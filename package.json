@@ -1,7 +1,7 @@
 {
-  "name": "myblog",
+  "name": "lelango",
   "version": "1.0.0",
-  "description": "myblog",
+  "description": "lelango",
   "author": "ubay dillah",
   "private": true,
   "scripts": {
@@ -11,11 +11,24 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.27",
+    "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/pwa": "^3.0.0-0",
+    "@nuxtjs/toast": "^3.3.0",
+    "axios": "^0.19.2",
     "frontmatter-markdown-loader": "^3.1.0",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.0.0",
+    "nuxt-fontawesome": "^0.4.0",
+    "nuxt-storage": "^1.2.2",
+    "vue-carousel": "^0.18.0",
+    "vue-feather-icon": "^1.2.0",
+    "vue-flickity": "^1.2.1",
+    "vue-progressive-image": "^3.2.0",
+    "vue-slick": "^1.1.15",
+    "vue-uuid": "^1.1.1",
+    "vuex-persist": "^2.2.0"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^1.0.0",

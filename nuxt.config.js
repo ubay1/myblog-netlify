@@ -2,62 +2,100 @@ const path = require("path");
 
 export default {
   mode: 'universal',
-  /*
-  ** Headers of the page
-  */
   head: {
     title: process.env.npm_package_name || '',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+    meta: [{
+        charset: 'utf-8'
+      },
+      {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1'
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content: process.env.npm_package_description || ''
+      }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{
+        rel: 'icon',
+        type: 'image/x-icon',
+        href: '/favicon.ico'
+      },
+      {
+        rel: 'stylesheet',
+        type: 'text/css',
+        href: '//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css'
+      },
+      {
+        rel: 'stylesheet',
+        type: 'text/css',
+        href: '//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css'
+      }
+    ],
   },
-  /*
-  ** Customize the progress-bar color
-  */
-  loading: { color: '#fff' },
-  /*
-  ** Global CSS
-  */
+  loading: {
+    color: '#fff'
+  },
   css: [
+    '@fortawesome/fontawesome-svg-core/styles.css',
   ],
-  /*
-  ** Plugins to load before mounting the App
-  */
-  plugins: [
+  plugins: [{
+      src: './plugins/fontawesome.js'
+    },
+    {
+      src: './plugins/imageprogressive.js',
+      ssr: false
+    },
+    {
+      src: './plugins/mixins/user.js'
+    },
+    {
+      src: './plugins/vue-carousel.js',
+      ssr: false
+    },
+    {
+      src: './plugins/mixins/validation.js'
+    },
+    {
+      src: './plugins/vuexpersist.js',
+      ssr: false
+    }
   ],
-  /*
-  ** Nuxt.js dev-modules
-  */
   buildModules: [
-    // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
   ],
-  /*
-  ** Nuxt.js modules
-  */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    // '@nuxtjs/auth',
     '@nuxtjs/pwa',
-    // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
+    'nuxt-fontawesome',
+    ['nuxt-fontawesome', {
+      component: 'fa',
+      imports: [
+        //import whole set
+        {
+          set: '@fortawesome/free-solid-svg-icons',
+          icons: ['fas']
+        },
+        //import 2 icons from set
+        // please note this is PRO set in this example,
+        // you must have it in your node_modules to actually import
+        {
+          set: '@fortawesome/pro-regular-svg-icons',
+          icons: ['faAdjust', 'faArchive']
+        }
+      ]
+    }],
+    '@nuxtjs/toast',
   ],
-  /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
   axios: {
+    baseURL: process.env.DEV_API
   },
-  /*
-  ** Build configuration
-  */
+  auth: {},
   build: {
-    extend (config, ctx) {
+    extend(config, ctx) {
       // config.module.rules.push({
       //   test: /\.md$/,
       //   include: path.resolve(__dirname, "content"),
@@ -66,7 +104,7 @@ export default {
       //     mode: [Mode.VUE_COMPONENT, Mode.META]
       //   }
       // });
-    }
+    },
 
   }
 }
