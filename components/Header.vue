@@ -2,7 +2,7 @@
   <div>
     <div class="header">
       <div class="logoSearchHeader">
-        <img class="logoImg" src="~/assets/img/logo.png" alt="">
+        <img class="logoImg" src="img/logo.png" alt="">
         <font-awesome-icon :icon="['fas', 'search']" style="color:rgb(0, 174, 239); font-size:20px;"/>
       </div>
       <div class="menuHeader">
@@ -32,6 +32,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 
 library.add(faUserSecret)
 

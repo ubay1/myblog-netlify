@@ -2,7 +2,7 @@
   <div>
     <div class="container bg-form">
       <div class="bg-login-head">
-        <img class="logoImg-login" src="~/assets/img/logo.png" alt="">
+        <img class="logoImg-login" src="img/logo.png" alt="">
       </div>
       <form @submit.prevent="submit" method="post">
         <div> <br>
@@ -44,7 +44,6 @@
   import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
   import {uuid} from 'vue-uuid';
   import axios from 'axios';
-  import nuxtStorage from 'nuxt-storage';
 
   library.add(faUserSecret)
 

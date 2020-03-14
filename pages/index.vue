@@ -5,11 +5,11 @@
         <client-only placeholder="sedang memuat ...">
         <carousel :perPage=1 :autoplay=true paginationColor="#f5bd22" paginationActiveColor='#00aeef' :paginationEnabled=false :loop=true>
           <slide v-for="(item, index) in banner" :key="index">
-              <progressive-img style="border-radius:20px;" :src="baseURL+item.picture[0]" :placeholder="baseURL+item.picture[0]" />
-              <div class="text-banner">
-                <h4>{{item.title}}</h4>
-                <h5>{{item.description}}</h5>
-              </div>
+            <progressive-img style="border-radius:20px;" :src="baseURL+item.picture[0]" :placeholder="baseURL+item.picture[0]" />
+            <div class="text-banner">
+              <h4>{{item.title}}</h4>
+              <h5>{{item.description}}</h5>
+            </div>
           </slide>
         </carousel>
         </client-only>
@@ -20,7 +20,21 @@
             <div>
               <div class="bg-card-mainTerkini">
                 <div class="card-mainTerkini" v-for="(item, index) in lelangterbaru" :key="index">
-                  <img class="img-list-lelang" :src="baseURL+item.picture[0]" alt="">
+                  <div class="harga-lelang">
+                    Harga lot {{item.format_bid}}
+                  </div>
+                  <span>
+                    <img class="img-list-lelang" :src="baseURL+item.picture[0]" >
+                  </span>
+                  <div class="nama-lot">
+                    {{item.nama}}
+                  </div>
+                  <div class="lot-expired">
+                    <timer :starttime="now" :endtime="item.expired_at" :trans="transOption" />
+                  </div>
+                  <button @click="moveToDetailLelang(item.id)" class="btn-detail">Detail
+                    Lelang
+                  </button>
                 </div>
               </div>
             </div>
@@ -96,16 +110,33 @@ import Header from '~/components/Header'
 import Footer from '~/components/Footer'
 import axios from 'axios'
 import {mapState, mapGetters} from 'vuex'
+import moment from 'moment'
+import Timer from './partial_home/timer'
 
 export default {
-
   data() {
     return {
       banner: [],
       lelangterbaru: [],
       lelangterlaris: [],
       tipsLelango: [],
-      baseURL: process.env.URL
+      lelang_expired : [],
+      baseURL: process.env.URL,
+      now : moment(),
+      transOption: {
+          day: "",
+          hours: "",
+          minutes: "",
+          seconds: "",
+          expired: "",
+          running: "",
+          upcoming: "",
+          status: {
+            expired: "Selesai",
+            running: "",
+            upcoming: "Akan Datang"
+          }
+      },
     }
   },
   // middleware:'iflogin',
@@ -114,6 +145,7 @@ export default {
   }),
   components: {
     Header, Footer,
+    'timer': Timer
   },
   methods: {
     logout(){
@@ -137,6 +169,11 @@ export default {
 				.then(response => {
           console.log(response)
           this.lelangterbaru = response.data.data.data;
+
+          for (let i = 0; i < this.lelangterbaru.length; i++) {
+            this.lelang_expired.push(this.lelangterbaru[i].expired_at)
+          }
+          console.log(this.lelang_expired);
 				});
 		},
   },
@@ -148,19 +185,8 @@ export default {
 </script>
 
 <style>
-.client-only-placeholder{
-  text-align:center;
-}
-.text-banner{
-  background: rgba(0,0,0,.6);
-  position: relative;
-  bottom: 63px;
-  z-index: 1;
-  border-radius: 0px 0px 20px 20px;
-  text-align: center;
-  color: #fff;
-  padding: 5px;
-}
+
+
 @media(min-width: 479px){
   .main{
     margin-bottom: 90px;
@@ -168,9 +194,18 @@ export default {
   .VueCarousel{
     width: 480px; margin: auto; margin-top: 10px; margin-bottom: -2em; padding-left: 20px; padding-right:20px;
   }
+  .harga-lelang{
+    font-size: 80%;
+    background: #00aeef;
+    padding: 3px;
+    border-radius: 10px 10px 0px 0px;
+    text-align: center;
+    color: #fff;
+  }
   .img-list-lelang{
     width: 150px;
-    padding: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
   }
 
   .bg-mainTerkini, .bg-mainTerlaris, .bg-mainTipslelango{
@@ -200,6 +235,38 @@ export default {
     margin: 10px;
     border-radius: 10px;
   }
+
+  .client-only-placeholder{
+  text-align:center;
+}
+.text-banner{
+  background: rgba(0,0,0,.6);
+  position: relative;
+  bottom: 63px;
+  z-index: 1;
+  border-radius: 0px 0px 20px 20px;
+  text-align: center;
+  color: #fff;
+  padding: 5px;
+}
+.nama-lot{
+  text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+.lot-expired{
+  text-align: center;
+  font-size: 14px;
+}
+
+.btn-detail{
+  background: #00aeef;
+  color: #fff;
+  padding: 4px;
+  border-radius: 0px 0px 10px 10px;
+  width: 100%;
+  font-size: 80%;
+}
 }
 
 @media(max-width: 480px){
@@ -210,9 +277,18 @@ export default {
   .VueCarousel{
     width: 480px; margin: auto; margin-top: 10px; margin-bottom: -2em; padding-left: 20px; padding-right:20px;
   }
+  .harga-lelang{
+    font-size: 80%;
+    background: #00aeef;
+    padding: 3px;
+    border-radius: 10px 10px 0px 0px;
+    text-align: center;
+    color: #fff;
+  }
   .img-list-lelang{
     width: 150px;
-    padding: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
   }
   .bg-mainTerkini, .bg-mainTerlaris{
     margin-bottom: 20px;
@@ -241,6 +317,38 @@ export default {
     margin: 10px;
     border-radius: 10px;
   }
+
+  .client-only-placeholder{
+  text-align:center;
+}
+.text-banner{
+  background: rgba(0,0,0,.6);
+  position: relative;
+  bottom: 63px;
+  z-index: 1;
+  border-radius: 0px 0px 20px 20px;
+  text-align: center;
+  color: #fff;
+  padding: 5px;
+}
+.nama-lot{
+  text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+.lot-expired{
+  text-align: center;
+  font-size: 14px;
+}
+
+.btn-detail{
+  background: #00aeef;
+  color: #fff;
+  padding: 4px;
+  border-radius: 0px 0px 10px 10px;
+  width: 100%;
+  font-size: 80%;
+}
 }
 
 </style>

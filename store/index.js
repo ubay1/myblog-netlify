@@ -1,10 +1,10 @@
-import { getData, setData } from 'nuxt-storage/local-storage';
+// import { getData, setData } from 'nuxt-storage/local-storage';
 
 export const stores = {
 	state: {
 		accessToken: null,
     status: '',
-    userData: getData("data") || '',
+    // userData: getData("data") || '',
 	},
 	getters: {
 		isLoggedIn: state => !!state.userData,
