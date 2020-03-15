@@ -81,7 +81,8 @@ export default {
   }
   .iconmenuFooter{
     color: rgb(0, 174, 239);
-    font-size: 20px;
+    font-size: 20px !important;
+    width: 25px !important;
   }
   .text-menuFooter{
     font-size: 12px;
@@ -129,7 +130,8 @@ export default {
   }
   .iconmenuFooter{
     color: rgb(0, 174, 239);
-    font-size: 20px;
+    font-size: 20px !important;
+    width: 25px !important;
   }
   .text-menuFooter{
     font-size: 12px;

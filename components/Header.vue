@@ -3,7 +3,7 @@
     <div class="header">
       <div class="logoSearchHeader">
         <img class="logoImg" src="img/logo.png" alt="">
-        <font-awesome-icon :icon="['fas', 'search']" style="color:rgb(0, 174, 239); font-size:20px;"/>
+        <font-awesome-icon :icon="['fas', 'search']" style="color:rgb(0, 174, 239); font-size:20px; width:20px; !important"/>
       </div>
       <div class="menuHeader">
         <button class="menuHeader1">
@@ -89,7 +89,8 @@ export default {
   }
   .iconmenuHeader{
     color: #fff;
-    font-size: 25px;
+    font-size: 25px !important;
+    width:25px !important;
   }
   .text-menuHeader{
     font-size: 14px;
@@ -139,7 +140,8 @@ export default {
   }
   .iconmenuHeader{
     color: #fff;
-    font-size: 25px;
+    font-size: 25px !important;
+    width:25px !important;
   }
   .text-menuHeader{
     font-size: 14px;

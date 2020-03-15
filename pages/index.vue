@@ -44,19 +44,22 @@
             <span class="text-main">Lelang terlaris</span>
             <div>
               <div class="bg-card-mainTerlaris">
-                <div class="card-mainTerlaris">
-                  ini card lelang terlaris
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-mainTipslelango">
-            <span class="text-main">Tips dari lelango</span>
-            <div>
-              <div class="bg-card-mainTipslelango">
-                <div class="card-mainTipslelango">
-                  ini card lelang terlaris
+                <div class="card-mainTerlaris" v-for="(item, index) in lelangterlaris" :key="index">
+                  <div class="harga-lelang">
+                    Harga lot {{item.format_bid}}
+                  </div>
+                  <span>
+                    <img class="img-list-lelang" :src="baseURL+item.picture[0]" >
+                  </span>
+                  <div class="nama-lot">
+                    {{item.nama}}
+                  </div>
+                  <div class="lot-expired">
+                    <timer :starttime="now" :endtime="item.expired_at" :trans="transOption" />
+                  </div>
+                  <button @click="moveToDetailLelang(item.id)" class="btn-detail">Detail
+                    Lelang
+                  </button>
                 </div>
               </div>
             </div>
@@ -84,22 +87,22 @@
               </div>
             </div>
           </div>
-
-          <div class="bg-mainTipslelango">
-            <span class="text-main">Tips dari lelango</span>
-            <div>
-              <div class="bg-card-mainTipslelango">
-                <div class="card-mainTipslelango">
-                  ini card lelang terlaris
-                </div>
-                <button @click='logout' class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                  Logout
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
 
+        <div class="bg-mainTipslelango">
+          <span class="text-main">Tips dari lelango</span>
+            <client-only>
+            <carousel :perPage=1 :navigationEnabled=true :paginationEnabled=false paginationColor="#f5bd22" paginationActiveColor='#00aeef'>
+              <slide v-for="(item, index) in tipslelango" :key="index">
+                <progressive-img style="border-radius:20px;" :src="baseURL+item.thumbnail" :placeholder="baseURL+item.thumbnail" />
+                <div class="text-tips">
+                  <h4 class="text-tips-title">{{item.title}}</h4>
+                  <h5 class="text-tips-descrip">{{_.truncate(item.description, {'length': 135})}}</h5>
+                </div>
+              </slide>
+            </carousel>
+            </client-only>
+        </div>
       </div>
       <Footer/>
   </div>
@@ -112,6 +115,7 @@ import axios from 'axios'
 import {mapState, mapGetters} from 'vuex'
 import moment from 'moment'
 import Timer from './partial_home/timer'
+import Tips from './partial_home/tips'
 
 export default {
   data() {
@@ -119,7 +123,7 @@ export default {
       banner: [],
       lelangterbaru: [],
       lelangterlaris: [],
-      tipsLelango: [],
+      tipslelango: [],
       lelang_expired : [],
       baseURL: process.env.URL,
       now : moment(),
@@ -145,7 +149,7 @@ export default {
   }),
   components: {
     Header, Footer,
-    'timer': Timer
+    'timer': Timer,
   },
   methods: {
     logout(){
@@ -167,24 +171,46 @@ export default {
     getLelangTerbaru() {
 			axios.get(process.env.DEV_API + "user/lot")
 				.then(response => {
-          console.log(response)
+          // console.log(response)
           this.lelangterbaru = response.data.data.data;
 
           for (let i = 0; i < this.lelangterbaru.length; i++) {
             this.lelang_expired.push(this.lelangterbaru[i].expired_at)
           }
-          console.log(this.lelang_expired);
+          // console.log(this.lelang_expired);
+				});
+    },
+    getLelangTerlaris() {
+			axios.get(process.env.DEV_API + "user/lot_terlaris")
+				.then(response => {
+          // console.log(response)
+          this.lelangterlaris = response.data.data.data;
+
+          for (let i = 0; i < this.lelangterlaris.length; i++) {
+            this.lelang_expired.push(this.lelangterlaris[i].expired_at)
+          }
+          // console.log(this.lelang_expired);
+				});
+    },
+    getTipsLelang() {
+			axios.get(process.env.DEV_API + "user/getBlog")
+				.then(response => {
+          // console.log(response)
+          this.tipslelango = response.data.data;
 				});
 		},
   },
   created(){
     this.getCaraousel(),
-    this.getLelangTerbaru()
+    this.getLelangTerbaru(),
+    this.getLelangTerlaris(),
+    this.getTipsLelang()
   }
 }
 </script>
 
 <style>
+
 
 
 @media(min-width: 479px){
@@ -229,7 +255,7 @@ export default {
     display: flex;
   }
 
-  .card-mainTerkini, .card-mainTerlaris, .card-mainTipslelango{
+  .card-mainTerkini, .card-mainTerlaris{
     background: #ffffff;
     box-shadow: 0px 2px 4px lightgrey;
     margin: 10px;
@@ -237,36 +263,62 @@ export default {
   }
 
   .client-only-placeholder{
-  text-align:center;
-}
-.text-banner{
-  background: rgba(0,0,0,.6);
-  position: relative;
-  bottom: 63px;
-  z-index: 1;
-  border-radius: 0px 0px 20px 20px;
-  text-align: center;
-  color: #fff;
-  padding: 5px;
-}
-.nama-lot{
-  text-align: center;
-    font-weight: bold;
+    text-align:center;
+  }
+  .text-banner{
+    background: rgba(0,0,0,.6);
+    position: relative;
+    bottom: 63px;
+    z-index: 1;
+    border-radius: 0px 0px 20px 20px;
+    text-align: center;
+    color: #fff;
+    padding: 5px;
+  }
+  .nama-lot{
+    text-align: center;
+      font-weight: bold;
+      font-size: 14px;
+  }
+  .lot-expired{
+    text-align: center;
     font-size: 14px;
-}
-.lot-expired{
-  text-align: center;
-  font-size: 14px;
-}
+  }
 
-.btn-detail{
-  background: #00aeef;
-  color: #fff;
-  padding: 4px;
-  border-radius: 0px 0px 10px 10px;
-  width: 100%;
-  font-size: 80%;
-}
+  .btn-detail{
+    background: #00aeef;
+    color: #fff;
+    padding: 4px;
+    border-radius: 0px 0px 10px 10px;
+    width: 100%;
+    font-size: 80%;
+  }
+
+  .text-tips h4.text-tips-title{
+    background: rgb(10, 169, 228);
+    color: #fff;
+    padding: 5px;
+    position: relative;
+    top: -30px;
+    z-index: 2;
+    font-size: 14px;
+  }
+  .text-tips h5.text-tips-descrip{
+    position: relative;
+    top: -30px;
+    z-index: 2;
+    font-size: 14px;
+    padding: 5px;
+  }
+
+  .VueCarousel-navigation{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .VueCarousel-navigation-button[data-v-453ad8cd]{
+    position: unset !important;
+  }
 }
 
 @media(max-width: 480px){
@@ -302,7 +354,7 @@ export default {
     padding-left: 20px;
   }
 
-  .bg-card-mainTerkini, .bg-card-mainTerlaris{
+  .bg-card-mainTerkini, .bg-card-mainTerlaris, .bg-card-mainTipslelango{
     background: #ffffff;
     width: 480px;
     margin: auto;
@@ -311,7 +363,7 @@ export default {
     display: flex;
   }
 
-  .card-mainTerkini, .card-mainTerlaris, .card-mainTipslelango{
+  .card-mainTerkini, .card-mainTerlaris{
     background: #ffffff;
     box-shadow: 0px 2px 4px lightgrey;
     margin: 10px;
@@ -319,36 +371,62 @@ export default {
   }
 
   .client-only-placeholder{
-  text-align:center;
-}
-.text-banner{
-  background: rgba(0,0,0,.6);
-  position: relative;
-  bottom: 63px;
-  z-index: 1;
-  border-radius: 0px 0px 20px 20px;
-  text-align: center;
-  color: #fff;
-  padding: 5px;
-}
-.nama-lot{
-  text-align: center;
-    font-weight: bold;
+    text-align:center;
+  }
+  .text-banner{
+    background: rgba(0,0,0,.6);
+    position: relative;
+    bottom: 63px;
+    z-index: 1;
+    border-radius: 0px 0px 20px 20px;
+    text-align: center;
+    color: #fff;
+    padding: 5px;
+  }
+  .nama-lot{
+    text-align: center;
+      font-weight: bold;
+      font-size: 14px;
+  }
+  .lot-expired{
+    text-align: center;
     font-size: 14px;
-}
-.lot-expired{
-  text-align: center;
-  font-size: 14px;
-}
+  }
 
-.btn-detail{
-  background: #00aeef;
-  color: #fff;
-  padding: 4px;
-  border-radius: 0px 0px 10px 10px;
-  width: 100%;
-  font-size: 80%;
-}
+  .btn-detail{
+    background: #00aeef;
+    color: #fff;
+    padding: 4px;
+    border-radius: 0px 0px 10px 10px;
+    width: 100%;
+    font-size: 80%;
+  }
+
+  .text-tips h4.text-tips-title{
+    background: rgb(10, 169, 228);
+    color: #fff;
+    padding: 5px;
+    position: relative;
+    top: -30px;
+    z-index: 2;
+    font-size: 14px;
+  }
+  .text-tips h5.text-tips-descrip{
+    position: relative;
+    top: -30px;
+    z-index: 2;
+    font-size: 14px;
+    padding: 5px;
+  }
+
+  .VueCarousel-navigation{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .VueCarousel-navigation-button[data-v-453ad8cd]{
+    position: unset !important;
+  }
 }
 
 </style>
