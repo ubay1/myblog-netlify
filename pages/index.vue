@@ -21,7 +21,7 @@
               <div class="bg-card-mainTerkini">
                 <div class="card-mainTerkini" v-for="(item, index) in lelangterbaru" :key="index">
                   <div class="harga-lelang">
-                    Harga lot {{item.format_bid}}
+                    <small><small>Harga lot</small></small> {{item.format_bid}}
                   </div>
                   <span>
                     <img class="img-list-lelang" :src="baseURL+item.picture[0]" >
@@ -46,7 +46,7 @@
               <div class="bg-card-mainTerlaris">
                 <div class="card-mainTerlaris" v-for="(item, index) in lelangterlaris" :key="index">
                   <div class="harga-lelang">
-                    Harga lot {{item.format_bid}}
+                    <small>Harga lot</small> {{item.format_bid}}
                   </div>
                   <span>
                     <img class="img-list-lelang" :src="baseURL+item.picture[0]" >
@@ -220,7 +220,26 @@ export default {
 
 <style>
 
+/* width */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #dadada;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 
 @media(max-width: 480px){
   .main{
@@ -231,9 +250,9 @@ export default {
     width: 480px; margin: auto; margin-top: 10px; margin-bottom: -2em; padding-left: 20px; padding-right:20px;
   }
   .harga-lelang{
-    font-size: 16px;
+    font-size: 14px;
     background: #00aeef;
-    padding: 3px;
+    padding: 10px;
     border-radius: 10px 10px 0px 0px;
     text-align: center;
     color: #fff;
@@ -262,7 +281,8 @@ export default {
     margin: auto;
     margin-top: 10px;
     padding-left: 20px;
-    display: flex;
+    display: -webkit-box;
+    overflow-x: hidden;
   }
 
   .card-mainTerkini, .card-mainTerlaris{
@@ -274,20 +294,21 @@ export default {
 
   .bg-card-mainTipslelango{
     display: -webkit-box;
-    /* display: flex; */
     width: 480px;
     margin: auto;
     margin-top: 10px;
     padding-left: 20px;
-    /* flex-wrap: nowrap; */
+    overflow-x: hidden;
+  }
+  .bg-card-mainTipslelango:hover{
     overflow-x: scroll;
-    /* flex-direction: row; */
-    /* padding: 10px; */
   }
   .card-mainTipslelango{
     /* flex: 0 0 auto; */
-    width: fit-content;
+    width: 70%;
     margin: 10px;
+    border-radius: 20px 20px 0px 0px;
+    box-shadow: 0px 2px 4px lightgrey;
   }
 
   .client-only-placeholder{
@@ -360,9 +381,9 @@ export default {
     width: 480px; margin: auto; margin-top: 10px; margin-bottom: -2em; padding-left: 20px; padding-right:20px;
   }
   .harga-lelang{
-    font-size: 16px;
+    font-size: 14px;
     background: #00aeef;
-    padding: 3px;
+    padding: 10px;
     border-radius: 10px 10px 0px 0px;
     text-align: center;
     color: #fff;
@@ -390,8 +411,13 @@ export default {
     margin: auto;
     margin-top: 10px;
     padding-left: 20px;
-    display: flex;
+    display: -webkit-box;
+    overflow-x: scroll;
   }
+
+  /* .bg-card-mainTerkini:hover, .bg-card-mainTerlaris:hover{
+    overflow-x: scroll;
+  } */
 
   .card-mainTerkini, .card-mainTerlaris{
     background: #ffffff;
@@ -402,20 +428,21 @@ export default {
 
   .bg-card-mainTipslelango{
     display: -webkit-box;
-    /* display: flex; */
     width: 480px;
     margin: auto;
     margin-top: 10px;
     padding-left: 20px;
-    /* flex-wrap: nowrap; */
     overflow-x: scroll;
-    /* flex-direction: row; */
-    /* padding: 10px; */
   }
+  /* .bg-card-mainTipslelango:hover{
+    overflow-x: scroll;
+  } */
   .card-mainTipslelango{
     /* flex: 0 0 auto; */
-    width: fit-content;
+    width: 70%;
     margin: 10px;
+    border-radius: 20px 20px 0px 0px;
+    box-shadow: 0px 2px 4px lightgrey;
   }
 
   .client-only-placeholder{

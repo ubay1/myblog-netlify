@@ -121,8 +121,8 @@ export default {
 
   },
   manifest: {
-		name: 'Lelango',
-		short_name: 'Lelango',
+		name: 'Lelango Lite',
+		short_name: 'Lelango Lite',
 		lang: 'en',
 		display: 'standalone',
 		theme_color: "#00aeef",
