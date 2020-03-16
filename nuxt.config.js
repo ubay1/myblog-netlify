@@ -101,13 +101,13 @@ export default {
   },
   auth: {},
   build: {
-    plugins: [
-      new webpack.ProvidePlugin({
-        // global modules
-        // '$': 'jquery',
-        '_': 'lodash'
-      })
-    ],
+    // plugins: [
+    //   new webpack.ProvidePlugin({
+    //     // global modules
+    //     // '$': 'jquery',
+    //     '_': 'lodash'
+    //   })
+    // ],
     extend(config, ctx) {
       // config.module.rules.push({
       //   test: /\.md$/,

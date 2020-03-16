@@ -49,7 +49,7 @@ export default {
 
 <style>
 
-@media(min-width: 479px){
+@media(min-width: 481px){
   .header{
     position: relative;
     top: 0;
@@ -57,7 +57,7 @@ export default {
   }
   .logoSearchHeader{
     display: flex;
-    width: 480px;
+    width: 481px;
     margin: auto;
     background: white;
     justify-content: space-between;
@@ -86,6 +86,7 @@ export default {
     flex-direction: column;
     align-items: center;
     padding: 10px;
+    justify-content: space-between;
   }
   .iconmenuHeader{
     color: #fff;
@@ -93,7 +94,7 @@ export default {
     width:25px !important;
   }
   .text-menuHeader{
-    font-size: 14px;
+    /* font-size: 14px; */
     color: #fff;
     line-height: 16px;
     margin-top: 8px;
@@ -137,6 +138,7 @@ export default {
     flex-direction: column;
     align-items: center;
     padding: 10px;
+    justify-content: space-between;
   }
   .iconmenuHeader{
     color: #fff;
@@ -144,7 +146,7 @@ export default {
     width:25px !important;
   }
   .text-menuHeader{
-    font-size: 14px;
+    /* font-size: 14px; */
     color: #fff;
     line-height: 16px;
     margin-top: 8px;

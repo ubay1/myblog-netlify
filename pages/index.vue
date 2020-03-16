@@ -91,8 +91,17 @@
 
         <div class="bg-mainTipslelango">
           <span class="text-main">Tips dari lelango</span>
-            <client-only>
-            <carousel :perPage=1 :navigationEnabled=true :paginationEnabled=false paginationColor="#f5bd22" paginationActiveColor='#00aeef'>
+            <div class="bg-card-mainTipslelango">
+            <div class="card-mainTipslelango" v-for="(item, index) in tipslelango" :key="index">
+              <img style="border-radius:20px;" :src="baseURL+item.thumbnail"/>
+                <div class="text-tips">
+                  <h4 class="text-tips-title">{{item.title}}</h4>
+                  <h5 class="text-tips-descrip">{{_.truncate(item.description, {'length': 135})}}</h5>
+                </div>
+            </div>
+            </div>
+            <!-- <client-only>
+            <carousel :perPage=1 :navigationEnabled=false :paginationEnabled=true paginationColor="#f5bd22" paginationActiveColor='#00aeef'>
               <slide v-for="(item, index) in tipslelango" :key="index">
                 <progressive-img style="border-radius:20px;" :src="baseURL+item.thumbnail" :placeholder="baseURL+item.thumbnail" />
                 <div class="text-tips">
@@ -101,7 +110,7 @@
                 </div>
               </slide>
             </carousel>
-            </client-only>
+            </client-only> -->
         </div>
       </div>
       <Footer/>
@@ -213,15 +222,16 @@ export default {
 
 
 
-@media(min-width: 479px){
+@media(max-width: 480px){
   .main{
+    width: 480px;
     margin-bottom: 90px;
   }
   .VueCarousel{
     width: 480px; margin: auto; margin-top: 10px; margin-bottom: -2em; padding-left: 20px; padding-right:20px;
   }
   .harga-lelang{
-    font-size: 80%;
+    font-size: 16px;
     background: #00aeef;
     padding: 3px;
     border-radius: 10px 10px 0px 0px;
@@ -246,7 +256,7 @@ export default {
     padding-left: 20px;
   }
 
-  .bg-card-mainTerkini, .bg-card-mainTerlaris, .bg-card-mainTipslelango{
+  .bg-card-mainTerkini, .bg-card-mainTerlaris{
     background: #ffffff;
     width: 480px;
     margin: auto;
@@ -260,6 +270,24 @@ export default {
     box-shadow: 0px 2px 4px lightgrey;
     margin: 10px;
     border-radius: 10px;
+  }
+
+  .bg-card-mainTipslelango{
+    display: -webkit-box;
+    /* display: flex; */
+    width: 480px;
+    margin: auto;
+    margin-top: 10px;
+    padding-left: 20px;
+    /* flex-wrap: nowrap; */
+    overflow-x: scroll;
+    /* flex-direction: row; */
+    /* padding: 10px; */
+  }
+  .card-mainTipslelango{
+    /* flex: 0 0 auto; */
+    width: fit-content;
+    margin: 10px;
   }
 
   .client-only-placeholder{
@@ -291,7 +319,7 @@ export default {
     padding: 4px;
     border-radius: 0px 0px 10px 10px;
     width: 100%;
-    font-size: 80%;
+    font-size: 16px;
   }
 
   .text-tips h4.text-tips-title{
@@ -319,18 +347,20 @@ export default {
   .VueCarousel-navigation-button[data-v-453ad8cd]{
     position: unset !important;
   }
+  .VueCarousel-dot-container[data-v-438fd353]{
+    margin-top: -40px !important;
+  }
 }
 
-@media(max-width: 480px){
+@media(min-width: 481px){
   .main{
     margin-bottom: 90px;
-    width: 480px;
   }
   .VueCarousel{
     width: 480px; margin: auto; margin-top: 10px; margin-bottom: -2em; padding-left: 20px; padding-right:20px;
   }
   .harga-lelang{
-    font-size: 80%;
+    font-size: 16px;
     background: #00aeef;
     padding: 3px;
     border-radius: 10px 10px 0px 0px;
@@ -354,7 +384,7 @@ export default {
     padding-left: 20px;
   }
 
-  .bg-card-mainTerkini, .bg-card-mainTerlaris, .bg-card-mainTipslelango{
+  .bg-card-mainTerkini, .bg-card-mainTerlaris{
     background: #ffffff;
     width: 480px;
     margin: auto;
@@ -368,6 +398,24 @@ export default {
     box-shadow: 0px 2px 4px lightgrey;
     margin: 10px;
     border-radius: 10px;
+  }
+
+  .bg-card-mainTipslelango{
+    display: -webkit-box;
+    /* display: flex; */
+    width: 480px;
+    margin: auto;
+    margin-top: 10px;
+    padding-left: 20px;
+    /* flex-wrap: nowrap; */
+    overflow-x: scroll;
+    /* flex-direction: row; */
+    /* padding: 10px; */
+  }
+  .card-mainTipslelango{
+    /* flex: 0 0 auto; */
+    width: fit-content;
+    margin: 10px;
   }
 
   .client-only-placeholder{
@@ -399,7 +447,7 @@ export default {
     padding: 4px;
     border-radius: 0px 0px 10px 10px;
     width: 100%;
-    font-size: 80%;
+    font-size: 16px;
   }
 
   .text-tips h4.text-tips-title{
@@ -426,6 +474,9 @@ export default {
   }
   .VueCarousel-navigation-button[data-v-453ad8cd]{
     position: unset !important;
+  }
+  .VueCarousel-dot-container[data-v-438fd353]{
+    margin-top: -40px !important;
   }
 }
 
