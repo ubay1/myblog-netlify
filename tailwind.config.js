@@ -6,6 +6,8 @@
 */
 module.exports = {
   theme: {},
-  variants: {},
+  variants: {
+    tableLayout: ['responsive', 'hover', 'focus']
+  },
   plugins: []
 }

@@ -32,7 +32,7 @@
                   <div class="lot-expired">
                     <timer :starttime="now" :endtime="item.expired_at" :trans="transOption" />
                   </div>
-                  <button @click="moveToDetailLelang(item.id)" class="btn-detail">Detail
+                  <button @click="detailLelang(item.id)" class="btn-detail">Detail
                     Lelang
                   </button>
                 </div>
@@ -57,7 +57,7 @@
                   <div class="lot-expired">
                     <timer :starttime="now" :endtime="item.expired_at" :trans="transOption" />
                   </div>
-                  <button @click="moveToDetailLelang(item.id)" class="btn-detail">Detail
+                  <button @click="detailLelang(item.id)" class="btn-detail">Detail
                     Lelang
                   </button>
                 </div>
@@ -100,17 +100,6 @@
                 </div>
             </div>
             </div>
-            <!-- <client-only>
-            <carousel :perPage=1 :navigationEnabled=false :paginationEnabled=true paginationColor="#f5bd22" paginationActiveColor='#00aeef'>
-              <slide v-for="(item, index) in tipslelango" :key="index">
-                <progressive-img style="border-radius:20px;" :src="baseURL+item.thumbnail" :placeholder="baseURL+item.thumbnail" />
-                <div class="text-tips">
-                  <h4 class="text-tips-title">{{item.title}}</h4>
-                  <h5 class="text-tips-descrip">{{_.truncate(item.description, {'length': 135})}}</h5>
-                </div>
-              </slide>
-            </carousel>
-            </client-only> -->
         </div>
       </div>
       <Footer/>
@@ -160,6 +149,7 @@ export default {
     Header, Footer,
     'timer': Timer,
   },
+  props:['id'],
   methods: {
     logout(){
        this.$store.dispatch('authh/logout').then(() => {
@@ -207,7 +197,10 @@ export default {
           // console.log(response)
           this.tipslelango = response.data.data;
 				});
-		},
+    },
+    detailLelang(id){
+      this.$router.push('/details/'+id)
+    }
   },
   created(){
     this.getCaraousel(),
@@ -222,8 +215,8 @@ export default {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 0px;
-  height: 0px;
+  width: 10px;
+  height: 5px;
 }
 
 /* Track */
@@ -234,11 +227,13 @@ export default {
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #dadada;
+  border-radius: 50px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+  border-radius: 50px;
 }
 
 @media(max-width: 480px){
@@ -284,6 +279,10 @@ export default {
     display: -webkit-box;
     overflow-x: hidden;
   }
+
+   .bg-card-mainTerkini:hover, .bg-card-mainTerlaris:hover{
+     overflow-x: scroll;
+   }
 
   .card-mainTerkini, .card-mainTerlaris{
     background: #ffffff;
@@ -412,12 +411,12 @@ export default {
     margin-top: 10px;
     padding-left: 20px;
     display: -webkit-box;
-    overflow-x: scroll;
+    overflow-x: hidden;
   }
 
-  /* .bg-card-mainTerkini:hover, .bg-card-mainTerlaris:hover{
+  .bg-card-mainTerkini:hover, .bg-card-mainTerlaris:hover{
     overflow-x: scroll;
-  } */
+  }
 
   .card-mainTerkini, .card-mainTerlaris{
     background: #ffffff;
@@ -432,11 +431,11 @@ export default {
     margin: auto;
     margin-top: 10px;
     padding-left: 20px;
+    overflow-x: hidden;
+  }
+  .bg-card-mainTipslelango:hover{
     overflow-x: scroll;
   }
-  /* .bg-card-mainTipslelango:hover{
-    overflow-x: scroll;
-  } */
   .card-mainTipslelango{
     /* flex: 0 0 auto; */
     width: 70%;
