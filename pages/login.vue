@@ -48,7 +48,7 @@
   library.add(faUserSecret)
 
   export default {
-    // middleware: 'iflogin',
+    middleware: 'ifnotlogin',
     computed: mapGetters({
       accessToken : 'authh/accessToken',
     }),
@@ -81,7 +81,7 @@
           fcm_token: this.form.fcm_token,
         }
 
-        await axios.post(process.env.DEV_URL + 'user/login_user', formData)
+        await axios.post(process.env.DEV_API + 'user/login_user', formData)
           .then(response => {
             switch (response.data.success) {
               case false:

@@ -6,22 +6,22 @@
         <font-awesome-icon :icon="['fas', 'search']" style="color:rgb(0, 174, 239); font-size:22px; width:22px; !important"/>
       </div>
       <div class="menuHeader">
-        <button class="menuHeader1">
+        <nuxt-link to="/" class="menuHeader1">
           <font-awesome-icon :icon="['fas', 'box-open']" class="iconmenuHeader"/>
           <span class="text-menuHeader">buat <br> lelang</span>
-        </button>
-        <button class="menuHeader1">
+        </nuxt-link>
+        <nuxt-link to="/" class="menuHeader1">
           <font-awesome-icon :icon="['fas', 'fire-alt']" class="iconmenuHeader"/>
           <span class="text-menuHeader">lelang <br> terkini</span>
-        </button>
-        <button class="menuHeader1">
+        </nuxt-link>
+        <nuxt-link to="/" class="menuHeader1">
           <font-awesome-icon :icon="['fas', 'history']" class="iconmenuHeader"/>
           <span class="text-menuHeader">riwayat <br> lelang</span>
-        </button>
-        <button class="menuHeader1">
+        </nuxt-link>
+        <nuxt-link to="user" class="menuHeader1">
           <font-awesome-icon :icon="['fas', 'user-alt']" class="iconmenuHeader"/>
           <span class="text-menuHeader">info <br> akun</span>
-        </button>
+        </nuxt-link>
       </div>
 
     </div>
@@ -72,7 +72,7 @@ export default {
     margin-bottom: 30px;
   }
   .menuHeader{
-    background: rgb(0, 174, 239);
+    background: linear-gradient(145deg, #00baff, #009dd7);
     width:460px;
     margin: auto;
     margin-bottom: 20px;
@@ -89,6 +89,7 @@ export default {
     align-items: center;
     padding: 10px;
     justify-content: space-between;
+    text-align: center;
   }
   .iconmenuHeader{
     color: #fff;
@@ -98,7 +99,7 @@ export default {
   .text-menuHeader{
     /* font-size: 14px; */
     color: #fff;
-    line-height: 16px;
+    line-height: 1.2;
     margin-top: 8px;
   }
 }
@@ -126,7 +127,7 @@ export default {
     margin-bottom: 30px;
   }
   .menuHeader{
-    background: rgb(0, 174, 239);
+    background: linear-gradient(145deg, #00baff, #009dd7);
     width:100%;
     margin: auto;
     margin-bottom: 20px;
@@ -143,6 +144,7 @@ export default {
     align-items: center;
     padding: 10px;
     justify-content: space-between;
+    text-align: center;
   }
   .iconmenuHeader{
     color: #fff;
@@ -152,7 +154,7 @@ export default {
   .text-menuHeader{
     /* font-size: 14px; */
     color: #fff;
-    line-height: 16px;
+    line-height: 1.2;
     margin-top: 8px;
   }
 }

@@ -38,6 +38,9 @@ export default {
   loading: {
     color: '#fff'
   },
+  generate: {
+    fallback: true
+  },
   css: [
     '@fortawesome/fontawesome-svg-core/styles.css',
     { src: "swiper/dist/css/swiper.css" }

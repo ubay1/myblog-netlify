@@ -14,7 +14,7 @@
         </carousel>
         </client-only>
 
-        <div v-if="accessToken == false">
+        <div v-if="accessToken == true">
           <div class="bg-mainTerkini">
             <span class="text-main">Lelang terkini</span>
             <div>
@@ -35,6 +35,7 @@
                   <button @click="detailLelang(item.id)" class="btn-detail">Detail
                     Lelang
                   </button>
+                  <div class="ext"></div>
                 </div>
               </div>
             </div>
@@ -52,6 +53,33 @@
                     <img class="img-list-lelang" :src="baseURL+item.picture[0]" >
                   </span>
                   <div class="nama-lot">
+                    Lot-{{item.id}}
+                  </div>
+                  <div class="lot-expired">
+                    <timer :starttime="now" :endtime="item.expired_at" :trans="transOption" />
+                  </div>
+                  <button @click="detailLelang(item.id)" class="btn-detail">Detail
+                    Lelang
+                  </button>
+                  <div class="ext"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-else>
+         <div class="bg-mainTerkini">
+            <span class="text-main">Lelang terkini</span>
+            <div>
+              <div class="bg-card-mainTerkini">
+                <div class="card-mainTerkini" v-for="(item, index) in lelangterbaru" :key="index">
+                  <div class="harga-lelang">
+                    <small><small>Harga lot</small></small> {{item.format_bid}}
+                  </div>
+                  <span>
+                    <img class="img-list-lelang" :src="baseURL+item.picture[0]" >
+                  </span>
+                  <div class="nama-lot">
                     {{item.nama}}
                   </div>
                   <div class="lot-expired">
@@ -60,18 +88,7 @@
                   <button @click="detailLelang(item.id)" class="btn-detail">Detail
                     Lelang
                   </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div v-else>
-          <div class="bg-mainTerkini">
-            <span class="text-main">Lelang terkini</span>
-            <div>
-              <div class="bg-card-mainTerkini">
-                <div class="card-mainTerkini">
-                  ini card lelang terkini
+                  <div class="ext"></div>
                 </div>
               </div>
             </div>
@@ -81,8 +98,23 @@
             <span class="text-main">Lelang terlaris</span>
             <div>
               <div class="bg-card-mainTerlaris">
-                <div class="card-mainTerlaris">
-                  ini card lelang terlaris
+                <div class="card-mainTerlaris" v-for="(item, index) in lelangterlaris" :key="index">
+                  <div class="harga-lelang">
+                    <small>Harga lot</small> {{item.format_bid}}
+                  </div>
+                  <span>
+                    <img class="img-list-lelang" :src="baseURL+item.picture[0]" >
+                  </span>
+                  <div class="nama-lot">
+                    Lot-{{item.id}}
+                  </div>
+                  <div class="lot-expired">
+                    <timer :starttime="now" :endtime="item.expired_at" :trans="transOption" />
+                  </div>
+                  <button @click="detailLelang(item.id)" class="btn-detail">Detail
+                    Lelang
+                  </button>
+                  <div class="ext"></div>
                 </div>
               </div>
             </div>
@@ -93,11 +125,13 @@
           <span class="text-main">Tips dari lelango</span>
             <div class="bg-card-mainTipslelango">
             <div class="card-mainTipslelango" v-for="(item, index) in tipslelango" :key="index">
-              <img style="border-radius:20px;" :src="baseURL+item.thumbnail"/>
+              <img style="border-radius:20px; margin-bottom: -20px;" :src="baseURL+item.thumbnail"/>
                 <div class="text-tips">
                   <h4 class="text-tips-title">{{item.title}}</h4>
                   <h5 class="text-tips-descrip">{{_.truncate(item.description, {'length': 135})}}</h5>
+                  <button @click="detailBlog(item.thumbnail,item.title, item.description)" class="btn-tips-lelang">Lihat selengkapnya</button>
                 </div>
+                <div class="ext"></div>
             </div>
             </div>
         </div>
@@ -114,6 +148,7 @@ import {mapState, mapGetters} from 'vuex'
 import moment from 'moment'
 import Timer from './partial_home/timer'
 import Tips from './partial_home/tips'
+import DetailBlog from './partial_blog/blog'
 
 export default {
   data() {
@@ -148,6 +183,7 @@ export default {
   components: {
     Header, Footer,
     'timer': Timer,
+    'detail-blog': 'DetailBLog'
   },
   props:['id'],
   methods: {
@@ -200,6 +236,17 @@ export default {
     },
     detailLelang(id){
       this.$router.push('/details/'+id)
+    },
+    detailBlog(image, title, description){
+      const data = {
+            title: title,
+            image: image,
+            description: description
+        }
+      this.$router.push({
+        name:'partial_blog-blog',
+        params: data,
+      })
     }
   },
   created(){
@@ -212,12 +259,6 @@ export default {
 </script>
 
 <style>
-
-/* width */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 5px;
-}
 
 /* Track */
 ::-webkit-scrollbar-track {
@@ -237,6 +278,11 @@ export default {
 }
 
 @media(max-width: 480px){
+  /* width */
+  ::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
   .main{
     width: 480px;
     margin-bottom: 90px;
@@ -246,7 +292,7 @@ export default {
   }
   .harga-lelang{
     font-size: 14px;
-    background: #00aeef;
+    background: linear-gradient(145deg, #00baff, #009dd7);
     padding: 10px;
     border-radius: 10px 10px 0px 0px;
     text-align: center;
@@ -304,10 +350,18 @@ export default {
   }
   .card-mainTipslelango{
     /* flex: 0 0 auto; */
+    height: 0%;
     width: 70%;
     margin: 10px;
     border-radius: 20px 20px 0px 0px;
     box-shadow: 0px 2px 4px lightgrey;
+  }
+
+  .ext {
+    position: relative;
+    left: 100%;
+    width: 30px;
+    height: 1px;
   }
 
   .client-only-placeholder{
@@ -334,7 +388,7 @@ export default {
   }
 
   .btn-detail{
-    background: #00aeef;
+    background: linear-gradient(145deg, #00baff, #009dd7);
     color: #fff;
     padding: 4px;
     border-radius: 0px 0px 10px 10px;
@@ -343,20 +397,30 @@ export default {
   }
 
   .text-tips h4.text-tips-title{
-    background: rgb(10, 169, 228);
+    background: linear-gradient(145deg, #00baff, #009dd7);
     color: #fff;
     padding: 5px;
     position: relative;
-    top: -30px;
+    /* top: -30px; */
     z-index: 2;
     font-size: 14px;
   }
   .text-tips h5.text-tips-descrip{
     position: relative;
-    top: -30px;
+    /* top: -30px; */
     z-index: 2;
     font-size: 14px;
     padding: 5px;
+  }
+
+  .btn-tips-lelang{
+    position: relative;
+    z-index: 2;
+    font-size: 14px;
+    padding: 5px;
+    color: #0d92c3;
+    /* background: aliceblue; */
+    width:100%;
   }
 
   .VueCarousel-navigation{
@@ -373,6 +437,11 @@ export default {
 }
 
 @media(min-width: 481px){
+  /* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 5px;
+  }
   .main{
     margin-bottom: 90px;
   }
@@ -381,7 +450,7 @@ export default {
   }
   .harga-lelang{
     font-size: 14px;
-    background: #00aeef;
+    background: linear-gradient(145deg, #00baff, #009dd7);
     padding: 10px;
     border-radius: 10px 10px 0px 0px;
     text-align: center;
@@ -438,10 +507,18 @@ export default {
   }
   .card-mainTipslelango{
     /* flex: 0 0 auto; */
+    height: 0%;
     width: 70%;
     margin: 10px;
     border-radius: 20px 20px 0px 0px;
     box-shadow: 0px 2px 4px lightgrey;
+  }
+
+  .ext {
+    position: relative;
+    left: 100%;
+    width: 30px;
+    height: 1px;
   }
 
   .client-only-placeholder{
@@ -468,7 +545,7 @@ export default {
   }
 
   .btn-detail{
-    background: #00aeef;
+    background: linear-gradient(145deg, #00baff, #009dd7);
     color: #fff;
     padding: 4px;
     border-radius: 0px 0px 10px 10px;
@@ -477,20 +554,30 @@ export default {
   }
 
   .text-tips h4.text-tips-title{
-    background: rgb(10, 169, 228);
+    background: linear-gradient(145deg, #00baff, #009dd7);
     color: #fff;
     padding: 5px;
     position: relative;
-    top: -30px;
+    /* top: -30px; */
     z-index: 2;
     font-size: 14px;
   }
   .text-tips h5.text-tips-descrip{
     position: relative;
-    top: -30px;
+    /* top: -30px; */
     z-index: 2;
     font-size: 14px;
     padding: 5px;
+  }
+
+  .btn-tips-lelang{
+    position: relative;
+    z-index: 2;
+    font-size: 14px;
+    padding: 5px;
+    color: #0d92c3;
+    /* background: aliceblue; */
+    width:100%;
   }
 
   .VueCarousel-navigation{

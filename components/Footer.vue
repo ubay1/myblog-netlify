@@ -2,19 +2,19 @@
   <div>
     <div class="footer">
       <div class="navbar-home">
-        <nuxt-link to="/" class="menuHeader1">
+        <nuxt-link to="/" class="menuFooter">
           <font-awesome-icon :icon="['fas', 'home']" class="iconmenuFooter"/>
           <span class="text-menuFooter">Beranda</span>
         </nuxt-link>
-        <nuxt-link to="/" class="menuHeader1">
+        <nuxt-link to="/" class="menuFooter">
           <font-awesome-icon :icon="['fas', 'th-large']" class="iconmenuFooter"/>
           <span class="text-menuFooter">Kategori</span>
         </nuxt-link>
-        <nuxt-link to="/" class="menuHeader1">
+        <nuxt-link to="/" class="menuFooter">
           <font-awesome-icon :icon="['fas', 'star']" class="iconmenuFooter"/>
           <span class="text-menuFooter">Favorit</span>
         </nuxt-link>
-        <nuxt-link to="/" class="menuHeader1">
+        <nuxt-link to="/" class="menuFooter">
           <font-awesome-icon :icon="['fas', 'bell']" class="iconmenuFooter"/>
           <span class="text-menuFooter">Notif</span>
         </nuxt-link>
@@ -79,6 +79,13 @@ export default {
     display: flex;
     justify-content: space-around;
   }
+  .menuFooter{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    justify-content: space-between;
+  }
   .iconmenuFooter{
     color: rgb(0, 174, 239);
     font-size: 20px !important;
@@ -127,6 +134,13 @@ export default {
   .navbar-home{
     display: flex;
     justify-content: space-around;
+  }
+  .menuFooter{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    justify-content: space-between;
   }
   .iconmenuFooter{
     color: rgb(0, 174, 239);

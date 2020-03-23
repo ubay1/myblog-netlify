@@ -112,11 +112,11 @@
     margin-bottom: 10px;
   }
   span.number{
-    background: #FFEB3B;
+    background: linear-gradient(145deg, #fffb3f, #decc2e);
     padding-right: 5px;
     padding-left: 5px;
-    box-shadow: 0px 2px 4px lightgrey;
-    border-radius: 5px;;
+    box-shadow: 1px 2px 1px #dadad6, -1px -2px 1px #f3f3f3;
+    border-radius: 5px;
   }
 
   .format{

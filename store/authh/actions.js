@@ -32,7 +32,7 @@ export default{
 
   logout : ({commit}) => {
     return new Promise((resolve, reject) => {
-      localStorage.removeItem('vuex')
+      localStorage.removeItem('lelangoApp')
       commit('logout')
       resolve()
     })
