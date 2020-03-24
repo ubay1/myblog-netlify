@@ -48,6 +48,9 @@ export default {
   plugins: [{
       src: './plugins/fontawesome.js'
     },
+    {
+      src: './plugins/axios.js'
+    },
     { src: "./plugins/vue-swiper.js", ssr: false },
     {
       src: './plugins/imageprogressive.js',
@@ -76,7 +79,7 @@ export default {
   ],
   modules: [
     '@nuxtjs/axios',
-    // '@nuxtjs/auth',
+    '@nuxtjs/proxy',
     '@nuxtjs/pwa',
     '@nuxtjs/dotenv',
     'nuxt-fontawesome',
@@ -100,7 +103,12 @@ export default {
     '@nuxtjs/toast',
   ],
   axios: {
-    baseURL: process.env.DEV_API
+    baseURL: process.env.DEV_API,
+    proxyHeaders: false,
+    credentials: false
+  },
+  proxy: {
+    '/api/': { target: 'https://dev.lenna.ai/lelango-backend/public', pathRewrite: {'^/api/': ''} }
   },
   auth: {},
   build: {

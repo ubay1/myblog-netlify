@@ -32,7 +32,7 @@ export default{
 
   logout : ({commit}) => {
     return new Promise((resolve, reject) => {
-      localStorage.removeItem('lelangoApp')
+      // localStorage.removeItem('lelangoApp')
       commit('logout')
       resolve()
     })

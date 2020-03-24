@@ -6,7 +6,7 @@
         <font-awesome-icon :icon="['fas', 'search']" style="color:rgb(0, 174, 239); font-size:22px; width:22px; !important"/>
       </div>
       <div class="menuHeader">
-        <nuxt-link to="/" class="menuHeader1">
+        <nuxt-link to="/buat_lelang" class="menuHeader1">
           <font-awesome-icon :icon="['fas', 'box-open']" class="iconmenuHeader"/>
           <span class="text-menuHeader">buat <br> lelang</span>
         </nuxt-link>
@@ -14,7 +14,7 @@
           <font-awesome-icon :icon="['fas', 'fire-alt']" class="iconmenuHeader"/>
           <span class="text-menuHeader">lelang <br> terkini</span>
         </nuxt-link>
-        <nuxt-link to="/" class="menuHeader1">
+        <nuxt-link to="/riwayat_lelang" class="menuHeader1">
           <font-awesome-icon :icon="['fas', 'history']" class="iconmenuHeader"/>
           <span class="text-menuHeader">riwayat <br> lelang</span>
         </nuxt-link>

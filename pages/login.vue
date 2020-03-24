@@ -30,7 +30,6 @@
           <div class="register">
             <nuxt-link to="/register">Daftar akun baru</nuxt-link>
           </div>
-          {{accessToken}}
         </div>
       </form>
     </div>
@@ -81,7 +80,7 @@
           fcm_token: this.form.fcm_token,
         }
 
-        await axios.post(process.env.DEV_API + 'user/login_user', formData)
+        await this.$axios.post(process.env.DEV_API + 'user/login_user', formData)
           .then(response => {
             switch (response.data.success) {
               case false:
@@ -113,8 +112,8 @@
                 this.$store.dispatch('authh/login', response.data).then(() => {
                   console.log('response true')
 
-                  location.replace('/')
-                  // this.$router.push('/')
+                  // location.replace('/')
+                  this.$router.push('/')
                   // redirect('/')
                 }).catch((err) => {
                   console.log(err)

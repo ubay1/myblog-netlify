@@ -72,7 +72,7 @@
             <span class="text-main">Lelang terkini</span>
             <div>
               <div class="bg-card-mainTerkini">
-                <div class="card-mainTerkini" v-for="(item, index) in lelangterbaru" :key="index">
+                <div class="card-mainTerkini" v-for="(item, index) in filterLelangTerbaru" :key="index">
                   <div class="harga-lelang">
                     <small><small>Harga lot</small></small> {{item.format_bid}}
                   </div>
@@ -177,9 +177,14 @@ export default {
     }
   },
   // middleware:'iflogin',
-  computed: mapGetters({
-      accessToken : 'authh/accessToken',
-  }),
+  computed: {
+    accessToken(){
+      this.$store.getters.accessToken
+    },
+    filterLelangTerbaru(){
+      return this.lelangterbaru.slice(0,3);
+    }
+  },
   components: {
     Header, Footer,
     'timer': Timer,
@@ -206,23 +211,29 @@ export default {
     getLelangTerbaru() {
 			axios.get(process.env.DEV_API + "user/lot")
 				.then(response => {
-          // console.log(response)
-          this.lelangterbaru = response.data.data.data;
+          // console.log(response.data.data.data)
+          if(response.data.data.data == null){
+            this.lelangterbaru = []
+          }else{
+            this.lelangterbaru = response.data.data.data;
 
-          for (let i = 0; i < this.lelangterbaru.length; i++) {
-            this.lelang_expired.push(this.lelangterbaru[i].expired_at)
+            for (let i = 0; i < this.lelangterbaru.length; i++) {
+              this.lelang_expired.push(this.lelangterbaru[i].expired_at)
+            }
           }
-          // console.log(this.lelang_expired);
 				});
     },
     getLelangTerlaris() {
 			axios.get(process.env.DEV_API + "user/lot_terlaris")
 				.then(response => {
-          // console.log(response)
-          this.lelangterlaris = response.data.data.data;
-
-          for (let i = 0; i < this.lelangterlaris.length; i++) {
-            this.lelang_expired.push(this.lelangterlaris[i].expired_at)
+          // console.log(response.data.success)
+          if(response.data.success == false){
+            this.lelangterlaris = [];
+          }else{
+            this.lelangterlaris = response.data.data.data;
+            for (let i = 0; i < this.lelangterlaris.length; i++) {
+              this.lelang_expired.push(this.lelangterlaris[i].expired_at)
+            }
           }
           // console.log(this.lelang_expired);
 				});
