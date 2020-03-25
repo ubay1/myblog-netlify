@@ -3,19 +3,19 @@
     <div class="footer">
       <div class="navbar-home">
         <nuxt-link to="/" class="menuFooter">
-          <font-awesome-icon :icon="['fas', 'home']" class="iconmenuFooter"/>
+          <font-awesome-icon :icon="['fas', 'home']" style="width:25px; font-size:20px;"/>
           <span class="text-menuFooter">Beranda</span>
         </nuxt-link>
-        <nuxt-link to="/" class="menuFooter">
-          <font-awesome-icon :icon="['fas', 'th-large']" class="iconmenuFooter"/>
+        <nuxt-link to="/kategori" class="menuFooter">
+          <font-awesome-icon :icon="['fas', 'th-large']" style="width:25px; font-size:20px;"/>
           <span class="text-menuFooter">Kategori</span>
         </nuxt-link>
-        <nuxt-link to="/" class="menuFooter">
-          <font-awesome-icon :icon="['fas', 'star']" class="iconmenuFooter"/>
+        <nuxt-link to="/favorit" class="menuFooter">
+          <font-awesome-icon :icon="['fas', 'star']" style="width:25px; font-size:20px;"/>
           <span class="text-menuFooter">Favorit</span>
         </nuxt-link>
-        <nuxt-link to="/" class="menuFooter">
-          <font-awesome-icon :icon="['fas', 'bell']" class="iconmenuFooter"/>
+        <nuxt-link to="/notif" class="menuFooter">
+          <font-awesome-icon :icon="['fas', 'bell']" style="width:25px; font-size:20px;"/>
           <span class="text-menuFooter">Notif</span>
         </nuxt-link>
       </div>
@@ -85,15 +85,18 @@ export default {
     align-items: center;
     padding: 10px;
     justify-content: space-between;
+    color: gainsboro;
   }
-  .iconmenuFooter{
-    color: rgb(0, 174, 239);
+  .exact-active-link {
+    color: #00aeef;
+  }
+  /* .iconmenuFooter{
     font-size: 20px !important;
     width: 25px !important;
-  }
+  } */
   .text-menuFooter{
     font-size: 12px;
-    color: #1a1a1a;
+    /* color: #1a1a1a; */
     line-height: 16px;
     margin-top: 8px;
   }
@@ -141,15 +144,18 @@ export default {
     align-items: center;
     padding: 10px;
     justify-content: space-between;
+    color: gainsboro;
   }
-  .iconmenuFooter{
-    color: rgb(0, 174, 239);
+  .exact-active-link {
+    color: #00aeef;
+  }
+  /* .iconmenuFooter{
     font-size: 20px !important;
     width: 25px !important;
-  }
+  } */
   .text-menuFooter{
     font-size: 12px;
-    color: #1a1a1a;
+    /* color: #1a1a1a; */
     line-height: 16px;
     margin-top: 8px;
   }

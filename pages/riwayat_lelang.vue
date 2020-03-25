@@ -113,7 +113,7 @@ export default {
 
   @media (max-width:480px){
     .header-riwayat{
-      width: 480px;
+      width: auto;
       margin: auto;
       background: linear-gradient(145deg, #00baff, #009dd7);
       margin-bottom: 10px;
@@ -131,7 +131,7 @@ export default {
     }
 
     .main-riwayat{
-      width: 480px;
+      width: auto;
       margin-bottom: 90px;
     }
   }

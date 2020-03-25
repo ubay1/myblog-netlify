@@ -2,19 +2,19 @@
   <div>
     <div class="container bg-form">
       <div class="bg-login-head">
-        <img class="logoImg-login" src="img/logo.png" alt="">
+        <img class="logoImg-login" src="logo.jpg" alt="">
       </div>
       <form @submit.prevent="submit" method="post">
         <div> <br>
           <!-- <small class="text-danger" v-if="errors.email">{{ errors.email[0] }}</small> <small> -->
-          <input class="bg-white h-11 px-5 pr-10 rounded-full text-sm focus:outline-none form-email" type="text"
+          <input class="bg-white text-gray-600 h-11 px-5 pr-10 rounded-full text-sm focus:outline-none form-email" type="text"
             v-model="form.email" placeholder="Enter email" name="email" required='true'>
 
           <div class="relative text-gray-600">
             <input :type="passwordFieldType" v-model="form.password" placeholder="Enter Password" name="password"
               class="bg-white h-10 px-5 rounded-full text-sm focus:outline-none" required='true'>
             <button type="button" class="absolute right-0 top-0 mt-3 mr-4" @click="show_password">
-              <font-awesome-icon :icon="['fas', icon]" style="font-size:20px;" />
+              <font-awesome-icon :icon="['fas', icon]" style="font-size:20px; width:20px;" />
             </button>
           </div>
 
@@ -140,32 +140,14 @@
 </script>
 
 <style>
-  @media (max-width:992px) {
-    .bg-form {
-      margin: 0px auto;
-      width: 100% !important;
-    }
-  }
-
   body {
     font-family: Arial, Helvetica, sans-serif;
     height: auto !important;
   }
 
-  .bg-form {
-    margin: 0px auto;
-    width: 40%;
-    padding: 20px;
-    ;
-  }
-
   .bg-login-head {
     display: flex;
     justify-content: center;
-  }
-
-  .logoImg-login {
-    width: 50%;
   }
 
   /* Full-width input fields */
@@ -242,7 +224,22 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
   }
 
-  @media only screen and (max-width: 600px) {
+  .text-gray-600{
+    margin:10px 0 !important;
+  }
+
+  @media (min-width:280px) and (max-width:480px) {
+    .bg-form {
+      height: 100vh;
+      margin: auto;
+      width: 100% !important;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
     .toasted-container .toasted:first-child {
       margin-top: 0;
     }
@@ -260,6 +257,51 @@
       font-weight: 300;
       color: #fff;
       box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+    }
+  }
+
+  @media(min-width:481px){
+    .bg-form {
+      height: 100vh;
+      margin: auto;
+      width: 100% !important;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+  }
+
+
+  /* logo */
+  @media(min-width: 992px){
+    .logoImg-login {
+      width: 30%;
+    }
+  }
+
+  @media(min-width: 768px) and (max-width: 991px){
+    .logoImg-login {
+      width: 40%;
+    }
+  }
+
+  @media (min-width:600px) and (max-width: 767px){
+    .logoImg-login {
+      width: 50%;
+    }
+  }
+
+  @media (min-width:320px) and (max-width: 599px){
+    .logoImg-login {
+      width: 60%;
+    }
+  }
+
+  @media (min-width:280px) and (max-width: 319px){
+    .logoImg-login {
+      width: 70%;
     }
   }
 

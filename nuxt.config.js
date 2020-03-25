@@ -38,6 +38,10 @@ export default {
   loading: {
     color: '#fff'
   },
+  router: {
+    linkActiveClass: "active-link",
+    linkExactActiveClass: "exact-active-link"
+  },
   generate: {
     fallback: true
   },
@@ -103,8 +107,8 @@ export default {
     '@nuxtjs/toast',
   ],
   axios: {
-    baseURL: process.env.DEV_API,
-    proxyHeaders: false,
+    // baseURL: process.env.DEV_API,
+    // proxyHeaders: false,
     credentials: false
   },
   proxy: {
@@ -138,18 +142,18 @@ export default {
 		display: 'standalone',
 		theme_color: "#00aeef",
 		icons:[
-			{
-				"src": "/img/icon/android-icon-36x36.png",
-				"sizes": "36x36",
-				"type": "image/png",
-				"density": "0.75"
-			},
-			{
-				"src": "/img/icon/android-icon-48x48.png",
-				"sizes": "48x48",
-				"type": "image/png",
-				"density": "1.0"
-			},
+			// {
+			// 	"src": "/img/icon/android-icon-36x36.png",
+			// 	"sizes": "36x36",
+			// 	"type": "image/png",
+			// 	"density": "0.75"
+			// },
+			// {
+			// 	"src": "/img/icon/android-icon-48x48.png",
+			// 	"sizes": "48x48",
+			// 	"type": "image/png",
+			// 	"density": "1.0"
+			// },
 			{
 				"src": "/img/icon/android-icon-72x72.png",
 				"sizes": "72x72",

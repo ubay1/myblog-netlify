@@ -2,6 +2,7 @@
   <div>
       <Header />
       <div class="main">
+
         <client-only placeholder="sedang memuat ...">
         <carousel :perPage=1 :autoplay=true paginationColor="#f5bd22" paginationActiveColor='#00aeef' :paginationEnabled=false :loop=true>
           <slide v-for="(item, index) in banner" :key="index">
@@ -295,11 +296,11 @@ export default {
     height: 0px;
   }
   .main{
-    width: 480px;
+    width: auto;
     margin-bottom: 90px;
   }
   .VueCarousel{
-    width: 480px; margin: auto; margin-top: 10px; margin-bottom: -2em; padding-left: 20px; padding-right:20px;
+    width: auto; margin: auto; margin-top: 10px; margin-bottom: -2em; padding-left: 20px; padding-right:20px;
   }
   .harga-lelang{
     font-size: 14px;
@@ -321,7 +322,7 @@ export default {
   .text-main{
     font-weight: bold;
     display: flex;
-    width: 480px;
+    width: auto;
     margin: auto;
     margin-top: 10px;
     padding-left: 20px;
@@ -329,7 +330,7 @@ export default {
 
   .bg-card-mainTerkini, .bg-card-mainTerlaris{
     background: #ffffff;
-    width: 480px;
+    width: auto;
     margin: auto;
     margin-top: 10px;
     padding-left: 20px;
@@ -350,7 +351,7 @@ export default {
 
   .bg-card-mainTipslelango{
     display: -webkit-box;
-    width: 480px;
+    width: auto;
     margin: auto;
     margin-top: 10px;
     padding-left: 20px;

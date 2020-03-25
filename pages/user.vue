@@ -2,7 +2,7 @@
   <div>
     <div>
       <div class="header-user">
-        <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-detail" @click="back()"/>
+        <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-user" @click="back()"/>
         <button @click="logout()" class="text-black bg-yellow-400 p-1 rounded shadow-md">Logout</button>
       </div>
     </div>
@@ -16,33 +16,78 @@
 
       <div class="bg-data-another">
         <div class="data-another">
-          <font-awesome-icon :icon="['fas', 'phone']" style="font-size:20px;"/>
-          <span>phone</span>
-          <div v-if="datauser.phone_verified_at == null">
+          <span>Email</span>
+          <span >
+              <b>{{datauser.email}}</b>
+          </span>
+        </div>
+        <div class="data-another">
+          <!-- <font-awesome-icon :icon="['fas', 'phone']" style="font-size:20px; width:20px;"/> -->
+          <span>Nomor HP</span>
+          <div v-if="datauser.phone == null" style="text-align:center; color: #d61212;">
             <span>
-              <b>{{datauser.phone}}</b>
+              <b> belum ada nomor handphone</b>
             </span>
-            <button class="btn-verif"><font-awesome-icon :icon="['fas', 'exclamation-circle']" style="font-size:15px;"/> verif phone</button>
+            <button class="btn-tambah-phone">Tambah</button>
           </div>
           <div v-else>
-            <span >
-              <b>{{datauser.phone}}</b>
-            </span>
+            <div v-if="datauser.phone_verified_at == null">
+              <span>
+                <b>{{datauser.phone}}</b>
+              </span>
+              <button class="btn-verif"> verif phone</button>
+            </div>
+            <div v-else>
+              <span>
+                <b>{{datauser.phone}}</b>
+              </span>
+            </div>
           </div>
         </div>
         <div class="data-another">
-          <font-awesome-icon :icon="['fas', 'address-card']" style="font-size:20px;"/>
-            <span>ktp</span>
-            <span>
-              <b>{{datauser.ktp}}</b>
-            </span>
+          <!-- <font-awesome-icon :icon="['fas', 'address-card']" style="font-size:20px; width:20px;"/> -->
+            <span>KTP</span>
+            <div v-if="datauser.ktp == null" style="text-align:center; color: #d61212;">
+              <span>
+                <b> belum ada nomor ktp</b>
+              </span>
+              <button class="btn-tambah-phone">Tambah</button>
+            </div>
+            <div v-else>
+              <span >
+                <b>{{datauser.ktp}}</b>
+              </span>
+            </div>
         </div>
         <div class="data-another">
-          <font-awesome-icon :icon="['fas', 'address-card']" style="font-size:20px;"/>
-            <span>npwp</span>
-            <span>
-              <b>{{datauser.npwp}}</b>
-            </span>
+          <!-- <font-awesome-icon :icon="['fas', 'address-card']" style="font-size:20px; width:20px;"/> -->
+            <span>NPWP</span>
+            <div v-if="datauser.npwp == null" style="text-align:center; color: #d61212;">
+              <span>
+                <b> belum ada nomor npwp</b>
+              </span>
+              <button class="btn-tambah-phone">Tambah</button>
+            </div>
+            <div v-else>
+              <span >
+                <b>{{datauser.npwp}}</b>
+              </span>
+            </div>
+        </div>
+        <div class="data-another">
+          <!-- <font-awesome-icon :icon="['fas', 'address-card']" style="font-size:20px; width:20px;"/> -->
+            <span>Data Rekening</span>
+            <div v-if="databank.success == false" style="text-align:center; color: #d61212;">
+              <span>
+                <b> belum ada Rekening</b>
+              </span>
+              <button class="btn-tambah-phone">Tambah</button>
+            </div>
+            <div v-else>
+              <span >
+                <b>{{databank.account_number}}</b>
+              </span>
+            </div>
         </div>
       </div>
 
@@ -77,7 +122,7 @@
         </div>
       </div> -->
 
-      <div class="bg-data-another2">
+      <!-- <div class="bg-data-another2">
         <div class="data-another2">
           <span>Ikuti bid</span>
           {{datauser.total_mengikuti_bid}}
@@ -90,7 +135,7 @@
           <span>Bid tertinggi</span>
           {{datauser.bid_tertinggi}}
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -107,6 +152,7 @@ export default {
       idUser: '',
       baseURL: process.env.DEV_API,
       datauser: [],
+      databank:[]
     }
   },
   methods: {
@@ -114,18 +160,37 @@ export default {
       this.$router.push('/');
     },
     getUser(){
-      console.log(this.token)
+      // console.log(this.token)
       const config = {
           headers: {
             Authorization: `Bearer ${this.token}`
           }
       };
-      this.$axios.get(this.baseURL+'user/profil'+'/'+this.id, config)
+      this.$axios.get(this.baseURL+'user/profil/'+this.id, config)
       .then(response => {
         if(response.data.success == true){
           this.datauser = response.data.data
         }else{
           this.datauser = ''
+        }
+      })
+      .catch((err)=>{
+        console.log(err)
+      });
+    },
+    async getBankAkun(){
+      const config = {
+        headers: {
+          Authorization: `Bearer ${this.token}`
+        }
+      };
+      await this.$axios.get(this.baseURL+'user/get-bank-account', config)
+      .then(response => {
+        // console.log(response)
+        if(response.data.success == true){
+          this.databank = response.data.data[0]
+        }else{
+          this.databank = response.data
         }
       })
       .catch((err)=>{
@@ -184,8 +249,14 @@ export default {
       this.accessToken = JSON.parse(aa).authh.accessToken;
       this.token = JSON.parse(aa).authh.userData.user.token.access_token;
       this.id = JSON.parse(aa).authh.userData.user.id;
-      console.log(this.id)
+      // console.log(this.id)
       this.getUser();
+      this.getBankAkun();
+    }
+  },
+  mounted() {
+    if(process.client){
+      
     }
   },
 }
@@ -204,10 +275,10 @@ export default {
       align-items: center;
       justify-content: space-between;
 
-      .icon-header-detail{
+      .icon-header-user{
         color: #ffffff;
         font-size:18px;
-        width:22px;
+        width:20px;
       }
     }
 
@@ -218,10 +289,11 @@ export default {
       flex-direction:column;
       margin:auto;
       width: 481px;
-      margin-bottom: 90px;
+      // margin-bottom: 90px;
 
       .bg-profile{
         filter: contrast(0.9);
+        height: 180px;
         background-image: url('https://img.freepik.com/free-vector/gadgets-auction_1284-22060.jpg?size=626&ext=jpg');
         background-size: cover;
         background-position: center;
@@ -242,13 +314,16 @@ export default {
       .bg-data-another {
           display: flex;
           justify-content: center;
+          flex-direction: column;
           align-items: center;
           width: -webkit-fill-available;
+          padding:20px;
           // box-shadow: 0px 2px 4px lightgrey;
-          margin-bottom:20px;
+          // margin-bottom:20px;
 
           .data-another {
               display: flex;
+              width: 100%;
               flex-direction: column;
               align-items: center;
               padding:20px;
@@ -260,14 +335,23 @@ export default {
                 color: #fff;
                 padding: 5px;
                 border-radius: 50px;
-                font-size: small;
+                // font-size: normal;
+                box-shadow: 0px 2px 4px rgba(0,0,0,.4);
+              }
+
+              .btn-tambah-phone{
+                background: #00aeef;
+                color: #fff;
+                padding: 5px;
+                // border-radius: 50px;
+                // font-size: normal;
                 box-shadow: 0px 2px 4px rgba(0,0,0,.4);
               }
           }
 
           span{
             b{
-              font-size:small;
+              font-size:normal;
               // background:yellow;
             }
           }
@@ -324,7 +408,7 @@ export default {
 
   @media (max-width:480px){
     .header-user{
-      width: 480px;
+      width: auto;
       margin: auto;
       background: linear-gradient(145deg, #00baff, #009dd7);
       // margin-bottom: 10px;
@@ -334,10 +418,10 @@ export default {
       align-items: center;
       justify-content: space-between;
 
-      .icon-header-detail{
+      .icon-header-user{
         color: #ffffff;
         font-size:18px;
-        width:22px;
+        width:20px;
       }
     }
 
@@ -347,11 +431,12 @@ export default {
       align-items:center;
       flex-direction:column;
       margin:auto;
-      width: 480px;
-      margin-bottom: 90px;
+      width: auto;
+      // margin-bottom: 90px;
 
       .bg-profile{
         filter: contrast(0.9);
+        height: 180px;
         background-image: url('https://img.freepik.com/free-vector/gadgets-auction_1284-22060.jpg?size=626&ext=jpg');
         background-size: cover;
         background-position: center;
@@ -372,13 +457,16 @@ export default {
       .bg-data-another {
           display: flex;
           justify-content: center;
+          flex-direction: column;
           align-items: center;
           width: -webkit-fill-available;
+          padding:10px;
           // box-shadow: 0px 2px 4px lightgrey;
-          margin-bottom:20px;
+          // margin-bottom:20px;
 
           .data-another {
               display: flex;
+              width: 100%;
               flex-direction: column;
               align-items: center;
               padding:20px;
@@ -390,14 +478,23 @@ export default {
                 color: #fff;
                 padding: 5px;
                 border-radius: 50px;
-                font-size: small;
+                // font-size: normal;
+                box-shadow: 0px 2px 4px rgba(0,0,0,.4);
+              }
+
+              .btn-tambah-phone{
+                background: #00aeef;
+                color: #fff;
+                padding: 5px;
+                // border-radius: 50px;
+                // font-size: normal;
                 box-shadow: 0px 2px 4px rgba(0,0,0,.4);
               }
           }
 
           span{
             b{
-              font-size:small;
+              font-size:normal;
               // background:yellow;
             }
           }

@@ -97,7 +97,7 @@
         <div class="bg-penawaran-tertinggi">
             <div class="text-penawaran-tertinggi">Penawaran Tertinggi</div>
             <div class="nilai-penawaran-tertinggi">{{lelang_data_bid[0].format_price}}
-              <font-awesome-icon :icon="['fas', 'chevron-right']" class="" @click="getbidtertinggi()"/>
+              <font-awesome-icon :icon="['fas', 'chevron-right']" style="width:14; font-size:14;" @click="getbidtertinggi()"/>
             </div>
         </div>
       </div>
@@ -269,6 +269,11 @@ export default {
     font-weight:bold;
   }
 
+  .nilai-penawaran-tertinggi{
+    display: flex;
+    align-items: center;
+  }
+
 }
 
 @media(max-width: 480px){
@@ -278,7 +283,7 @@ export default {
     height: 0px;
   }
   .header-detail{
-    width: 480px;
+    width: auto;
     margin: auto;
     background: linear-gradient(145deg, #00baff, #009dd7);
     margin-bottom: 10px;
@@ -305,7 +310,7 @@ export default {
   }
 
   .main-detail{
-    width: 480px;
+    width: auto;
     margin: auto;
     margin-top: 10px;
     margin-bottom: -2em;
@@ -314,7 +319,7 @@ export default {
   }
   .bg-card-list-data{
     display: -webkit-box;
-    width: 480px;
+    width: auto;
     margin: auto;
     margin-top: 10px;
     padding-left: 20px;
@@ -331,7 +336,7 @@ export default {
   }
   .bg-card-list-data-detail{
     display: -webkit-box;
-    width: 480px;
+    width: auto;
     margin: auto;
     margin-top: 10px;
     padding-left: 8em;
@@ -339,7 +344,7 @@ export default {
   }
   .bg-card-list-data-detail-text{
     display: -webkit-box;
-    width: 480px;
+    width: auto;
     margin: auto;
     margin-top: 10px;
     padding-left:30px;
@@ -359,13 +364,18 @@ export default {
   .bg-penawaran-tertinggi{
     display: flex;
     justify-content:space-between;
-    width: 480px;
+    width: auto;
     margin: auto;
     margin-top: 10px;
     padding-left: 30px;
     padding-right: 30px;
     margin-bottom:20px;
     font-weight:bold;
+  }
+
+  .nilai-penawaran-tertinggi{
+    display: flex;
+    align-items: center;
   }
 
 }

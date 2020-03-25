@@ -39,6 +39,8 @@ export default {
 </script>
 
 <style lang="scss">
+
+@media (min-width:481px){
   .header-detail-blog{
     width: 481px;
     margin: auto;
@@ -63,7 +65,7 @@ export default {
     }
   }
   .detail-blog{
-    width: 480px;
+    width: 481px;
     margin: auto;
     .title-detail-blog{
       background: linear-gradient(145deg, #00baff, #009dd7);
@@ -78,4 +80,47 @@ export default {
       font-size: 15px;
     }
   }
+}
+
+@media (max-width:480px){
+  .header-detail-blog{
+    width: auto;
+    margin: auto;
+    background: linear-gradient(145deg, #00baff, #009dd7);
+    padding: 10px;
+    // box-shadow: 0px 2px 6px rgba(150, 144, 144, 0.4);
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin-bottom: -10px;
+    z-index: 2;
+    position: relative;
+    .icon-header-detail{
+      color: #ffffff;
+      /* position: relative; */
+      /* left: -8em; */
+      font-size:18px;
+      width:22px;
+    }
+  }
+  .detail-blog{
+    width: auto;
+    margin: auto;
+    .title-detail-blog{
+      background: linear-gradient(145deg, #00baff, #009dd7);
+      color: white;
+      padding: 10px;
+    }
+    .description-detail-blog{
+      padding: 10px;
+      line-height: 1.6;
+      text-align: justify;
+      text-indent: 30px;
+      font-size: 15px;
+    }
+  }
+}
 </style>

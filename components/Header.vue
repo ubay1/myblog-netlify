@@ -108,11 +108,11 @@ export default {
   .header{
     position: relative;
     top: 0;
-    width: 480px;
+    width: auto;
   }
   .logoSearchHeader{
     display: flex;
-    width: 480px;
+    width: auto;
     margin: auto;
     background: white;
     justify-content: space-between;
@@ -128,7 +128,7 @@ export default {
   }
   .menuHeader{
     background: linear-gradient(145deg, #00baff, #009dd7);
-    width:100%;
+    width:auto;
     margin: auto;
     margin-bottom: 20px;
     padding: 10px;
