@@ -36,7 +36,8 @@ export default {
     ],
   },
   loading: {
-    color: '#fff'
+    color: '#f6e05e',
+    height: '3px'
   },
   router: {
     linkActiveClass: "active-link",

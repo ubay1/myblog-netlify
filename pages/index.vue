@@ -17,7 +17,10 @@
 
         <div v-if="accessToken == true">
           <div class="bg-mainTerkini">
-            <span class="text-main">Lelang terkini</span>
+            <div class="text-main">
+              <div>  Lelang terkini </div>
+              <div class="lihat-semua"> Lihat Semua</div>
+            </div>
             <div>
               <div class="bg-card-mainTerkini">
                 <div class="card-mainTerkini" v-for="(item, index) in lelangterbaru" :key="index">
@@ -43,7 +46,10 @@
           </div>
 
           <div class="bg-mainTerlaris">
-            <span class="text-main">Lelang terlaris</span>
+            <div class="text-main">
+              <div>  Lelang terlaris </div>
+              <div class="lihat-semua"> Lihat Semua</div>
+            </div>
             <div>
               <div class="bg-card-mainTerlaris">
                 <div class="card-mainTerlaris" v-for="(item, index) in lelangterlaris" :key="index">
@@ -70,7 +76,10 @@
         </div>
         <div v-else>
          <div class="bg-mainTerkini">
-            <span class="text-main">Lelang terkini</span>
+            <div class="text-main">
+              <div>  Lelang terkini </div>
+              <div class="lihat-semua"> Lihat Semua</div>
+            </div>
             <div>
               <div class="bg-card-mainTerkini">
                 <div class="card-mainTerkini" v-for="(item, index) in filterLelangTerbaru" :key="index">
@@ -96,10 +105,13 @@
           </div>
 
           <div class="bg-mainTerlaris">
-            <span class="text-main">Lelang terlaris</span>
+            <div class="text-main">
+              <div>  Lelang terlaris </div>
+              <div class="lihat-semua"> Lihat Semua</div>
+            </div>
             <div>
               <div class="bg-card-mainTerlaris">
-                <div class="card-mainTerlaris" v-for="(item, index) in lelangterlaris" :key="index">
+                <div class="card-mainTerlaris" v-for="(item, index) in filterLelangTerlaris" :key="index">
                   <div class="harga-lelang">
                     <small>Harga lot</small> {{item.format_bid}}
                   </div>
@@ -123,7 +135,9 @@
         </div>
 
         <div class="bg-mainTipslelango">
-          <span class="text-main">Tips dari lelango</span>
+          <div class="text-main">
+            <div>  Tips dari lelango </div>
+          </div>
             <div class="bg-card-mainTipslelango">
             <div class="card-mainTipslelango" v-for="(item, index) in tipslelango" :key="index">
               <img alt="img-tips-lelango" style="border-radius:20px; margin-bottom: -20px;" :src="baseURL+item.thumbnail"/>
@@ -184,6 +198,9 @@ export default {
     },
     filterLelangTerbaru(){
       return this.lelangterbaru.slice(0,3);
+    },
+    filterLelangTerlaris(){
+      return this.lelangterlaris.slice(0,3);
     }
   },
   components: {
@@ -322,10 +339,16 @@ export default {
   .text-main{
     font-weight: bold;
     display: flex;
+    justify-content: space-between;
     width: auto;
     margin: auto;
     margin-top: 10px;
     padding-left: 20px;
+  }
+
+  .lihat-semua{
+    color: #00aeef;
+    padding-right: 20px;;
   }
 
   .bg-card-mainTerkini, .bg-card-mainTerlaris{
@@ -479,10 +502,16 @@ export default {
   .text-main{
     font-weight: bold;
     display: flex;
+    justify-content: space-between;
     width: 480px;
     margin: auto;
     margin-top: 10px;
     padding-left: 20px;
+  }
+
+  .lihat-semua{
+    color: #00aeef;
+    padding-right: 20px;;
   }
 
   .bg-card-mainTerkini, .bg-card-mainTerlaris{

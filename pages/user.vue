@@ -22,120 +22,83 @@
           </span>
         </div>
         <div class="data-another">
-          <!-- <font-awesome-icon :icon="['fas', 'phone']" style="font-size:20px; width:20px;"/> -->
+          <!-- <font-awesome-icon :icon="['fas', 'phone']" style=" width:20px;"/> -->
           <span>Nomor HP</span>
-          <div v-if="datauser.phone == null" style="text-align:center; color: #d61212;">
+          <div v-if="datauser.phone == null" style="color: #d61212;" class="flex-data">
             <span>
-              <b> belum ada nomor handphone</b>
+              <b> belum ada</b>
             </span>
             <button class="btn-tambah-phone">Tambah</button>
           </div>
           <div v-else>
-            <div v-if="datauser.phone_verified_at == null">
+            <div v-if="datauser.phone_verified_at == null" class="flex-data">
               <span>
                 <b>{{datauser.phone}}</b>
               </span>
               <button class="btn-verif"> verif phone</button>
             </div>
-            <div v-else>
+            <div v-else class="flex-data">
               <span>
                 <b>{{datauser.phone}}</b>
               </span>
+              <div>
+                <font-awesome-icon :icon="['fas', 'chevron-right']" style=" width:20px;;"/>
+              </div>
             </div>
           </div>
         </div>
         <div class="data-another">
-          <!-- <font-awesome-icon :icon="['fas', 'address-card']" style="font-size:20px; width:20px;"/> -->
             <span>KTP</span>
-            <div v-if="datauser.ktp == null" style="text-align:center; color: #d61212;">
+            <div v-if="datauser.ktp == null" style="color: #d61212;" class="flex-data">
               <span>
-                <b> belum ada nomor ktp</b>
+                <b> belum ada</b>
               </span>
               <button class="btn-tambah-phone">Tambah</button>
             </div>
-            <div v-else>
+            <div v-else class="flex-data">
               <span >
                 <b>{{datauser.ktp}}</b>
               </span>
+              <div>
+                <font-awesome-icon :icon="['fas', 'chevron-right']" style=" width:20px;;"/>
+              </div>
             </div>
         </div>
         <div class="data-another">
-          <!-- <font-awesome-icon :icon="['fas', 'address-card']" style="font-size:20px; width:20px;"/> -->
             <span>NPWP</span>
-            <div v-if="datauser.npwp == null" style="text-align:center; color: #d61212;">
+            <div v-if="datauser.npwp == null" style="color: #d61212;" class="flex-data">
               <span>
-                <b> belum ada nomor npwp</b>
+                <b> belum ada</b>
               </span>
               <button class="btn-tambah-phone">Tambah</button>
             </div>
-            <div v-else>
+            <div v-else class="flex-data">
               <span >
                 <b>{{datauser.npwp}}</b>
               </span>
+              <div>
+                <font-awesome-icon :icon="['fas', 'chevron-right']" style=" width:20px;;"/>
+              </div>
             </div>
         </div>
         <div class="data-another">
-          <!-- <font-awesome-icon :icon="['fas', 'address-card']" style="font-size:20px; width:20px;"/> -->
             <span>Data Rekening</span>
-            <div v-if="databank.success == false" style="text-align:center; color: #d61212;">
+            <div v-if="databank.success == false" style="color: #d61212;" class="flex-data">
               <span>
-                <b> belum ada Rekening</b>
+                <b> belum ada</b>
               </span>
               <button class="btn-tambah-phone">Tambah</button>
             </div>
-            <div v-else>
+            <div v-else class="flex-data">
               <span >
-                <b>{{databank.account_number}}</b>
+                <b>{{databank.length}}</b>
               </span>
+              <div>
+                <font-awesome-icon :icon="['fas', 'chevron-right']" style=" width:20px;;"/>
+              </div>
             </div>
         </div>
       </div>
-
-      <!-- <div class="bg-data-alive">
-        <div class="data-alive">
-          <table cellpadding="10">
-            <tr>
-              <td>Alamat</td>
-              <td><input type="text" :value="datauser.address" class="form-data-alive"></td>
-            </tr>
-            <tr>
-              <td>Provinsi</td>
-              <td><input type="text" :value="datauser.province" class="form-data-alive"></td>
-            </tr>
-            <tr>
-              <td>Kab/Kota</td>
-              <td><input type="text" :value="datauser.city" class="form-data-alive"></td>
-            </tr>
-            <tr>
-              <td>Kecamatan</td>
-              <td><input type="text" :value="datauser.sub_district" class="form-data-alive"></td>
-            </tr>
-            <tr>
-              <td>Kelurahan</td>
-              <td><input type="text" :value="datauser.village" class="form-data-alive"></td>
-            </tr>
-            <tr>
-              <td>Kode pos</td>
-              <td><input type="text" :value="datauser.postal_code" class="form-data-alive"></td>
-            </tr>
-          </table>
-        </div>
-      </div> -->
-
-      <!-- <div class="bg-data-another2">
-        <div class="data-another2">
-          <span>Ikuti bid</span>
-          {{datauser.total_mengikuti_bid}}
-        </div>
-        <div class="data-another2">
-          <span>Total bid</span>
-          {{datauser.total_bid}}
-        </div>
-        <div class="data-another2">
-          <span>Bid tertinggi</span>
-          {{datauser.bid_tertinggi}}
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -186,9 +149,9 @@ export default {
       };
       await this.$axios.get(this.baseURL+'user/get-bank-account', config)
       .then(response => {
-        // console.log(response)
+        // console.log(response.data.length)
         if(response.data.success == true){
-          this.databank = response.data.data[0]
+          this.databank = response.data.data
         }else{
           this.databank = response.data
         }
@@ -256,7 +219,7 @@ export default {
   },
   mounted() {
     if(process.client){
-      
+
     }
   },
 }
@@ -325,10 +288,16 @@ export default {
               display: flex;
               width: 100%;
               flex-direction: column;
-              align-items: center;
+              // align-items: center;
               padding:20px;
               margin:5px;
               box-shadow: 0px 2px 2px lightgrey;
+
+              .flex-data{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+              }
 
               .btn-verif{
                 background: #fb3333;
@@ -468,10 +437,16 @@ export default {
               display: flex;
               width: 100%;
               flex-direction: column;
-              align-items: center;
+              // align-items: center;
               padding:20px;
               margin:5px;
               box-shadow: 0px 2px 2px lightgrey;
+
+              .flex-data{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+              }
 
               .btn-verif{
                 background: #fb3333;
