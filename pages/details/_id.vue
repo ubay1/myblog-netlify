@@ -15,7 +15,7 @@
     <div v-else>
       <div class="bg-card-list-data-detail">
         <div v-if="productid.length != 0">
-          <img :src="baseURL+productid.product.pictures[0]" alt="">
+          <img :src="baseURL+productid.product.pictures[0]" alt="img-list-detail">
         </div>
         <div v-else>
            <img :src="baseURL+lelang_product_awal[0].product.pictures[0]" alt="">
@@ -23,7 +23,7 @@
       </div>
       <div class="bg-card-list-data">
         <div class="card-list-data" :id="item.id" v-for="(item, index) in lelang_data_product" :key="index">
-          <img style="border-radius:20px; cursor:pointer;" @click="getid(index)" :src="baseURL+item.picture[0]"/>
+          <img alt="img-list-data" style="border-radius:20px; cursor:pointer;" @click="getid(index)" :src="baseURL+item.picture[0]"/>
           <div class="ext"></div>
         </div>
       </div>
@@ -88,9 +88,9 @@
         </div>
       </div>
 
-      <div style="width:480px; margin:auto;">
+      <!-- <div style="width:auto; margin:auto;"> -->
         <hr>
-      </div>
+      <!-- </div> -->
 
       <div v-if="lelang_data_bid.length == 0"></div>
       <div v-else>

@@ -6,7 +6,7 @@
         <client-only placeholder="sedang memuat ...">
         <carousel :perPage=1 :autoplay=true paginationColor="#f5bd22" paginationActiveColor='#00aeef' :paginationEnabled=false :loop=true>
           <slide v-for="(item, index) in banner" :key="index">
-            <progressive-img style="border-radius:20px;" :src="baseURL+item.picture[0]" :placeholder="baseURL+item.picture[0]" />
+            <progressive-img style="border-radius:20px;" alt='img-carousel' :src="baseURL+item.picture[0]" :placeholder="baseURL+item.picture[0]" />
             <div class="text-banner">
               <h4>{{item.title}}</h4>
               <h5>{{item.description}}</h5>
@@ -25,7 +25,7 @@
                     <small><small>Harga lot</small></small> {{item.format_bid}}
                   </div>
                   <span>
-                    <img class="img-list-lelang" :src="baseURL+item.picture[0]" >
+                    <img alt="image-lot-terbaru" class="img-list-lelang" :src="baseURL+item.picture[0]" >
                   </span>
                   <div class="nama-lot">
                     {{item.nama}}
@@ -51,7 +51,7 @@
                     <small>Harga lot</small> {{item.format_bid}}
                   </div>
                   <span>
-                    <img class="img-list-lelang" :src="baseURL+item.picture[0]" >
+                    <img alt="img-lot-terlaris" class="img-list-lelang" :src="baseURL+item.picture[0]" >
                   </span>
                   <div class="nama-lot">
                     Lot-{{item.id}}
@@ -78,7 +78,7 @@
                     <small><small>Harga lot</small></small> {{item.format_bid}}
                   </div>
                   <span>
-                    <img class="img-list-lelang" :src="baseURL+item.picture[0]" >
+                    <img alt="img-lot-terbaru" class="img-list-lelang" :src="baseURL+item.picture[0]" >
                   </span>
                   <div class="nama-lot">
                     {{item.nama}}
@@ -104,7 +104,7 @@
                     <small>Harga lot</small> {{item.format_bid}}
                   </div>
                   <span>
-                    <img class="img-list-lelang" :src="baseURL+item.picture[0]" >
+                    <img alt="img-lot-terlaris" class="img-list-lelang" :src="baseURL+item.picture[0]" >
                   </span>
                   <div class="nama-lot">
                     Lot-{{item.id}}
@@ -126,7 +126,7 @@
           <span class="text-main">Tips dari lelango</span>
             <div class="bg-card-mainTipslelango">
             <div class="card-mainTipslelango" v-for="(item, index) in tipslelango" :key="index">
-              <img style="border-radius:20px; margin-bottom: -20px;" :src="baseURL+item.thumbnail"/>
+              <img alt="img-tips-lelango" style="border-radius:20px; margin-bottom: -20px;" :src="baseURL+item.thumbnail"/>
                 <div class="text-tips">
                   <h4 class="text-tips-title">{{item.title}}</h4>
                   <h5 class="text-tips-descrip">{{_.truncate(item.description, {'length': 135})}}</h5>

@@ -2,7 +2,7 @@
   <div>
     <div class="header">
       <div class="logoSearchHeader">
-        <img class="logoImg" src="img/logo.png" alt="">
+        <img class="logoImg" src="img/logo.png" alt="logo-img">
         <font-awesome-icon :icon="['fas', 'search']" style="color:rgb(0, 174, 239); font-size:22px; width:22px; !important"/>
       </div>
       <div class="menuHeader">

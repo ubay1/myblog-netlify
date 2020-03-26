@@ -85,7 +85,7 @@ export default {
     align-items: center;
     padding: 10px;
     justify-content: space-between;
-    color: gainsboro;
+    color: #b9b8b8;
   }
   .exact-active-link {
     color: #00aeef;
@@ -144,7 +144,7 @@ export default {
     align-items: center;
     padding: 10px;
     justify-content: space-between;
-    color: gainsboro;
+    color: #b9b8b8;
   }
   .exact-active-link {
     color: #00aeef;
