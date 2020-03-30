@@ -7,97 +7,104 @@
       </div>
     </div>
     <div class="main-user">
-      <div class="bg-profile">
+      <!-- <div class="bg-profile">
         <img src="img/profile.png" alt="lelango user">
         <div class="data-profile">
           <b>{{datauser.name}} </b>
         </div>
-      </div>
-
+      </div> -->
+      
       <div class="bg-data-another">
-        <div class="data-another">
-          <span>Email</span>
-          <span >
-              <b>{{datauser.email}}</b>
-          </span>
-        </div>
-        <div class="data-another">
-          <!-- <font-awesome-icon :icon="['fas', 'phone']" style=" width:20px;"/> -->
-          <span>Nomor HP</span>
-          <div v-if="datauser.phone == null" style="color: #d61212;" class="flex-data">
-            <span>
-              <b> belum ada</b>
+        <client-only placeholder="sedang memuat data...">
+          <div class="data-another">
+            <span>Nama</span>
+            <span >
+                <b>{{datauser.name}}</b>
             </span>
-            <button class="btn-tambah-phone">Tambah</button>
           </div>
-          <div v-else>
-            <div v-if="datauser.phone_verified_at == null" class="flex-data">
+          <div class="data-another">
+            <span>Email</span>
+            <span >
+                <b>{{datauser.email}}</b>
+            </span>
+          </div>
+          <div class="data-another">
+            <span>Nomor HP</span>
+            <div v-if="datauser.phone == null" style="color: #d61212;" class="flex-data">
               <span>
-                <b>{{datauser.phone}}</b>
+                <b> belum ada</b>
               </span>
-              <button class="btn-verif"> verif phone</button>
+              <button class="btn-tambah-phone">Tambah</button>
             </div>
-            <div v-else class="flex-data">
-              <span>
-                <b>{{datauser.phone}}</b>
-              </span>
-              <div>
-                <font-awesome-icon :icon="['fas', 'chevron-right']" style=" width:20px;;"/>
+            <div v-else>
+              <div v-if="datauser.phone_verified_at == null" class="flex-data">
+                <span>
+                  <b>{{datauser.phone}}</b>
+                </span>
+                <button class="btn-verif"> verif phone</button>
+              </div>
+              <div v-else class="flex-data">
+                <span>
+                  <b>{{datauser.phone}}</b>
+                </span>
+                <div>
+                  <font-awesome-icon :icon="['fas', 'chevron-right']" style=" font-size:20px; width:20px;;"/>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="data-another">
-            <span>KTP</span>
-            <div v-if="datauser.ktp == null" style="color: #d61212;" class="flex-data">
-              <span>
-                <b> belum ada</b>
-              </span>
-              <button class="btn-tambah-phone">Tambah</button>
-            </div>
-            <div v-else class="flex-data">
-              <span >
-                <b>{{datauser.ktp}}</b>
-              </span>
-              <div>
-                <font-awesome-icon :icon="['fas', 'chevron-right']" style=" width:20px;;"/>
+          <div class="data-another">
+              <span>KTP</span>
+              <div v-if="datauser.ktp == null" style="color: #d61212;" class="flex-data">
+                <span>
+                  <b> belum ada</b>
+                </span>
+                <button class="btn-tambah-phone">Tambah</button>
               </div>
-            </div>
-        </div>
-        <div class="data-another">
-            <span>NPWP</span>
-            <div v-if="datauser.npwp == null" style="color: #d61212;" class="flex-data">
-              <span>
-                <b> belum ada</b>
-              </span>
-              <button class="btn-tambah-phone">Tambah</button>
-            </div>
-            <div v-else class="flex-data">
-              <span >
-                <b>{{datauser.npwp}}</b>
-              </span>
-              <div>
-                <font-awesome-icon :icon="['fas', 'chevron-right']" style=" width:20px;;"/>
+              <div v-else class="flex-data">
+                <span >
+                  <b>{{datauser.ktp}}</b>
+                </span>
+                <div>
+                  <font-awesome-icon :icon="['fas', 'chevron-right']" style=" font-size:20px; width:20px;;"/>
+                </div>
               </div>
-            </div>
-        </div>
-        <div class="data-another">
-            <span>Data Rekening</span>
-            <div v-if="databank.success == false" style="color: #d61212;" class="flex-data">
-              <span>
-                <b> belum ada</b>
-              </span>
-              <button class="btn-tambah-phone">Tambah</button>
-            </div>
-            <div v-else class="flex-data">
-              <span >
-                <b>{{databank.length}}</b>
-              </span>
-              <div>
-                <font-awesome-icon :icon="['fas', 'chevron-right']" style=" width:20px;;"/>
+          </div>
+          <div class="data-another">
+              <span>NPWP</span>
+              <div v-if="datauser.npwp == null" style="color: #d61212;" class="flex-data">
+                <span>
+                  <b> belum ada</b>
+                </span>
+                <button class="btn-tambah-phone">Tambah</button>
               </div>
-            </div>
-        </div>
+              <div v-else class="flex-data">
+                <span >
+                  <b>{{datauser.npwp}}</b>
+                </span>
+                <div>
+                  <font-awesome-icon :icon="['fas', 'chevron-right']" style=" font-size:20px; width:20px;;"/>
+                </div>
+              </div>
+          </div>
+          <div class="data-another">
+              <span>Data Rekening</span>
+              <div v-if="databank.success == false" style="color: #d61212;" class="flex-data">
+                <span>
+                  <b> belum ada</b>
+                </span>
+                <button class="btn-tambah-phone">Tambah</button>
+              </div>
+              <div v-else class="flex-data">
+                <span >
+                  <b>{{databank.length}}</b>
+                </span>
+                <div>
+                  <font-awesome-icon :icon="['fas', 'chevron-right']" style=" font-size:20px; width:20px;;"/>
+                </div>
+              </div>
+          </div>
+        </client-only>
       </div>
     </div>
   </div>
@@ -107,23 +114,25 @@
 import axios from 'axios';
 
 export default {
-  middleware: 'iflogin',
+  // middleware: 'iflogin',
   data() {
     return {
-      accessToken : '',
-      token: '',
-      idUser: '',
-      baseURL: process.env.DEV_API,
+      accessTokens : '',
+      token   : '',
+      idUser  : '',
+      baseURL : process.env.DEV_API,
       datauser: [],
-      databank:[]
+      databank: [],
     }
+  },
+  computed: {
+    
   },
   methods: {
     back(){
       this.$router.push('/');
     },
     getUser(){
-      // console.log(this.token)
       const config = {
           headers: {
             Authorization: `Bearer ${this.token}`
@@ -209,13 +218,19 @@ export default {
   created() {
     if (process.client) {
       var aa = localStorage.getItem('lelangoApp');
-      this.accessToken = JSON.parse(aa).authh.accessToken;
-      this.token = JSON.parse(aa).authh.userData.user.token.access_token;
-      this.id = JSON.parse(aa).authh.userData.user.id;
-      // console.log(this.id)
-      this.getUser();
-      this.getBankAkun();
+      this.accessTokens = JSON.parse(aa).authh.accessToken;
+
+      if(JSON.parse(aa).authh.userData == ''){
+        this.$router.push('/login');
+      } else {
+        this.token = JSON.parse(aa).authh.userData.user.token.access_token;
+        this.id = JSON.parse(aa).authh.userData.user.id;
+        // console.log(this.id)
+        this.getUser();
+        this.getBankAkun();
+      }
     }
+    
   },
   mounted() {
     if(process.client){

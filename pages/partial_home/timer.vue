@@ -115,7 +115,7 @@
     background: linear-gradient(145deg, #fffb3f, #decc2e);
     padding-right: 5px;
     padding-left: 5px;
-    box-shadow: 1px 2px 1px #dadad6, -1px -2px 1px #f3f3f3;
+    /* box-shadow: 1px 2px 1px #dadad6, -1px -2px 1px #f3f3f3; */
     border-radius: 5px;
   }
 

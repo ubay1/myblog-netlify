@@ -62,6 +62,10 @@ export default {
       ssr: false
     },
     {
+      src: './plugins/v-lazy.js',
+      ssr: false
+    },
+    {
       src: './plugins/mixins/user.js'
     },
     {
@@ -78,6 +82,7 @@ export default {
       src: './plugins/vuexpersist.js',
       ssr: false
     }
+    
   ],
   buildModules: [
     '@nuxtjs/tailwindcss',
@@ -155,18 +160,18 @@ export default {
 			// 	"type": "image/png",
 			// 	"density": "1.0"
 			// },
-			{
-				"src": "/img/icon/android-icon-72x72.png",
-				"sizes": "72x72",
-				"type": "image/png",
-				"density": "1.5"
-			},
-			{
-				"src": "/img/icon/android-icon-96x96.png",
-				"sizes": "96x96",
-				"type": "image/png",
-				"density": "2.0"
-			},
+			// {
+			// 	"src": "/img/icon/android-icon-72x72.png",
+			// 	"sizes": "72x72",
+			// 	"type": "image/png",
+			// 	"density": "1.5"
+			// },
+			// {
+			// 	"src": "/img/icon/android-icon-96x96.png",
+			// 	"sizes": "96x96",
+			// 	"type": "image/png",
+			// 	"density": "2.0"
+			// },
 			{
 				"src": "/img/icon/android-icon-144x144.png",
 				"sizes": "144x144",

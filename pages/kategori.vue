@@ -10,7 +10,7 @@
     </div>
     <div class="grid-kategori">
       <div v-for="(item, index) in listcategory" :key="index" class="grid-item" @click="detail_kategori(item.id)">
-          <img :src="baseURL + item.category_picture" alt="">
+          <img v-lazy="baseURL + item.category_picture" :key="baseURL + item.category_picture" alt="">
           <div>
             {{item.category_name}}
           </div>
@@ -81,6 +81,7 @@ export default {
       grid-row-gap: 40px;
 
       .grid-item{
+        cursor:pointer;
         height: 100px;
         width: 100px;
         display: -webkit-box;
@@ -125,6 +126,7 @@ export default {
       grid-row-gap: 40px;
 
       .grid-item{
+        cursor:pointer;
         height: 100px;
         width: 100px;
         display: -webkit-box;

@@ -5,7 +5,7 @@ export default ({ store }) => {
     new VuexPersistence({
     /* your options */
     key: 'lelangoApp',
-    storage: window.localStorage
+    storage: window.localStorage,
     }).plugin(store);
   });
 }

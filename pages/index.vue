@@ -15,10 +15,11 @@
         </carousel>
         </client-only>
 
-        <div v-if="accessToken == true">
+        
+        <div v-if="filterAccessToken == true">
           <div class="bg-mainTerkini">
             <div class="text-main">
-              <div>  Lelang terkini </div>
+              <div>  Lelang terkini</div>
               <div class="lihat-semua"> Lihat Semua</div>
             </div>
             <div>
@@ -26,6 +27,9 @@
                 <div class="card-mainTerkini" v-for="(item, index) in lelangterbaru" :key="index">
                   <div class="harga-lelang">
                     <small><small>Harga lot</small></small> {{item.format_bid}}
+                  </div>
+                  <div class="btn-favorit">
+                    <font-awesome-icon :icon="['fas', 'star']" class="icon-favorit" style="width:25px; font-size:20px; filter: drop-shadow(0px 1px 1px #8e8a8a);"/>
                   </div>
                   <span>
                     <img alt="image-lot-terbaru" class="img-list-lelang" :src="baseURL+item.picture[0]" >
@@ -44,7 +48,7 @@
               </div>
             </div>
           </div>
-
+          
           <div class="bg-mainTerlaris">
             <div class="text-main">
               <div>  Lelang terlaris </div>
@@ -55,6 +59,9 @@
                 <div class="card-mainTerlaris" v-for="(item, index) in lelangterlaris" :key="index">
                   <div class="harga-lelang">
                     <small>Harga lot</small> {{item.format_bid}}
+                  </div>
+                  <div class="btn-favorit">
+                    <font-awesome-icon :icon="['fas', 'star']" class="icon-favorit" style="width:25px; font-size:20px;" filter: drop-shadow(0px 1px 1px #8e8a8a);/>
                   </div>
                   <span>
                     <img alt="img-lot-terlaris" class="img-list-lelang" :src="baseURL+item.picture[0]" >
@@ -133,7 +140,7 @@
             </div>
           </div>
         </div>
-
+        <!-- {{filterAccessToken}} -->
         <div class="bg-mainTipslelango">
           <div class="text-main">
             <div>  Tips dari lelango </div>
@@ -164,10 +171,16 @@ import moment from 'moment'
 import Timer from './partial_home/timer'
 import Tips from './partial_home/tips'
 import DetailBlog from './partial_blog/blog'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faUserSecret)
 
 export default {
   data() {
     return {
+      accessTokens : '',
       banner: [],
       lelangterbaru: [],
       lelangterlaris: [],
@@ -193,8 +206,9 @@ export default {
   },
   // middleware:'iflogin',
   computed: {
-    accessToken(){
-      this.$store.getters.accessToken
+    filterAccessToken(){
+      console.log('ehey '+this.$store.getters['authh/accessToken'])
+      return this.accessTokens = this.$store.getters['authh/accessToken'];
     },
     filterLelangTerbaru(){
       return this.lelangterbaru.slice(0,3);
@@ -283,7 +297,9 @@ export default {
     this.getLelangTerbaru(),
     this.getLelangTerlaris(),
     this.getTipsLelang()
-  }
+  },
+  mounted() {
+  },
 }
 </script>
 
@@ -304,6 +320,10 @@ export default {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
   border-radius: 50px;
+}
+
+button:focus {
+    outline: none;
 }
 
 @media(max-width: 480px){
@@ -327,10 +347,18 @@ export default {
     text-align: center;
     color: #fff;
   }
+  .btn-favorit{
+    position: relative;
+    float: right;
+    padding: 10px;
+  }
+  .icon-favorit{
+    color: #b9b8b8;
+  }
   .img-list-lelang{
     width: 150px;
-    padding-right: 20px;
-    padding-left: 20px;
+    padding:10px;
+    margin: auto;
   }
 
   .bg-mainTerkini, .bg-mainTerlaris, .bg-mainTipslelango{
@@ -370,6 +398,7 @@ export default {
     box-shadow: 0px 2px 4px lightgrey;
     margin: 10px;
     border-radius: 10px;
+    width: 200px;
   }
 
   .bg-card-mainTipslelango{
@@ -386,7 +415,7 @@ export default {
   .card-mainTipslelango{
     /* flex: 0 0 auto; */
     height: 0%;
-    width: 70%;
+    width: 300px;
     margin: 10px;
     border-radius: 20px 20px 0px 0px;
     box-shadow: 0px 2px 4px lightgrey;
@@ -439,6 +468,10 @@ export default {
     /* top: -30px; */
     z-index: 2;
     font-size: 14px;
+    white-space: nowrap;
+    width: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .text-tips h5.text-tips-descrip{
     position: relative;
@@ -491,10 +524,18 @@ export default {
     text-align: center;
     color: #fff;
   }
+  .btn-favorit{
+    position: relative;
+    float: right;
+    padding: 10px;
+  }
+  .icon-favorit{
+    color: #b9b8b8;
+  }
   .img-list-lelang{
     width: 150px;
-    padding-right: 20px;
-    padding-left: 20px;
+    padding:10px;
+    margin: auto;
   }
   .bg-mainTerkini, .bg-mainTerlaris{
     margin-bottom: 20px;
@@ -533,6 +574,7 @@ export default {
     box-shadow: 0px 2px 4px lightgrey;
     margin: 10px;
     border-radius: 10px;
+    width: 200px;
   }
 
   .bg-card-mainTipslelango{
@@ -549,7 +591,7 @@ export default {
   .card-mainTipslelango{
     /* flex: 0 0 auto; */
     height: 0%;
-    width: 70%;
+    width: 300px;
     margin: 10px;
     border-radius: 20px 20px 0px 0px;
     box-shadow: 0px 2px 4px lightgrey;
@@ -602,6 +644,10 @@ export default {
     /* top: -30px; */
     z-index: 2;
     font-size: 14px;
+    white-space: nowrap;
+    width: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .text-tips h5.text-tips-descrip{
     position: relative;

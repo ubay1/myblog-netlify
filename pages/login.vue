@@ -12,14 +12,16 @@
 
           <div class="relative text-gray-600">
             <input :type="passwordFieldType" v-model="form.password" placeholder="Enter Password" name="password"
-              class="bg-white h-10 px-5 rounded-full text-sm focus:outline-none" required='true'>
-            <button type="button" class="absolute right-0 top-0 mt-3 mr-4" @click="show_password">
+              class="bg-white h-10 px-5 rounded-full text-sm focus:outline-none form-password" required='true'
+              style=''
+            >
+            <button type="button" class="absolute right-0 top-0 btn-show-password" style="" @click="show_password">
               <font-awesome-icon :icon="['fas', icon]" style="font-size:20px; width:20px;" />
             </button>
           </div>
 
           <div class="forgot-pass">
-            <nuxt-link to="/forgot_password">Lupa kata sandi ?</nuxt-link>
+            <nuxt-link to="/lupa_sandi">Lupa kata sandi ?</nuxt-link>
           </div>
 
           <button type="submit" :disabled="btnsubmit" class="btn btn-primary btn-login">
@@ -28,6 +30,7 @@
           </button>
 
           <div class="register">
+            <nuxt-link to="/">Ke Beranda</nuxt-link>
             <nuxt-link to="/register">Daftar akun baru</nuxt-link>
           </div>
         </div>
@@ -206,6 +209,10 @@
     color: rgb(0, 159, 225);
     text-align: center;
     font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   .toasted.bubble {
@@ -258,6 +265,14 @@
       color: #fff;
       box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
     }
+
+    .btn-show-password{
+      width: 20%; height: 100%; border-radius: 0px 100px 100px 0px; display: flex; justify-content: center;
+    }
+
+    .form-password{
+      width:80%; border-radius: 100px 0px 0px 100px;
+    }
   }
 
   @media(min-width:481px){
@@ -270,6 +285,14 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
+    }
+
+    .btn-show-password{
+      width: 10%; height: 100%; border-radius: 0px 100px 100px 0px; display: flex; justify-content: center;
+    }
+
+    .form-password{
+      width:90%; border-radius: 100px 0px 0px 100px;
     }
   }
 
