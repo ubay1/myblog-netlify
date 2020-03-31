@@ -6,107 +6,106 @@
         <button @click="logout()" class="text-black bg-yellow-400 p-1 rounded shadow-md">Logout</button>
       </div>
     </div>
-    <div class="main-user">
-      <!-- <div class="bg-profile">
-        <img src="img/profile.png" alt="lelango user">
-        <div class="data-profile">
-          <b>{{datauser.name}} </b>
+     <v-wait for="load_user">
+      <template slot="waiting">
+        <div style="display:flex; flex-direction:column; align-items:center; height:50vh; margin:auto;">
+          <img src="~/static/loading_send.gif" alt="" width="70" style="margin:100px auto; margin-bottom:10px;">
+          <div>sedang memuat data..</div>
         </div>
-      </div> -->
-      
-      <div class="bg-data-another">
-        <client-only placeholder="sedang memuat data...">
-          <div class="data-another">
-            <span>Nama</span>
-            <span >
-                <b>{{datauser.name}}</b>
-            </span>
-          </div>
-          <div class="data-another">
-            <span>Email</span>
-            <span >
-                <b>{{datauser.email}}</b>
-            </span>
-          </div>
-          <div class="data-another">
-            <span>Nomor HP</span>
-            <div v-if="datauser.phone == null" style="color: #d61212;" class="flex-data">
-              <span>
-                <b> belum ada</b>
+      </template>
+      <div class="main-user">
+        <div class="bg-data-another">
+            <div class="data-another">
+              <span>Nama</span>
+              <span >
+                  <b>{{get_datauser.name}}</b>
               </span>
-              <button class="btn-tambah-phone">Tambah</button>
             </div>
-            <div v-else>
-              <div v-if="datauser.phone_verified_at == null" class="flex-data">
+            <div class="data-another">
+              <span>Email</span>
+              <span >
+                  <b>{{get_datauser.email}}</b>
+              </span>
+            </div>
+            <div class="data-another">
+              <span>Nomor HP</span>
+              <div v-if="datauser.phone == null" style="color: #d61212;" class="flex-data">
                 <span>
-                  <b>{{datauser.phone}}</b>
+                  <b> belum ada</b>
                 </span>
-                <button class="btn-verif"> verif phone</button>
+                <button class="btn-tambah-phone">Tambah</button>
               </div>
-              <div v-else class="flex-data">
-                <span>
-                  <b>{{datauser.phone}}</b>
-                </span>
-                <div>
-                  <font-awesome-icon :icon="['fas', 'chevron-right']" style=" font-size:20px; width:20px;;"/>
+              <div v-else>
+                <div v-if="datauser.phone_verified_at == null" class="flex-data">
+                  <span>
+                    <b>{{get_datauser.phone}}</b>
+                  </span>
+                  <button class="btn-verif"> verif phone</button>
+                </div>
+                <div v-else class="flex-data">
+                  <span>
+                    <b>{{get_datauser.phone}}</b>
+                  </span>
+                  <div>
+                    <font-awesome-icon :icon="['fas', 'chevron-right']" style=" font-size:20px; width:20px;;"/>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="data-another">
-              <span>KTP</span>
-              <div v-if="datauser.ktp == null" style="color: #d61212;" class="flex-data">
-                <span>
-                  <b> belum ada</b>
-                </span>
-                <button class="btn-tambah-phone">Tambah</button>
-              </div>
-              <div v-else class="flex-data">
-                <span >
-                  <b>{{datauser.ktp}}</b>
-                </span>
-                <div>
-                  <font-awesome-icon :icon="['fas', 'chevron-right']" style=" font-size:20px; width:20px;;"/>
+            <div class="data-another">
+                <span>KTP</span>
+                <div v-if="datauser.ktp == null" style="color: #d61212;" class="flex-data">
+                  <span>
+                    <b> belum ada</b>
+                  </span>
+                  <button class="btn-tambah-phone">Tambah</button>
                 </div>
-              </div>
-          </div>
-          <div class="data-another">
-              <span>NPWP</span>
-              <div v-if="datauser.npwp == null" style="color: #d61212;" class="flex-data">
-                <span>
-                  <b> belum ada</b>
-                </span>
-                <button class="btn-tambah-phone">Tambah</button>
-              </div>
-              <div v-else class="flex-data">
-                <span >
-                  <b>{{datauser.npwp}}</b>
-                </span>
-                <div>
-                  <font-awesome-icon :icon="['fas', 'chevron-right']" style=" font-size:20px; width:20px;;"/>
+                <div v-else class="flex-data">
+                  <span >
+                    <b>{{get_datauser.ktp}}</b>
+                  </span>
+                  <div>
+                    <font-awesome-icon :icon="['fas', 'chevron-right']" style=" font-size:20px; width:20px;;"/>
+                  </div>
                 </div>
-              </div>
-          </div>
-          <div class="data-another">
-              <span>Data Rekening</span>
-              <div v-if="databank.success == false" style="color: #d61212;" class="flex-data">
-                <span>
-                  <b> belum ada</b>
-                </span>
-                <button class="btn-tambah-phone">Tambah</button>
-              </div>
-              <div v-else class="flex-data">
-                <span >
-                  <b>{{databank.length}}</b>
-                </span>
-                <div>
-                  <font-awesome-icon :icon="['fas', 'chevron-right']" style=" font-size:20px; width:20px;;"/>
+            </div>
+            <div class="data-another">
+                <span>NPWP</span>
+                <div v-if="datauser.npwp == null" style="color: #d61212;" class="flex-data">
+                  <span>
+                    <b> belum ada</b>
+                  </span>
+                  <button class="btn-tambah-phone">Tambah</button>
                 </div>
-              </div>
-          </div>
-        </client-only>
+                <div v-else class="flex-data">
+                  <span >
+                    <b>{{get_datauser.npwp}}</b>
+                  </span>
+                  <div>
+                    <font-awesome-icon :icon="['fas', 'chevron-right']" style=" font-size:20px; width:20px;;"/>
+                  </div>
+                </div>
+            </div>
+            <div class="data-another">
+                <span>Data Rekening</span>
+                <div v-if="get_databank.success == false" style="color: #d61212;" class="flex-data">
+                  <span>
+                    <b> belum ada</b>
+                  </span>
+                  <button class="btn-tambah-phone">Tambah</button>
+                </div>
+                <div v-else class="flex-data">
+                  <span >
+                    <b>{{get_databank.length}}</b>
+                  </span>
+                  <div>
+                    <font-awesome-icon :icon="['fas', 'chevron-right']" style=" font-size:20px; width:20px;;"/>
+                  </div>
+                </div>
+            </div>
+        </div>
       </div>
-    </div>
+    </v-wait>
   </div>
 </template>
 
@@ -122,23 +121,27 @@ export default {
       idUser  : '',
       baseURL : process.env.DEV_API,
       datauser: [],
+      get_datauser: [],
       databank: [],
+      get_databank: []
     }
   },
   computed: {
-    
+
   },
   methods: {
     back(){
       this.$router.push('/');
     },
-    getUser(){
+    async getUser(){
+      this.$wait.start('load_user');
+
       const config = {
           headers: {
             Authorization: `Bearer ${this.token}`
           }
       };
-      this.$axios.get(this.baseURL+'user/profil/'+this.id, config)
+      axios.get(this.baseURL+'user/profil/'+this.id, config)
       .then(response => {
         if(response.data.success == true){
           this.datauser = response.data.data
@@ -146,28 +149,36 @@ export default {
           this.datauser = ''
         }
       })
-      .catch((err)=>{
-        console.log(err)
+
+      this.get_datauser = await new Promise(resolve => {
+        setTimeout(() => resolve(this.datauser), 2000);
       });
+
+
+      this.$wait.end('load_user');
     },
     async getBankAkun(){
+      this.$wait.start('load_user');
+
       const config = {
         headers: {
           Authorization: `Bearer ${this.token}`
         }
       };
-      await this.$axios.get(this.baseURL+'user/get-bank-account', config)
+      axios.get(this.baseURL+'user/get-bank-account', config)
       .then(response => {
-        // console.log(response.data.length)
         if(response.data.success == true){
           this.databank = response.data.data
         }else{
           this.databank = response.data
         }
       })
-      .catch((err)=>{
-        console.log(err)
+
+      this.get_databank = await new Promise(resolve => {
+        setTimeout(() => resolve(this.databank), 2000);
       });
+
+      this.$wait.end('load_user');
     },
     logout() {
         const config = {
@@ -230,7 +241,8 @@ export default {
         this.getBankAkun();
       }
     }
-    
+    this.getUser();
+    this.getBankAkun();
   },
   mounted() {
     if(process.client){

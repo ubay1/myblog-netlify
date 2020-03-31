@@ -15,7 +15,7 @@
         </carousel>
         </client-only>
 
-        
+
         <div v-if="filterAccessToken == true">
           <div class="bg-mainTerkini">
             <div class="text-main">
@@ -24,7 +24,7 @@
             </div>
             <div>
               <div class="bg-card-mainTerkini">
-                <div class="card-mainTerkini" v-for="(item, index) in lelangterbaru" :key="index">
+                <div class="card-mainTerkini" v-for="(item, index) in filterLelangTerbaru" :key="index">
                   <div class="harga-lelang">
                     <small><small>Harga lot</small></small> {{item.format_bid}}
                   </div>
@@ -48,7 +48,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="bg-mainTerlaris">
             <div class="text-main">
               <div>  Lelang terlaris </div>
@@ -56,7 +56,7 @@
             </div>
             <div>
               <div class="bg-card-mainTerlaris">
-                <div class="card-mainTerlaris" v-for="(item, index) in lelangterlaris" :key="index">
+                <div class="card-mainTerlaris" v-for="(item, index) in filterLelangTerlaris" :key="index">
                   <div class="harga-lelang">
                     <small>Harga lot</small> {{item.format_bid}}
                   </div>
@@ -169,7 +169,6 @@ import axios from 'axios'
 import {mapState, mapGetters} from 'vuex'
 import moment from 'moment'
 import Timer from './partial_home/timer'
-import Tips from './partial_home/tips'
 import DetailBlog from './partial_blog/blog'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'

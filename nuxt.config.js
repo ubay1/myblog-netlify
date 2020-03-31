@@ -62,6 +62,10 @@ export default {
       ssr: false
     },
     {
+      src: './plugins/vue-await.js',
+      ssr: false
+    },
+    {
       src: './plugins/v-lazy.js',
       ssr: false
     },
@@ -111,6 +115,7 @@ export default {
       ]
     }],
     '@nuxtjs/toast',
+    'vue-wait/nuxt'
   ],
   axios: {
     // baseURL: process.env.DEV_API,

@@ -2,55 +2,20 @@
   <div>
     <div class="header-kategori">
       <div class="text-header-kategori">
-        Kategori
+        {{judul}}
       </div>
       <div class="search-kategori">
         <font-awesome-icon :icon="['fas', 'search']" style="color:rgb(0, 174, 239); font-size:20px; width:20px; !important"/>
       </div>
     </div>
-    <div class="grid-kategori">
-      <div v-for="(item, index) in listcategory" :key="index" class="grid-item" @click="detail_kategori(item.id, item.category_name)">
-          <img v-lazy="baseURL + item.category_picture" :key="baseURL + item.category_picture" alt="img-kategori">
-          <div>
-            {{item.category_name}}
-          </div>
-      </div>
-    </div>
-    <Footer />
   </div>
 </template>
 
 <script>
-import Footer from '~/components/Footer'
-import axios from 'axios'
-
 export default {
-  components:{
-    Footer
-  },
-  data() {
-    return {
-      listcategory : [],
-      baseURL : process.env.URL
-    }
-  },
-  methods: {
-    getListCategory() {
-			axios.get(process.env.DEV_API + "user/category")
-				.then(response => {
-          this.listcategory = response.data.data;
-				});
-    },
-    detail_kategori(id, name){
-      this.$router.push('/kategoris/'+name+'/'+id)
-    }
-  },
-  created() {
-    this.getListCategory();
-  },
+  props: ['judul'],
 }
 </script>
-
 
 <style lang="scss">
   @media(min-width:481px){
