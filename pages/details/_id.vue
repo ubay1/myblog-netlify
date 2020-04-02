@@ -106,50 +106,50 @@
 </template>
 
 <script>
-import axios from 'axios'
-import Notfound from '../404'
+  import axios from 'axios'
+  import Notfound from '../404'
 
-export default {
-  components:{
-    'notfound':Notfound
-  },
-  data() {
-    return {
-      id: this.$route.params.id,
-      lelang_data_lot:[],
-      lelang_data_bid:[],
-      lelang_data_lotdetail : [],
-      lelang_data_product: [],
-      productid: [],
-      lelang_product_awal: [],
-      baseURL: process.env.URL
-    }
-  },
-  methods: {
-    getdetaillelang(){
-      axios.get(process.env.DEV_API + "user/lot/"+this.id)
-				.then(response => {
-          this.lelang_data_lot = response.data.lot;
-          this.lelang_data_bid = response.data.bid;
-          this.lelang_data_lotdetail = response.data.lot_detail;
-          for (let i = 0; i<this.lelang_data_lotdetail.length; i++) {
-            this.lelang_data_product.push({id: this.lelang_data_lotdetail[i].product.id, picture: JSON.parse(this.lelang_data_lotdetail[i].product.picture)});
-          }
-          this.lelang_product_awal.push(this.lelang_data_lotdetail[0])
-      });
+  export default {
+    components:{
+      'notfound':Notfound
     },
-    back(){
-      this.$router.push('/');
+    data() {
+      return {
+        id: this.$route.params.id,
+        lelang_data_lot:[],
+        lelang_data_bid:[],
+        lelang_data_lotdetail : [],
+        lelang_data_product: [],
+        productid: [],
+        lelang_product_awal: [],
+        baseURL: process.env.URL
+      }
     },
-    getid(id){
-      this.productid = this.lelang_data_lotdetail[id]
+    methods: {
+      getdetaillelang(){
+        axios.get(process.env.DEV_API + "user/lot/"+this.id)
+          .then(response => {
+            this.lelang_data_lot = response.data.lot;
+            this.lelang_data_bid = response.data.bid;
+            this.lelang_data_lotdetail = response.data.lot_detail;
+            for (let i = 0; i<this.lelang_data_lotdetail.length; i++) {
+              this.lelang_data_product.push({id: this.lelang_data_lotdetail[i].product.id, picture: JSON.parse(this.lelang_data_lotdetail[i].product.picture)});
+            }
+            this.lelang_product_awal.push(this.lelang_data_lotdetail[0])
+        });
+      },
+      back(){
+        this.$router.push('/');
+      },
+      getid(id){
+        this.productid = this.lelang_data_lotdetail[id]
+      },
     },
-  },
-  created() {
-    this.getdetaillelang()
-  },
-  // props: ['id']
-}
+    created() {
+      this.getdetaillelang()
+    },
+    // props: ['id']
+  }
 </script>
 
 <style>
@@ -276,7 +276,7 @@ export default {
 
 }
 
-@media(max-width: 480px){
+@media(min-width:320px) and (max-width: 480px){
   /* width */
   ::-webkit-scrollbar {
     width: 0px;
@@ -329,18 +329,18 @@ export default {
     overflow-x: scroll;
   }
   .card-list-data{
-    width: 20%;
+    width: 100px;
     margin: 10px;
     border-radius: 20px;
     box-shadow: 0px 4px 4px lightgrey;
   }
   .bg-card-list-data-detail{
     display: -webkit-box;
-    width: auto;
+    width: 200px;
     margin: auto;
     margin-top: 10px;
-    padding-left: 8em;
-    padding-right: 8em;
+    /* padding-left: 5em;
+    padding-right: 5em; */
   }
   .bg-card-list-data-detail-text{
     display: -webkit-box;
@@ -378,5 +378,108 @@ export default {
     align-items: center;
   }
 
+}
+
+@media(min-width:0px) and (max-width:319px){
+  /* width */
+  ::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+  .header-detail{
+    width: auto;
+    margin: auto;
+    background: linear-gradient(145deg, #00baff, #009dd7);
+    margin-bottom: 10px;
+    padding: 10px;
+    box-shadow: 0px 2px 6px lightgrey;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .icon-header-detail{
+    color: #ffffff;
+    /* position: relative; */
+    /* left: -8em; */
+    font-size:18px;
+    width:22px;
+  }
+  .text-header-lot{
+    color: #ffffff;
+    /* font-weight: bold; */
+  }
+  .text-header-penawaran{
+    color: #ffffff;
+    /* font-weight: bold; */
+  }
+
+  .main-detail{
+    width: auto;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: -2em;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .bg-card-list-data{
+    display: -webkit-box;
+    width: auto;
+    margin: auto;
+    margin-top: 10px;
+    padding-left: 20px;
+    overflow-x: hidden;
+  }
+  .bg-card-list-data:hover{
+    overflow-x: scroll;
+  }
+  .card-list-data{
+    width: 90px;
+    margin: 10px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 4px lightgrey;
+  }
+  .bg-card-list-data-detail{
+    display: -webkit-box;
+    width: 160px;
+    margin: auto;
+    margin-top: 10px;
+    /* padding-left: 4em;
+    padding-right: 4em; */
+  }
+  .bg-card-list-data-detail-text{
+    display: -webkit-box;
+    width: auto;
+    margin: auto;
+    margin-top: 10px;
+    padding-left:30px;
+    padding-right:30px;
+    margin-bottom:20px;
+  }
+  .p-2{
+    width:50%;
+  }
+  .ext {
+    position: relative;
+    left: 100%;
+    width: 30px;
+    height: 1px;
+  }
+
+  .bg-penawaran-tertinggi{
+    display: flex;
+    justify-content:space-between;
+    width: auto;
+    margin: auto;
+    margin-top: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-bottom:20px;
+    font-weight:bold;
+  }
+
+  .nilai-penawaran-tertinggi{
+    display: flex;
+    align-items: center;
+  }
 }
 </style>

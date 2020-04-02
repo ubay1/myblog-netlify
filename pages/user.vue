@@ -141,7 +141,7 @@ export default {
             Authorization: `Bearer ${this.token}`
           }
       };
-      axios.get(this.baseURL+'user/profil/'+this.id, config)
+      this.$axios.get(this.baseURL+'user/profil/'+this.id, config)
       .then(response => {
         if(response.data.success == true){
           this.datauser = response.data.data
@@ -165,7 +165,7 @@ export default {
           Authorization: `Bearer ${this.token}`
         }
       };
-      axios.get(this.baseURL+'user/get-bank-account', config)
+      this.$axios.get(this.baseURL+'user/get-bank-account', config)
       .then(response => {
         if(response.data.success == true){
           this.databank = response.data.data
@@ -229,20 +229,24 @@ export default {
   created() {
     if (process.client) {
       var aa = localStorage.getItem('lelangoApp');
-      this.accessTokens = JSON.parse(aa).authh.accessToken;
 
-      if(JSON.parse(aa).authh.userData == ''){
+      if(aa == null){
         this.$router.push('/login');
-      } else {
-        this.token = JSON.parse(aa).authh.userData.user.token.access_token;
-        this.id = JSON.parse(aa).authh.userData.user.id;
-        // console.log(this.id)
-        this.getUser();
-        this.getBankAkun();
+      } else{
+        this.accessTokens = JSON.parse(aa).authh.accessToken;
+        if(JSON.parse(aa).authh.userData == ''){
+          this.$router.push('/login');
+        } else {
+          this.token = JSON.parse(aa).authh.userData.user.token.access_token;
+          this.id = JSON.parse(aa).authh.userData.user.id;
+          // console.log(this.id)
+          this.getUser();
+          this.getBankAkun();
+        }
       }
     }
-    this.getUser();
-    this.getBankAkun();
+    // this.getUser();
+    // this.getBankAkun();
   },
   mounted() {
     if(process.client){

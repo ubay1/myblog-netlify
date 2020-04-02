@@ -6,7 +6,7 @@
         <client-only placeholder="sedang memuat ...">
         <carousel :perPage=1 :autoplay=true paginationColor="#f5bd22" paginationActiveColor='#00aeef' :paginationEnabled=false :loop=true>
           <slide v-for="(item, index) in banner" :key="index">
-            <progressive-img style="border-radius:20px;" alt='img-carousel' :src="baseURL+item.picture[0]" :placeholder="baseURL+item.picture[0]" />
+            <progressive-img alt='img-carousel' :src="baseURL+item.picture[0]" :placeholder="baseURL+item.picture[0]" />
             <div class="text-banner">
               <h4>{{item.title}}</h4>
               <h5>{{item.description}}</h5>
@@ -61,7 +61,7 @@
                     <small>Harga lot</small> {{item.format_bid}}
                   </div>
                   <div class="btn-favorit">
-                    <font-awesome-icon :icon="['fas', 'star']" class="icon-favorit" style="width:25px; font-size:20px;" filter: drop-shadow(0px 1px 1px #8e8a8a);/>
+                    <font-awesome-icon :icon="['fas', 'star']" class="icon-favorit" style="width:25px;font-size:20px; filter: drop-shadow(0px 1px 1px #8e8a8a); "/>
                   </div>
                   <span>
                     <img alt="img-lot-terlaris" class="img-list-lelang" :src="baseURL+item.picture[0]" >
@@ -325,6 +325,189 @@ button:focus {
     outline: none;
 }
 
+@media(min-width: 481px){
+  /* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 5px;
+  }
+  .main{
+    margin-bottom: 90px;
+  }
+  .VueCarousel{
+    width: 480px; margin: auto; margin-top: 10px; margin-bottom: -2em; padding-left: 20px; padding-right:20px;
+  }
+  .progressive-image{
+    border-radius:20px;
+    position:relative;
+    overflow:hidden;
+    width:100%;
+    display:inline-block;
+  }
+  .harga-lelang{
+    font-size: 14px;
+    background: linear-gradient(145deg, #00baff, #009dd7);
+    padding: 10px;
+    border-radius: 10px 10px 0px 0px;
+    text-align: center;
+    color: #fff;
+  }
+  .btn-favorit{
+    position: relative;
+    float: right;
+    padding: 10px;
+  }
+  .icon-favorit{
+    color: #b9b8b8;
+  }
+  .img-list-lelang{
+    width: 150px;
+    padding:10px;
+    margin: auto;
+  }
+  .bg-mainTerkini, .bg-mainTerlaris{
+    margin-bottom: 20px;
+  }
+  .text-main{
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    width: 480px;
+    margin: auto;
+    margin-top: 10px;
+    padding-left: 20px;
+  }
+
+  .lihat-semua{
+    color: #00aeef;
+    padding-right: 20px;;
+  }
+
+  .bg-card-mainTerkini, .bg-card-mainTerlaris{
+    background: #ffffff;
+    width: 480px;
+    margin: auto;
+    margin-top: 10px;
+    padding-left: 20px;
+    display: -webkit-box;
+    overflow-x: hidden;
+  }
+
+  .bg-card-mainTerkini:hover, .bg-card-mainTerlaris:hover{
+    overflow-x: scroll;
+  }
+
+  .card-mainTerkini, .card-mainTerlaris{
+    background: #ffffff;
+    box-shadow: 0px 2px 4px lightgrey;
+    margin: 10px;
+    border-radius: 10px;
+    width: 200px;
+  }
+
+  .bg-card-mainTipslelango{
+    display: -webkit-box;
+    width: 480px;
+    margin: auto;
+    margin-top: 10px;
+    padding-left: 20px;
+    overflow-x: hidden;
+  }
+  .bg-card-mainTipslelango:hover{
+    overflow-x: scroll;
+  }
+  .card-mainTipslelango{
+    /* flex: 0 0 auto; */
+    height: 0%;
+    width: 300px;
+    margin: 10px;
+    border-radius: 20px 20px 0px 0px;
+    box-shadow: 0px 2px 4px lightgrey;
+  }
+
+  .ext {
+    position: relative;
+    left: 100%;
+    width: 30px;
+    height: 1px;
+  }
+
+  .client-only-placeholder{
+    text-align:center;
+  }
+  .text-banner{
+    background: rgba(0,0,0,.6);
+    position: relative;
+    bottom: 63px;
+    z-index: 1;
+    border-radius: 0px 0px 20px 20px;
+    text-align: center;
+    color: #fff;
+    padding: 5px;
+  }
+  .nama-lot{
+    text-align: center;
+      font-weight: bold;
+      font-size: 14px;
+  }
+  .lot-expired{
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .btn-detail{
+    background: linear-gradient(145deg, #00baff, #009dd7);
+    color: #fff;
+    padding: 4px;
+    border-radius: 0px 0px 10px 10px;
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .text-tips h4.text-tips-title{
+    background: linear-gradient(145deg, #00baff, #009dd7);
+    color: #fff;
+    padding: 5px;
+    position: relative;
+    /* top: -30px; */
+    z-index: 2;
+    font-size: 14px;
+    white-space: nowrap;
+    width: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .text-tips h5.text-tips-descrip{
+    position: relative;
+    /* top: -30px; */
+    z-index: 2;
+    font-size: 14px;
+    padding: 5px;
+  }
+
+  .btn-tips-lelang{
+    position: relative;
+    z-index: 2;
+    font-size: 14px;
+    padding: 5px;
+    color: #0d92c3;
+    /* background: aliceblue; */
+    width:100%;
+  }
+
+  .VueCarousel-navigation{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .VueCarousel-navigation-button[data-v-453ad8cd]{
+    position: unset !important;
+  }
+  .VueCarousel-dot-container[data-v-438fd353]{
+    margin-top: -40px !important;
+  }
+}
+
 @media(max-width: 480px){
   /* width */
   ::-webkit-scrollbar {
@@ -337,6 +520,14 @@ button:focus {
   }
   .VueCarousel{
     width: auto; margin: auto; margin-top: 10px; margin-bottom: -2em; padding-left: 20px; padding-right:20px;
+  }
+  .progressive-image{
+    border-radius:20px;
+    max-width:1000px;
+    position:relative;
+    overflow:hidden;
+    width:100%;
+    display:inline-block;
   }
   .harga-lelang{
     font-size: 14px;
@@ -503,17 +694,26 @@ button:focus {
   }
 }
 
-@media(min-width: 481px){
+@media(min-width:0px) and (max-width:319px){
   /* width */
   ::-webkit-scrollbar {
-    width: 10px;
-    height: 5px;
+    width: 0px;
+    height: 0px;
   }
   .main{
+    width: auto;
     margin-bottom: 90px;
   }
   .VueCarousel{
-    width: 480px; margin: auto; margin-top: 10px; margin-bottom: -2em; padding-left: 20px; padding-right:20px;
+    width: auto; margin: auto; margin-top: 10px; margin-bottom: -2em; padding-left: 0px; padding-right: 0px;
+    display: none;
+  }
+  .progressive-image{
+    border-radius:0px;
+    position:relative;
+    overflow:hidden;
+    width:100%;
+    display:inline-block;
   }
   .harga-lelang{
     font-size: 14px;
@@ -536,14 +736,15 @@ button:focus {
     padding:10px;
     margin: auto;
   }
-  .bg-mainTerkini, .bg-mainTerlaris{
+
+  .bg-mainTerkini, .bg-mainTerlaris, .bg-mainTipslelango{
     margin-bottom: 20px;
   }
   .text-main{
     font-weight: bold;
     display: flex;
     justify-content: space-between;
-    width: 480px;
+    width: auto;
     margin: auto;
     margin-top: 10px;
     padding-left: 20px;
@@ -556,7 +757,7 @@ button:focus {
 
   .bg-card-mainTerkini, .bg-card-mainTerlaris{
     background: #ffffff;
-    width: 480px;
+    width: auto;
     margin: auto;
     margin-top: 10px;
     padding-left: 20px;
@@ -564,9 +765,9 @@ button:focus {
     overflow-x: hidden;
   }
 
-  .bg-card-mainTerkini:hover, .bg-card-mainTerlaris:hover{
-    overflow-x: scroll;
-  }
+   .bg-card-mainTerkini:hover, .bg-card-mainTerlaris:hover{
+     overflow-x: scroll;
+   }
 
   .card-mainTerkini, .card-mainTerlaris{
     background: #ffffff;
@@ -578,7 +779,7 @@ button:focus {
 
   .bg-card-mainTipslelango{
     display: -webkit-box;
-    width: 480px;
+    width: auto;
     margin: auto;
     margin-top: 10px;
     padding-left: 20px;
@@ -611,10 +812,16 @@ button:focus {
     position: relative;
     bottom: 63px;
     z-index: 1;
-    border-radius: 0px 0px 20px 20px;
+    border-radius: 0px 0px 0px 0px;
     text-align: center;
     color: #fff;
     padding: 5px;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    font-size: small;
   }
   .nama-lot{
     text-align: center;
@@ -678,5 +885,6 @@ button:focus {
     margin-top: -40px !important;
   }
 }
+
 
 </style>

@@ -18,6 +18,9 @@
         <div class="grid-kategori-detail">
           <div v-for="(item, index) in get_data" :key="index" class="kategori-detail">
             <img :src="baseURL+item.picture[0]" alt="img-header-detail-kategori">
+            <div class="text-product-name">
+              {{item.product_name}}
+            </div>
             <div class="text_price">
               <b>{{item.price}}</b>
             </div>
@@ -112,10 +115,16 @@ export default {
           border-radius: 10px;
           box-shadow: 0px 2px 4px lightgrey;
           img{
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 10px 10px 0px 0px;
+            height: 140px;
+            padding: 10px;
+          }
+
+          .text-product-name {
+            white-space: nowrap;
+            width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding:10px;
           }
 
           .text_price {
@@ -129,7 +138,7 @@ export default {
     }
   }
 
-  @media(min-width:321px) and (max-width: 480px){
+  @media(min-width:360px) and (max-width: 480px){
     .grid-kategori-detail{
       margin: auto;
       margin-bottom: 70px;
@@ -152,10 +161,62 @@ export default {
           border-radius: 10px;
           box-shadow: 0px 2px 4px lightgrey;
           img{
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 10px 10px 0px 0px;
+            height: 140px;
+            padding: 10px;
+          }
+
+          .text-product-name {
+            white-space: nowrap;
+            width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding:10px;
+          }
+
+          .text_price {
+              width: 100%;
+              background: linear-gradient(145deg, #00baff, #009dd7);
+              color: #fff;
+              border-radius: 0px 0px 10px 10px;
+              padding: 5px;
+          }
+      }
+    }
+  }
+
+  @media(max-width: 359px){
+    .grid-kategori-detail{
+      margin: auto;
+      margin-bottom: 0px;
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: auto;
+      align-items: center;
+      padding: 20px;
+      grid-gap: 20px;
+      .kategori-detail{
+          cursor:pointer;
+          // height: 50%;
+          // width: 50%;
+          display: -webkit-box;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          text-align: center;
+          border-radius: 10px;
+          box-shadow: 0px 2px 4px lightgrey;
+          img{
+            height: 140px;
+            padding: 10px;
+          }
+
+          .text-product-name {
+            white-space: nowrap;
+            width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding:10px;
           }
 
           .text_price {

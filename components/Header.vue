@@ -152,7 +152,7 @@ export default {
     width:25px !important;
   }
   .text-menuHeader{
-    /* font-size: 14px; */
+    font-size: 14px;
     color: #fff;
     line-height: 1.2;
     margin-top: 8px;

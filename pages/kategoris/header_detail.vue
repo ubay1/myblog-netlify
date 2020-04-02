@@ -1,11 +1,12 @@
 <template>
   <div>
-    <div class="header-kategori">
-      <div class="text-header-kategori">
+    <div class="header-detail-kategori">
+      <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-detail-kategori" @click="back()"/>
+      <div class="text-header-detail-kategori">
         {{judul}}
       </div>
-      <div class="search-kategori">
-        <font-awesome-icon :icon="['fas', 'search']" style="color:rgb(0, 174, 239); font-size:20px; width:20px; !important"/>
+      <div class="search-kategori-detail">
+        <font-awesome-icon :icon="['fas', 'search']" class="icon-header-detail-kategori"/>
       </div>
     </div>
   </div>
@@ -14,12 +15,17 @@
 <script>
 export default {
   props: ['judul'],
+  methods: {
+    back(){
+      this.$router.push('/kategori');
+    },
+  },
 }
 </script>
 
 <style lang="scss">
   @media(min-width:481px){
-    .header-kategori {
+    .header-detail-kategori {
       width: 480px;
       margin: auto;
       display: flex;
@@ -29,9 +35,14 @@ export default {
       font-size: 20px;
       border-bottom: 1px solid #e2e8f0;
       box-shadow: 0px 0px 2px 0px lightgrey;
-      .text-header-kategori {
+      .text-header-detail-kategori {
         font-weight: bold;
         color: #00aeef;
+      }
+      .icon-header-detail-kategori{
+        color: #00aeef;
+        font-size:18px;
+        width:20px;
       }
     }
 
@@ -70,17 +81,27 @@ export default {
   }
 
   @media(min-width:321px) and (max-width:480px){
-    .header-kategori {
+    .header-detail-kategori {
       margin: auto;
       display: flex;
       padding: 15px;
       justify-content: space-between;
       border-bottom: 1px solid #e2e8f0;
       align-items: baseline;
-      .text-header-kategori {
+      .text-header-detail-kategori {
         font-size: 20px;
         font-weight: bold;
         color: #00aeef;
+        width: 180px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;;
+      }
+      .icon-header-detail-kategori{
+        color: #00aeef;
+        font-size:18px;
+        width:20px;
       }
     }
     .grid-kategori{
@@ -117,17 +138,27 @@ export default {
   }
 
   @media(min-width:280px) and (max-width:320px){
-    .header-kategori {
+    .header-detail-kategori {
       margin: auto;
       display: flex;
       padding: 15px;
       justify-content: space-between;
       border-bottom: 1px solid #e2e8f0;
       align-items: baseline;
-      .text-header-kategori {
+      .text-header-detail-kategori {
         font-size: 20px;
         font-weight: bold;
         color: #00aeef;
+        width: 180px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;;
+      }
+      .icon-header-detail-kategori{
+        color: #00aeef;
+        font-size:18px;
+        width:20px;
       }
     }
 
