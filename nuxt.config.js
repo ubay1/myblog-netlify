@@ -62,6 +62,10 @@ export default {
       ssr: false
     },
     {
+      src: './plugins/vue-sweetalert.js',
+      ssr: false
+    },
+    {
       src: './plugins/vue-await.js',
       ssr: false
     },
@@ -96,6 +100,7 @@ export default {
     '@nuxtjs/proxy',
     '@nuxtjs/pwa',
     '@nuxtjs/dotenv',
+    'vue-sweetalert2/nuxt',
     'nuxt-fontawesome',
     ['nuxt-fontawesome', {
       component: 'fa',

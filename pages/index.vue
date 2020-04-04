@@ -284,14 +284,14 @@ export default {
         console.log(response.data.success)
         if(response.data.success == true){
           this.$toasted.show(response.data.message, {
-            theme: "bubblee",
+            theme: "bubble",
             position: "top-center",
             duration : 5000
           });
           this.is_favorite = !this.is_favorite
         }else{
           this.$toasted.show(response.data.message, {
-            theme: "bubble",
+            theme: "bubbles",
             position: "top-center",
             duration : 5000
           });
@@ -417,14 +417,13 @@ export default {
 }
 
  .toasted.bubble {
-    background: #e92020 !important;
+    background: rgb(0, 159, 225) !important;
   }
 
-  .toasted.bubblee {
-    border-radius: 30px;
+  .toasted.bubbles {
     min-height: 38px;
     line-height: 1.1em;
-    background-color: #00aeef;
+    background-color: #f83c3c;
     padding: 0 20px;
     font-size: 15px;
     font-weight: 300;

@@ -107,6 +107,7 @@
         lot : [],
         datalot : [],
         baseURL : process.env.URL,
+        devAPI  : process.env.DEV_API,
         now : moment(),
         transOption: {
             day: "",
@@ -147,19 +148,19 @@
             Authorization: `Bearer ${this.token}`
           }
         };
-        this.$axios.post(process.env.DEV_API + "user/save_lot_favorit/"+id, [], config)
+        this.$axios.post(this.devAPI + "user/save_lot_favorit/"+id, [], config)
         .then(response => {
           console.log(response.data.success)
           if(response.data.success == true){
             this.$toasted.show(response.data.message, {
-              theme: "bubble",
+              theme: "bubblee",
               position: "top-center",
               duration : 5000
             });
             this.is_favorite = !this.is_favorite
           }else{
             this.$toasted.show(response.data.message, {
-              theme: "bubble",
+              theme: "bubbles",
               position: "top-center",
               duration : 5000
             });
@@ -169,7 +170,7 @@
       async getLot() {
         this.$wait.start('load_all_lot');
 
-        this.$axios.get(process.env.DEV_API + "user/lot")
+        this.$axios.get(this.devAPI + "user/lot")
         .then(response => {
           console.log(response.data.success)
           if(response.data.success == true){
@@ -195,7 +196,7 @@
             Authorization: `Bearer ${this.token}`
           }
         };
-        this.$axios.get(process.env.DEV_API + "user/get_lot_auth", config)
+        this.$axios.get(this.devAPI + "user/get_lot_auth", config)
           .then(response => {
             console.log(response.data.data.data)
             if(response.data.success == true){

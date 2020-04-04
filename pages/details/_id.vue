@@ -143,7 +143,7 @@
             </div>
         </div>
         <div class="footer-bidding">
-          <button class="btn-join-bid">
+          <button class="btn-join-bid" @click="join_lot(id)">
             <img src="~/static/img/img_auction.png" alt="img-bidding" style="width:20px; margin-right:10px;">
             Ikuti Lelang
           </button>
@@ -155,6 +155,12 @@
             <div class="nilai-penawaran-tertinggi">{{lelang_product_awal[0].product.format_price}}
               <font-awesome-icon :icon="['fas', 'chevron-right']" style="width:14; font-size:14;" @click="getbidtertinggi()"/>
             </div>
+        </div>
+        <div class="footer-bidding">
+          <button class="btn-join-bid" @click="join_lot(id)">
+            <img src="~/static/img/img_auction.png" alt="img-bidding" style="width:20px; margin-right:10px;">
+            Ikuti Lelang
+          </button>
         </div>
       </div>
     </div>
@@ -172,18 +178,25 @@
     data() {
       return {
         id: this.$route.params.id,
+        token : '',
         lelang_data_lot:[],
         lelang_data_bid:[],
         lelang_data_lotdetail : [],
         lelang_data_product: [],
         productid: [],
         lelang_product_awal: [],
-        baseURL: process.env.URL
+        baseURL: process.env.URL,
+        devAPI : process.env.DEV_API
       }
     },
     methods: {
       getdetaillelang(){
-        axios.get(process.env.DEV_API + "user/lot/"+this.id)
+        const config = {
+          headers: {
+            Authorization: `Bearer ${this.token}`
+          }
+        };
+        axios.get(this.devAPI + "user/lot/"+this.id, [])
           .then(response => {
             this.lelang_data_lot = response.data.lot;
             this.lelang_data_bid = response.data.bid;
@@ -200,11 +213,58 @@
       getid(id){
         this.productid = this.lelang_data_lotdetail[id]
       },
+      join_lot(id){
+        const config = {
+          headers: {
+            Authorization: `Bearer ${this.token}`
+          }
+        };
+        axios.get(this.devAPI + "user/join_lot/"+this.id, config)
+        .then(response => {
+          console.log(response.data.success);
+          if(response.data.success == true){
+            // this.$swal('Hello Vue world!!!');
+            this.$swal({
+              title: '',
+              text: response.data.message,
+              icon: 'info',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Bayar',
+              cancelButtonText: 'Batal',
+            }).then((result) => {
+              if (result.value) {
+                return this.$router.push('/pembayaran/'+this.id)
+              }
+            })
+          } else{
+            this.$toasted.show(response.data.message, {
+              theme: "bubbles",
+              position: "top-center",
+              duration : 5000
+            });
+          }
+        });
+      }
     },
     created() {
-      this.getdetaillelang()
+
     },
-    // props: ['id']
+    mounted() {
+      if(process.client){
+        var aa = localStorage.getItem('lelangoApp');
+        var cekakses = JSON.parse(aa).authh.accessToken;
+
+        // cek adakah akses atau adakah key localstorage dengan nama lelangoApp
+        if(aa == null || cekakses == false){
+          this.$router.push('/login');
+        } else{
+          this.token = JSON.parse(aa).authh.userData.user.token.access_token;
+          this.getdetaillelang()
+        }
+      }
+    },
   }
 </script>
 
