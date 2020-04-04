@@ -9,10 +9,10 @@
         </div>
       </template>
       <div v-if='get_data.length == 0'>
-        <div style="display:flex; flex-direction:column; align-items:center;">
-          <img src="~/static/img/notfound3.jpg" alt="img-kategori" style="margin:auto;">
-          <div>Data Tidak Ditemukan</div>
-        </div>
+        <div style="display:flex; flex-direction:column; align-items:center; height: 70vh;">
+            <img src="~/static/img/img_splash.png" alt="img-kategori" style="margin:auto; margin-bottom:10px; width:80%;">
+            <div>Data tidak ditemukan</div>
+          </div>
       </div>
       <div v-else>
         <div class="grid-kategori-detail">
@@ -25,7 +25,7 @@
               <b>{{item.price}}</b>
             </div>
           </div>
-          </div>
+        </div>
       </div>
     </v-wait>
 
@@ -42,7 +42,7 @@
       </div>
       <div v-else>
         <div style="display:flex; flex-direction:column; align-items:center;">
-          <img src="~/static/img/notfound3.jpg" alt="img-kategori" style="margin:auto;">
+          <img src="~/static/img/img_splash.png" alt="img-kategori" style="margin:auto;">
           <div>Data Tidak Ditemukan</div>
         </div>
       </div>
@@ -141,7 +141,7 @@ export default {
   @media(min-width:360px) and (max-width: 480px){
     .grid-kategori-detail{
       margin: auto;
-      margin-bottom: 70px;
+      margin-bottom: 0px;
       margin-top: 20px;
       display: grid;
       grid-template-columns: auto auto;

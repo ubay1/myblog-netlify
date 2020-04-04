@@ -151,7 +151,7 @@ export default {
       })
 
       this.get_datauser = await new Promise(resolve => {
-        setTimeout(() => resolve(this.datauser), 2000);
+        setTimeout(() => resolve(this.datauser), 3000);
       });
 
 
@@ -175,7 +175,7 @@ export default {
       })
 
       this.get_databank = await new Promise(resolve => {
-        setTimeout(() => resolve(this.databank), 2000);
+        setTimeout(() => resolve(this.databank), 3000);
       });
 
       this.$wait.end('load_user');
@@ -227,6 +227,9 @@ export default {
       },
   },
   created() {
+
+  },
+  mounted() {
     if (process.client) {
       var aa = localStorage.getItem('lelangoApp');
 
@@ -244,13 +247,6 @@ export default {
           this.getBankAkun();
         }
       }
-    }
-    // this.getUser();
-    // this.getBankAkun();
-  },
-  mounted() {
-    if(process.client){
-
     }
   },
 }

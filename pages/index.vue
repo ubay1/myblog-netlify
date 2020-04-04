@@ -4,7 +4,7 @@
       <div class="main">
 
         <client-only placeholder="sedang memuat ...">
-        <carousel :perPage=1 :autoplay=true paginationColor="#f5bd22" paginationActiveColor='#00aeef' :paginationEnabled=false :loop=true>
+        <carousel :perPage=1 :autoplay=true paginationColor="#f5bd22" paginationActiveColor='#00aeef' :loop=true>
           <slide v-for="(item, index) in banner" :key="index">
             <progressive-img alt='img-carousel' :src="baseURL+item.picture[0]" :placeholder="baseURL+item.picture[0]" />
             <div class="text-banner">
@@ -20,17 +20,26 @@
           <div class="bg-mainTerkini">
             <div class="text-main">
               <div>  Lelang terkini</div>
-              <div class="lihat-semua"> Lihat Semua</div>
+              <nuxt-link to="partial_home/lelang_terbaru_all" class="lihat-semua">
+                Lihat semua
+              </nuxt-link>
             </div>
             <div>
               <div class="bg-card-mainTerkini">
                 <div class="card-mainTerkini" v-for="(item, index) in filterLelangTerbaru" :key="index">
                   <div class="harga-lelang">
-                    <small><small>Harga lot</small></small> {{item.format_bid}}
+                    <small>Harga lot</small> {{item.format_bid}}
                   </div>
-                  <div class="btn-favorit">
-                    <font-awesome-icon :icon="['fas', 'star']" class="icon-favorit" style="width:25px; font-size:20px; filter: drop-shadow(0px 1px 1px #8e8a8a);"/>
-                  </div>
+                  <button @click="save_favorit(item.id)" class="btn-favorit" v-if="item.is_favorite == false">
+                    <span >
+                      <font-awesome-icon :icon="['fas', 'star']" :class="{activeFavorit: is_favorite}" class="icon-favorit" style="width:25px; font-size:20px; filter: drop-shadow(0px 1px 1px #8e8a8a);"/>
+                    </span>
+                  </button>
+                  <button @click="save_favorit(item.id)" class="btn-favorit" v-else>
+                    <span>
+                      <font-awesome-icon :icon="['fas', 'star']" class="icon-favorit" style="width:25px; font-size:20px; filter: drop-shadow(0px 1px 1px #8e8a8a); color:#00aeef;"/>
+                    </span>
+                  </button>
                   <span>
                     <img alt="image-lot-terbaru" class="img-list-lelang" :src="baseURL+item.picture[0]" >
                   </span>
@@ -52,7 +61,7 @@
           <div class="bg-mainTerlaris">
             <div class="text-main">
               <div>  Lelang terlaris </div>
-              <div class="lihat-semua"> Lihat Semua</div>
+              <nuxt-link to="" class="lihat-semua"> Lihat semua</nuxt-link>
             </div>
             <div>
               <div class="bg-card-mainTerlaris">
@@ -61,7 +70,12 @@
                     <small>Harga lot</small> {{item.format_bid}}
                   </div>
                   <div class="btn-favorit">
-                    <font-awesome-icon :icon="['fas', 'star']" class="icon-favorit" style="width:25px;font-size:20px; filter: drop-shadow(0px 1px 1px #8e8a8a); "/>
+                    <span  v-if="item.is_favorite == false">
+                      <font-awesome-icon :icon="['fas', 'star']" class="icon-favorit" style="width:25px; font-size:20px; filter: drop-shadow(0px 1px 1px #8e8a8a);"/>
+                    </span>
+                    <span v-else>
+                      <font-awesome-icon :icon="['fas', 'star']" class="icon-favorit" style="width:25px; font-size:20px; filter: drop-shadow(0px 1px 1px #8e8a8a); color:#00aeef;"/>
+                    </span>
                   </div>
                   <span>
                     <img alt="img-lot-terlaris" class="img-list-lelang" :src="baseURL+item.picture[0]" >
@@ -82,16 +96,18 @@
           </div>
         </div>
         <div v-else>
-         <div class="bg-mainTerkini">
+          <div class="bg-mainTerkini">
             <div class="text-main">
               <div>  Lelang terkini </div>
-              <div class="lihat-semua"> Lihat Semua</div>
+              <nuxt-link to="partial_home/lelang_terbaru_all" class="lihat-semua">
+                Lihat semua
+              </nuxt-link>
             </div>
             <div>
               <div class="bg-card-mainTerkini">
                 <div class="card-mainTerkini" v-for="(item, index) in filterLelangTerbaru" :key="index">
                   <div class="harga-lelang">
-                    <small><small>Harga lot</small></small> {{item.format_bid}}
+                    <small>Harga lot</small> {{item.format_bid}}
                   </div>
                   <span>
                     <img alt="img-lot-terbaru" class="img-list-lelang" :src="baseURL+item.picture[0]" >
@@ -114,7 +130,7 @@
           <div class="bg-mainTerlaris">
             <div class="text-main">
               <div>  Lelang terlaris </div>
-              <div class="lihat-semua"> Lihat Semua</div>
+              <nuxt-link to="" class="lihat-semua"> Lihat semua</nuxt-link>
             </div>
             <div>
               <div class="bg-card-mainTerlaris">
@@ -180,6 +196,7 @@ export default {
   data() {
     return {
       accessTokens : '',
+      token : '',
       banner: [],
       lelangterbaru: [],
       lelangterlaris: [],
@@ -201,6 +218,8 @@ export default {
             upcoming: "Akan Datang"
           }
       },
+      // icon_favorit: true,
+      is_favorite : false
     }
   },
   // middleware:'iflogin',
@@ -210,7 +229,7 @@ export default {
       return this.accessTokens = this.$store.getters['authh/accessToken'];
     },
     filterLelangTerbaru(){
-      return this.lelangterbaru.slice(0,3);
+      return this.lelangterbaru.slice(0,5);
     },
     filterLelangTerlaris(){
       return this.lelangterlaris.slice(0,3);
@@ -239,7 +258,7 @@ export default {
           this.banner = response.data.data;
 				});
     },
-    getLelangTerbaru() {
+    getLot() {
 			axios.get(process.env.DEV_API + "user/lot")
 				.then(response => {
           // console.log(response.data.data.data)
@@ -254,8 +273,72 @@ export default {
           }
 				});
     },
+    save_favorit(id){
+      const config = {
+        headers: {
+          Authorization: `Bearer ${this.token}`
+        }
+      };
+      this.$axios.post(process.env.DEV_API + "user/save_lot_favorit/"+id, [], config)
+      .then(response => {
+        console.log(response.data.success)
+        if(response.data.success == true){
+          this.$toasted.show(response.data.message, {
+            theme: "bubblee",
+            position: "top-center",
+            duration : 5000
+          });
+          this.is_favorite = !this.is_favorite
+        }else{
+          this.$toasted.show(response.data.message, {
+            theme: "bubble",
+            position: "top-center",
+            duration : 5000
+          });
+        }
+      });
+    },
+    getLotAuth(){
+      const config = {
+          headers: {
+            Authorization: `Bearer ${this.token}`
+          }
+        };
+      axios.get(process.env.DEV_API + "user/get_lot_auth", config)
+				.then(response => {
+          if(response.data.data.data == null){
+            this.lelangterbaru = []
+          }else{
+            this.lelangterbaru = response.data.data.data;
+
+            for (let i = 0; i < this.lelangterbaru.length; i++) {
+              this.lelang_expired.push(this.lelangterbaru[i].expired_at)
+            }
+          }
+				});
+    },
     getLelangTerlaris() {
 			axios.get(process.env.DEV_API + "user/lot_terlaris")
+				.then(response => {
+          // console.log(response.data.success)
+          if(response.data.success == false){
+            this.lelangterlaris = [];
+          }else{
+            this.lelangterlaris = response.data.data.data;
+            for (let i = 0; i < this.lelangterlaris.length; i++) {
+              this.lelang_expired.push(this.lelangterlaris[i].expired_at)
+            }
+          }
+          // console.log(this.lelang_expired);
+				});
+    },
+    getLelangTerlarisAuth() {
+      const config = {
+          headers: {
+            Authorization: `Bearer ${this.token}`
+          }
+        };
+			axios.get(process.env.DEV_API + "user/lot_terlaris_auth", config)
 				.then(response => {
           // console.log(response.data.success)
           if(response.data.success == false){
@@ -293,11 +376,23 @@ export default {
   },
   created(){
     this.getCaraousel(),
-    this.getLelangTerbaru(),
-    this.getLelangTerlaris(),
     this.getTipsLelang()
   },
   mounted() {
+    if(process.client){
+      var aa = localStorage.getItem('lelangoApp');
+      var cekakses = JSON.parse(aa).authh.accessToken;
+
+      // cek adakah akses atau adakah key localstorage dengan nama lelangoApp
+      if(aa == null || cekakses == false){
+        this.getLot();
+        this.getLelangTerlaris();
+      } else{
+        this.token = JSON.parse(aa).authh.userData.user.token.access_token;
+        this.getLotAuth();
+        this.getLelangTerlarisAuth();
+      }
+    }
   },
 }
 </script>
@@ -321,6 +416,22 @@ export default {
   border-radius: 50px;
 }
 
+ .toasted.bubble {
+    background: #e92020 !important;
+  }
+
+  .toasted.bubblee {
+    border-radius: 30px;
+    min-height: 38px;
+    line-height: 1.1em;
+    background-color: #00aeef;
+    padding: 0 20px;
+    font-size: 15px;
+    font-weight: 300;
+    color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+  }
+
 button:focus {
     outline: none;
 }
@@ -335,6 +446,7 @@ button:focus {
     margin-bottom: 90px;
   }
   .VueCarousel{
+    z-index: 1;
     width: 480px; margin: auto; margin-top: 10px; margin-bottom: -2em; padding-left: 20px; padding-right:20px;
   }
   .progressive-image{
@@ -360,6 +472,9 @@ button:focus {
   .icon-favorit{
     color: #b9b8b8;
   }
+  .activeFavorit{
+    color:#00aeef;
+  }
   .img-list-lelang{
     width: 150px;
     padding:10px;
@@ -367,6 +482,7 @@ button:focus {
   }
   .bg-mainTerkini, .bg-mainTerlaris{
     margin-bottom: 20px;
+    margin-top: 20px;
   }
   .text-main{
     font-weight: bold;
@@ -503,8 +619,9 @@ button:focus {
   .VueCarousel-navigation-button[data-v-453ad8cd]{
     position: unset !important;
   }
-  .VueCarousel-dot-container[data-v-438fd353]{
-    margin-top: -40px !important;
+  .VueCarousel-dot-container{
+    margin-top: -70px !important;
+    display: block !important;
   }
 }
 
@@ -519,6 +636,7 @@ button:focus {
     margin-bottom: 90px;
   }
   .VueCarousel{
+    z-index: 1;
     width: auto; margin: auto; margin-top: 10px; margin-bottom: -2em; padding-left: 20px; padding-right:20px;
   }
   .progressive-image{
@@ -545,6 +663,9 @@ button:focus {
   .icon-favorit{
     color: #b9b8b8;
   }
+  .activeFavorit{
+    color:#00aeef;
+  }
   .img-list-lelang{
     width: 150px;
     padding:10px;
@@ -553,6 +674,7 @@ button:focus {
 
   .bg-mainTerkini, .bg-mainTerlaris, .bg-mainTipslelango{
     margin-bottom: 20px;
+    margin-top: 20px;
   }
   .text-main{
     font-weight: bold;
@@ -689,8 +811,9 @@ button:focus {
   .VueCarousel-navigation-button[data-v-453ad8cd]{
     position: unset !important;
   }
-  .VueCarousel-dot-container[data-v-438fd353]{
-    margin-top: -40px !important;
+  .VueCarousel-dot-container{
+    margin-top: -70px !important;
+    display: block !important;
   }
 }
 
@@ -705,6 +828,7 @@ button:focus {
     margin-bottom: 90px;
   }
   .VueCarousel{
+    z-index: 1;
     width: auto; margin: auto; margin-top: 10px; margin-bottom: -2em; padding-left: 0px; padding-right: 0px;
     display: none;
   }
@@ -731,6 +855,9 @@ button:focus {
   .icon-favorit{
     color: #b9b8b8;
   }
+  .activeFavorit{
+    color:#00aeef;
+  }
   .img-list-lelang{
     width: 150px;
     padding:10px;
@@ -739,6 +866,7 @@ button:focus {
 
   .bg-mainTerkini, .bg-mainTerlaris, .bg-mainTipslelango{
     margin-bottom: 20px;
+    margin-top: 20px;
   }
   .text-main{
     font-weight: bold;
@@ -881,8 +1009,9 @@ button:focus {
   .VueCarousel-navigation-button[data-v-453ad8cd]{
     position: unset !important;
   }
-  .VueCarousel-dot-container[data-v-438fd353]{
-    margin-top: -40px !important;
+  .VueCarousel-dot-container{
+    margin-top: -70px !important;
+    display: block !important;
   }
 }
 

@@ -43,7 +43,7 @@ export default {
 
 <style>
 
-@media(min-width: 480px){
+@media(min-width: 481px){
   .footer{
     list-style-type: none;
     display: inline-block;

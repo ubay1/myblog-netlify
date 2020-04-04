@@ -14,20 +14,59 @@
 
     <div v-else>
       <div class="bg-card-list-data-detail">
+        <!-- ketika klik lain, akan dihandle bagian ini -->
         <div v-if="productid.length != 0">
+          <div v-if="productid.product.type.type_name == 'hot'">
+            <div class="text-type-hot">
+              {{productid.product.type.type_name}}
+            </div>
+          </div>
+          <div v-else-if="productid.product.type.type_name == 'slow'">
+            <div class="text-type-slow">
+              {{productid.product.type.type_name}}
+            </div>
+          </div>
+          <div v-else>
+            <div class="text-type-fast">
+              {{productid.product.type.type_name}}
+            </div>
+          </div>
           <img :src="baseURL+productid.product.pictures[0]" alt="img-list-detail">
         </div>
+
+        <!-- pembukaan awal, akan dihandle oleh bagian ini -->
         <div v-else>
+          <div v-if="lelang_product_awal[0].product.type.type_name == 'hot'">
+            <div class="text-type-hot">
+              {{lelang_product_awal[0].product.type.type_name}}
+            </div>
+          </div>
+          <div v-else-if="lelang_product_awal[0].product.type.type_name == 'slow'">
+            <div class="text-type-slow">
+              {{lelang_product_awal[0].product.type.type_name}}
+            </div>
+          </div>
+          <div v-else>
+            <div class="text-type-fast">
+              {{lelang_product_awal[0].product.type.type_name}}
+            </div>
+          </div>
            <img :src="baseURL+lelang_product_awal[0].product.pictures[0]" alt="">
         </div>
+
       </div>
+
       <div class="bg-card-list-data">
         <div class="card-list-data" :id="item.id" v-for="(item, index) in lelang_data_product" :key="index">
           <img alt="img-list-data" style="border-radius:20px; cursor:pointer;" @click="getid(index)" :src="baseURL+item.picture[0]"/>
           <div class="ext"></div>
         </div>
       </div>
+
+      <hr class="mb-3 mt-4">
+
       <div class="bg-card-list-data-detail-text mb-3">
+        <!-- ketika klik lain, akan dihandle bagian ini -->
         <div v-if="productid.length != 0">
           <table class="sm:bg-white rounded-lg">
             <tr>
@@ -57,6 +96,8 @@
             </tr>
           </table>
         </div>
+
+        <!-- pembukaan awal, akan dihandle oleh bagian ini -->
         <div v-else>
           <table class="sm:bg-white rounded-lg">
             <tr>
@@ -88,15 +129,30 @@
         </div>
       </div>
 
-      <!-- <div style="width:auto; margin:auto;"> -->
-        <hr>
-      <!-- </div> -->
+      <hr class="mb-5">
 
-      <div v-if="lelang_data_bid.length == 0"></div>
+      <div>
+
+      </div>
+
+      <div v-if="lelang_data_bid.length == 0">
+        <div class="bg-penawaran-tertinggi">
+            <div class="text-penawaran-tertinggi">Penawaran Tertinggi</div>
+            <div class="nilai-penawaran-tertinggi"><small>Belum ada Bidding</small>
+              <font-awesome-icon :icon="['fas', 'chevron-right']" style="width:14; font-size:14;" @click="getbidtertinggi()"/>
+            </div>
+        </div>
+        <div class="footer-bidding">
+          <button class="btn-join-bid">
+            <img src="~/static/img/img_auction.png" alt="img-bidding" style="width:20px; margin-right:10px;">
+            Ikuti Lelang
+          </button>
+        </div>
+      </div>
       <div v-else>
         <div class="bg-penawaran-tertinggi">
             <div class="text-penawaran-tertinggi">Penawaran Tertinggi</div>
-            <div class="nilai-penawaran-tertinggi">{{lelang_data_bid[0].format_price}}
+            <div class="nilai-penawaran-tertinggi">{{lelang_product_awal[0].product.format_price}}
               <font-awesome-icon :icon="['fas', 'chevron-right']" style="width:14; font-size:14;" @click="getbidtertinggi()"/>
             </div>
         </div>
@@ -180,7 +236,8 @@
   .header-detail{
     width: 481px;
     margin: auto;
-    background: linear-gradient(145deg, #00baff, #009dd7);
+    /* background: linear-gradient(145deg, #00baff, #009dd7); */
+    color:#00aeef;
     margin-bottom: 10px;
     padding: 10px;
     box-shadow: 0px 2px 6px lightgrey;
@@ -189,18 +246,18 @@
     justify-content: space-between;
   }
   .icon-header-detail{
-    color: #ffffff;
+    color: #00aeef;
     /* position: relative; */
     /* left: -8em; */
     font-size:18px;
     width:22px;
   }
   .text-header-lot{
-    color: #ffffff;
+    color: #00aeef;
     /* font-weight: bold; */
   }
   .text-header-penawaran{
-    color: #ffffff;
+    color: #1ddc72;
     /* font-weight: bold; */
   }
 
@@ -225,7 +282,7 @@
     overflow-x: scroll;
   }
   .card-list-data{
-    width: 20%;
+    width: 60px;
     margin: 10px;
     border-radius: 20px;
     box-shadow: 0px 4px 4px lightgrey;
@@ -237,6 +294,27 @@
     margin-top: 10px;
     padding-left: 8em;
     padding-right: 8em;
+  }
+  .text-type-hot {
+    background: #F44336;
+    position: absolute;
+    padding: 5px;
+    color: #ffffff;
+    box-shadow: 0px 2px 4px #8e8686;
+  }
+  .text-type-slow{
+    background: #1ddc72;
+    position: absolute;
+    padding: 5px;
+    color: #ffffff;
+    box-shadow: 0px 2px 4px #8e8686;
+  }
+  .text-type-fast{
+    background: #00aeef;
+    position: absolute;
+    padding: 5px;
+    color: #ffffff;
+    box-shadow: 0px 2px 4px #8e8686;
   }
   .bg-card-list-data-detail-text{
     display: -webkit-box;
@@ -257,6 +335,11 @@
     height: 1px;
   }
 
+  hr{
+    width: 480px;
+    margin: auto;;
+  }
+
   .bg-penawaran-tertinggi{
     display: flex;
     justify-content:space-between;
@@ -265,13 +348,57 @@
     margin-top: 10px;
     padding-left: 30px;
     padding-right: 30px;
-    margin-bottom:20px;
+    margin-bottom:100px;
     font-weight:bold;
   }
 
   .nilai-penawaran-tertinggi{
     display: flex;
     align-items: center;
+  }
+
+  .footer-bidding{
+    list-style-type: none;
+    display: inline-block;
+    border-right-style: initial;
+    border-bottom-style: initial;
+    border-left-style: initial;
+    border-right-color: initial;
+    border-bottom-color: initial;
+    border-left-color: initial;
+    font-weight: 600;
+    line-height: 13px;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+    max-width: 480px;
+    position: fixed;
+    bottom: 0px;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 2;
+    font-size: 1em;
+    background-color: rgb(255, 255, 255);
+    /* border-width: 1px 0px 0px; */
+    border-image: initial;
+    transition: all 0.35s ease 0s;
+    text-decoration: none;
+    padding: 10px;
+    /* border-top: 1px solid rgb(222, 222, 222);
+    box-shadow: 0px 0px 2px 0px lightgrey; */
+    margin: 0px;
+  }
+
+  .btn-join-bid{
+    background: #00aeef;
+    padding: 6px;
+    width: 100%;
+    border-radius: 50px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 2px 4px #bdbcbc;
   }
 
 }
@@ -285,7 +412,8 @@
   .header-detail{
     width: auto;
     margin: auto;
-    background: linear-gradient(145deg, #00baff, #009dd7);
+    /* background: linear-gradient(145deg, #00baff, #009dd7); */
+    color:#00aeef;
     margin-bottom: 10px;
     padding: 10px;
     box-shadow: 0px 2px 6px lightgrey;
@@ -294,18 +422,18 @@
     justify-content: space-between;
   }
   .icon-header-detail{
-    color: #ffffff;
+    color: #00aeef;
     /* position: relative; */
     /* left: -8em; */
     font-size:18px;
     width:22px;
   }
   .text-header-lot{
-    color: #ffffff;
+    color: #00aeef;
     /* font-weight: bold; */
   }
   .text-header-penawaran{
-    color: #ffffff;
+    color: #1ddc72;
     /* font-weight: bold; */
   }
 
@@ -329,7 +457,7 @@
     overflow-x: scroll;
   }
   .card-list-data{
-    width: 100px;
+    width: 60px;
     margin: 10px;
     border-radius: 20px;
     box-shadow: 0px 4px 4px lightgrey;
@@ -341,6 +469,27 @@
     margin-top: 10px;
     /* padding-left: 5em;
     padding-right: 5em; */
+  }
+  .text-type-hot {
+    background: #F44336;
+    position: absolute;
+    padding: 5px;
+    color: #ffffff;
+    box-shadow: 0px 2px 4px #8e8686;
+  }
+  .text-type-slow{
+    background: #1ddc72;
+    position: absolute;
+    padding: 5px;
+    color: #ffffff;
+    box-shadow: 0px 2px 4px #8e8686;
+  }
+  .text-type-fast{
+    background: #00aeef;
+    position: absolute;
+    padding: 5px;
+    color: #ffffff;
+    box-shadow: 0px 2px 4px #8e8686;
   }
   .bg-card-list-data-detail-text{
     display: -webkit-box;
@@ -369,13 +518,57 @@
     margin-top: 10px;
     padding-left: 30px;
     padding-right: 30px;
-    margin-bottom:20px;
+    margin-bottom:100px;
     font-weight:bold;
   }
 
   .nilai-penawaran-tertinggi{
     display: flex;
     align-items: center;
+  }
+
+  .footer-bidding{
+    list-style-type: none;
+    display: inline-block;
+    border-right-style: initial;
+    border-bottom-style: initial;
+    border-left-style: initial;
+    border-right-color: initial;
+    border-bottom-color: initial;
+    border-left-color: initial;
+    font-weight: 600;
+    line-height: 13px;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+    max-width: 100%;
+    position: fixed;
+    bottom: 0px;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 2;
+    font-size: 1em;
+    background-color: rgb(255, 255, 255);
+    /* border-width: 1px 0px 0px; */
+    border-image: initial;
+    transition: all 0.35s ease 0s;
+    text-decoration: none;
+    padding: 10px;
+    /* border-top: 1px solid rgb(222, 222, 222);
+    box-shadow: 0px 0px 2px 0px lightgrey; */
+    margin: 0px;
+  }
+
+  .btn-join-bid{
+    background: #00aeef;
+    padding: 6px;
+    width: 100%;
+    border-radius: 50px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 2px 4px #bdbcbc;
   }
 
 }
@@ -389,7 +582,8 @@
   .header-detail{
     width: auto;
     margin: auto;
-    background: linear-gradient(145deg, #00baff, #009dd7);
+    /* background: linear-gradient(145deg, #00baff, #009dd7); */
+    color:#00aeef;
     margin-bottom: 10px;
     padding: 10px;
     box-shadow: 0px 2px 6px lightgrey;
@@ -398,18 +592,18 @@
     justify-content: space-between;
   }
   .icon-header-detail{
-    color: #ffffff;
+    color: #00aeef;
     /* position: relative; */
     /* left: -8em; */
     font-size:18px;
     width:22px;
   }
   .text-header-lot{
-    color: #ffffff;
+    color: #00aeef;
     /* font-weight: bold; */
   }
   .text-header-penawaran{
-    color: #ffffff;
+    color: #1ddc72;
     /* font-weight: bold; */
   }
 
@@ -433,7 +627,7 @@
     overflow-x: scroll;
   }
   .card-list-data{
-    width: 90px;
+    width: 60px;
     margin: 10px;
     border-radius: 20px;
     box-shadow: 0px 4px 4px lightgrey;
@@ -445,6 +639,27 @@
     margin-top: 10px;
     /* padding-left: 4em;
     padding-right: 4em; */
+  }
+  .text-type-hot {
+    background: #F44336;
+    position: absolute;
+    padding: 5px;
+    color: #ffffff;
+    box-shadow: 0px 2px 4px #8e8686;
+  }
+  .text-type-slow{
+    background: #1ddc72;
+    position: absolute;
+    padding: 5px;
+    color: #ffffff;
+    box-shadow: 0px 2px 4px #8e8686;
+  }
+  .text-type-fast{
+    background: #00aeef;
+    position: absolute;
+    padding: 5px;
+    color: #ffffff;
+    box-shadow: 0px 2px 4px #8e8686;
   }
   .bg-card-list-data-detail-text{
     display: -webkit-box;
@@ -473,13 +688,57 @@
     margin-top: 10px;
     padding-left: 30px;
     padding-right: 30px;
-    margin-bottom:20px;
+    margin-bottom:100px;
     font-weight:bold;
   }
 
   .nilai-penawaran-tertinggi{
     display: flex;
     align-items: center;
+  }
+
+  .footer-bidding{
+    list-style-type: none;
+    display: inline-block;
+    border-right-style: initial;
+    border-bottom-style: initial;
+    border-left-style: initial;
+    border-right-color: initial;
+    border-bottom-color: initial;
+    border-left-color: initial;
+    font-weight: 600;
+    line-height: 13px;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+    max-width: 100%;
+    position: fixed;
+    bottom: 0px;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 2;
+    font-size: 1em;
+    background-color: rgb(255, 255, 255);
+    /* border-width: 1px 0px 0px; */
+    border-image: initial;
+    transition: all 0.35s ease 0s;
+    text-decoration: none;
+    padding: 10px;
+    /* border-top: 1px solid rgb(222, 222, 222);
+    box-shadow: 0px 0px 2px 0px lightgrey; */
+    margin: 0px;
+  }
+
+  .btn-join-bid{
+    background: #00aeef;
+    padding: 6px;
+    width: 100%;
+    border-radius: 50px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 2px 4px #bdbcbc;
   }
 }
 </style>

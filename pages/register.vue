@@ -16,15 +16,15 @@
           <div class="relative text-gray-600">
             <input :type="passwordFieldType" v-model="form.password" placeholder="Enter Password" name="password"
               class="bg-white h-10 px-5 rounded-full text-sm focus:outline-none" required='true'>
-            <button type="button" class="absolute right-0 top-0 mt-3 mr-4" @click="show_password_daftar()">
+            <button type="button" class="absolute right-0 top-0 btn-show-password" style="" @click="show_password_daftar()">
               <font-awesome-icon :icon="['fas', icon]" style="font-size:20px; width:20px;" />
             </button>
           </div>
 
           <div class="relative text-gray-600">
             <input :type="passwordFieldType2" v-model="form.repassword" placeholder="Enter Password" name="password"
-              class="bg-white h-10 px-5 rounded-full text-sm focus:outline-none" required='true'>
-            <button type="button" class="absolute right-0 top-0 mt-3 mr-4" @click="show_repassword_daftar()">
+              class="bg-white h-10 px-5 rounded-full text-sm focus:outline-none form-password" required='true'>
+            <button type="button" class="absolute right-0 top-0 btn-show-password" style="" @click="show_repassword_daftar()">
               <font-awesome-icon :icon="['fas', icon2]" style="font-size:20px; width:20px;" />
             </button>
           </div>
@@ -143,3 +143,24 @@
 
 </script>
 
+<style lang="scss">
+  @media(min-width:280px) and (max-width:480px){
+    .btn-show-password{
+      width: 20%; height: 100%; border-radius: 0px 100px 100px 0px; display: flex; justify-content: center;
+    }
+
+    .form-password{
+      width:80%; border-radius: 100px 0px 0px 100px;
+    }
+  }
+
+  @media (min-width:481px){
+    .btn-show-password{
+      width: 10%; height: 100%; border-radius: 0px 100px 100px 0px; display: flex; justify-content: center;
+    }
+
+    .form-password{
+      width:90%; border-radius: 100px 0px 0px 100px;
+    }
+  }
+</style>

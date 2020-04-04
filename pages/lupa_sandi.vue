@@ -84,7 +84,7 @@
                 this.form.email = '';
 
                 this.$toasted.show(response.data.message, {
-                  theme: "bubble",
+                  theme: "bubblee",
                   position: "top-center",
                   duration : 5000
                 });
