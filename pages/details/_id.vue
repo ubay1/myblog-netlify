@@ -3,7 +3,7 @@
     <div class="header-detail">
       <div><font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-detail" @click="back()"/></div>
       <div class="text-header-lot">Lot-{{id}}</div>
-      <div class="text-header-penawaran">{{lelang_data_lot.total_bidder}} Penawaran</div>
+      <div class="text-header-penawaran">{{filter_penawaran}} Penawaran</div>
     </div>
 
     <div v-if="lelang_data_product.length == 0">
@@ -135,7 +135,7 @@
 
       </div>
 
-      <div v-if="lelang_data_bid.length == 0">
+      <div v-if="filter_lelang_data_bid.length == 0">
         <div class="bg-penawaran-tertinggi">
             <div class="text-penawaran-tertinggi">Penawaran Tertinggi</div>
             <div class="nilai-penawaran-tertinggi"><small>Belum ada Bidding</small>
@@ -152,7 +152,7 @@
       <div v-else>
         <div class="bg-penawaran-tertinggi">
             <div class="text-penawaran-tertinggi">Penawaran Tertinggi</div>
-            <div class="nilai-penawaran-tertinggi">{{lelang_product_awal[0].product.format_price}}
+            <div class="nilai-penawaran-tertinggi">{{filter_bid_tertinggi2}}
               <font-awesome-icon :icon="['fas', 'chevron-right']" style="width:14; font-size:14;" @click="getbidtertinggi()"/>
             </div>
         </div>
@@ -164,6 +164,36 @@
         </div>
       </div>
     </div>
+
+    <!-- modal -->
+    <modal name="hello-world">
+      <div class="bg-modal-lot">
+        <div>
+          <img :src="baseURL+lelang_data_lot.picture" style="width: 70px; box-shadow: 0px 2px 2px lightgrey;">
+        </div>
+        <div class="bg-text-modal-lot">
+          <div><b>Lot-{{id}}</b></div>
+          <div v-if="filter_lelang_data_bid.length == 0">
+            <small>Bid Tertinggi : {{filter_bid_tertinggi}}</small>
+          </div>
+          <div v-else>
+            <small>Bid Tertinggi : {{filter_bid_tertinggi2}}</small>
+          </div>
+          <small>Syarat dan ketentuan berlaku</small>
+        </div>
+      </div>
+      <hr>
+      <div class="bg-form-bidding">
+        <form method="post" @submit.prevent="pay_bidding">
+          <input class="bg-white text-gray-600 h-11 px-5 pr-10 rounded-full text-sm focus:outline-none form-bidding" type="text" v-model="form.bidding" placeholder="Masukan jumlah bid" name="bidding" required='true'>
+
+          <button type="submit" :disabled="btnsubmit" class="btn-form-bidding mb-4">
+            <span v-show="showtext_btn">Ajukan penawaran </span>
+            <img v-show="showloader" src="~/static/loading_send.gif" style="width:20px;" alt="">
+          </button>
+        </form>
+      </div>
+    </modal>
 </div>
 </template>
 
@@ -186,7 +216,27 @@
         productid: [],
         lelang_product_awal: [],
         baseURL: process.env.URL,
-        devAPI : process.env.DEV_API
+        devAPI : process.env.DEV_API,
+        form:{
+          bidding:''
+        },
+        showloader: false,
+        btnsubmit: false,
+        showtext_btn: true
+      }
+    },
+    computed: {
+      filter_lelang_data_bid(){
+        return this.lelang_data_bid;
+      },
+      filter_bid_tertinggi(){
+        return this.lelang_data_lot.bid_price;
+      },
+      filter_bid_tertinggi2(){
+        return this.lelang_data_bid[0].format_price;
+      },
+      filter_penawaran(){
+        return this.lelang_data_lot.total_bidder;
       }
     },
     methods: {
@@ -201,10 +251,16 @@
             this.lelang_data_lot = response.data.lot;
             this.lelang_data_bid = response.data.bid;
             this.lelang_data_lotdetail = response.data.lot_detail;
+
             for (let i = 0; i<this.lelang_data_lotdetail.length; i++) {
-              this.lelang_data_product.push({id: this.lelang_data_lotdetail[i].product.id, picture: JSON.parse(this.lelang_data_lotdetail[i].product.picture)});
+              this.lelang_data_product.push({
+                id: this.lelang_data_lotdetail[i].product.id,
+                picture: JSON.parse(this.lelang_data_lotdetail[i].product.picture)
+              });
             }
+            // mengambil data pertama, untuk ditampilkan diawal
             this.lelang_product_awal.push(this.lelang_data_lotdetail[0])
+            // console.log(this.lelang_data_lot)
         });
       },
       back(){
@@ -223,7 +279,15 @@
         .then(response => {
           console.log(response.data.success);
           if(response.data.success == true){
-            // this.$swal('Hello Vue world!!!');
+            this.$modal.show('hello-world');
+          } else if(response.data.success == false && response.data.statuscode == 4004){
+            this.$swal({
+              title: '',
+              text: response.data.message,
+              icon: 'warning',
+              showCancelButton: false,
+            })
+          } else if(response.data.success == false && response.data.statuscode == 4002){
             this.$swal({
               title: '',
               text: response.data.message,
@@ -238,14 +302,107 @@
                 return this.$router.push('/pembayaran/'+this.id)
               }
             })
-          } else{
-            this.$toasted.show(response.data.message, {
+          }
+        });
+      },
+      pay_bidding(){
+        // jika data bid == 0
+        if(this.lelang_data_bid.length == 0){
+          this.showloader = !this.showloader;
+          this.btnsubmit = !this.btnsubmit;
+          this.showtext_btn = !this.showtext_btn;
+
+          if(this.form.bidding <= this.lelang_data_lot.original_bid_price){
+            this.$toasted.show('tidak boleh kecil atau sama dengan dari harga bid sekarang', {
               theme: "bubbles",
               position: "top-center",
               duration : 5000
             });
+
+            this.showloader = !this.showloader;
+            this.btnsubmit = !this.btnsubmit;
+            this.showtext_btn = !this.showtext_btn;
+
+            return false;
+          } else{
+            var formData = {
+              hargabid: this.form.bidding,
+            }
+            const config = {
+              headers: {
+                Authorization: `Bearer ${this.token}`
+              }
+            };
+            this.$axios.post(this.devAPI+'user/pay_bidding/'+this.id, formData, config)
+            .then(response=>{
+              console.log(response);
+
+              if(response.data.success == true){
+                this.$toasted.show(response.data.message, {
+                  theme: "bubble",
+                  position: "top-center",
+                  duration : 5000
+                });
+
+                this.getdetaillelang();
+                this.form.bidding = '';
+
+                this.showloader = !this.showloader;
+                this.btnsubmit = !this.btnsubmit;
+                this.showtext_btn = !this.showtext_btn;
+              }
+
+            })
           }
-        });
+        }
+        else{
+          this.showloader = !this.showloader;
+          this.btnsubmit = !this.btnsubmit;
+          this.showtext_btn = !this.showtext_btn;
+
+          if(this.form.bidding <= this.lelang_data_bid[0].amount){
+            this.$toasted.show('tidak boleh kecil atau sama dengan dari harga bid sekarang', {
+              theme: "bubbles",
+              position: "top-center",
+              duration : 5000
+            });
+
+            this.showloader = !this.showloader;
+            this.btnsubmit = !this.btnsubmit;
+            this.showtext_btn = !this.showtext_btn;
+
+            return false;
+          } else {
+            var formData = {
+              hargabid: this.form.bidding,
+            }
+            const config = {
+              headers: {
+                Authorization: `Bearer ${this.token}`
+              }
+            };
+            this.$axios.post(this.devAPI+'user/pay_bidding/'+this.id, formData, config)
+            .then(response=>{
+              console.log(response);
+
+              if(response.data.success == true){
+                this.$toasted.show(response.data.message, {
+                  theme: "bubble",
+                  position: "top-center",
+                  duration : 5000
+                });
+
+                this.getdetaillelang();
+                this.form.bidding = '';
+
+                this.showloader = !this.showloader;
+                this.btnsubmit = !this.btnsubmit;
+                this.showtext_btn = !this.showtext_btn;
+              }
+
+            })
+          }
+        }
       }
     },
     created() {
@@ -270,6 +427,57 @@
 
 <style>
 
+/* modal */
+.v--modal-overlay .v--modal-box {
+  position: absolute;
+  overflow: hidden;
+  box-sizing: border-box;
+  bottom: 0px !important;
+  top: unset !important;
+  left: 0px !important;
+  width: 100% !important;
+  height: auto !important;
+  margin: auto !important;
+}
+
+.bg-modal-lot {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.bg-form-bidding{
+  margin: 10px;
+}
+.form-bidding {
+  width: 100%;
+  padding: 10px 20px;
+  margin: 10px 0px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  box-shadow: 0px 2px 4px lightgrey;
+  border-radius: 0px;
+}
+
+.btn-form-bidding {
+  background-color: rgb(0, 159, 225);
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 0px 2px 4px lightgrey;
+  border-radius: 0px;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+}
+
+/* end modal */
+
 /* Track */
 ::-webkit-scrollbar-track {
   background: #fff;
@@ -288,6 +496,33 @@
 }
 
 @media(min-width: 481px){
+
+  /* modal */
+  .v--modal-overlay .v--modal-box {
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    bottom: 0px !important;
+    top: 220px !important;
+    left: 0px !important;
+    width: 480px !important;
+    height: auto !important;
+    margin: auto !important;
+  }
+
+  .bg-modal-lot {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    justify-content: left;
+    align-items: center;
+  }
+
+  .bg-text-modal-lot {
+    margin-left: 20px;
+  }
+  /* end modal */
+
   /* width */
   ::-webkit-scrollbar {
     width: 5px;

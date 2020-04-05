@@ -66,6 +66,10 @@ export default {
       ssr: false
     },
     {
+      src: './plugins/vue-modal.js',
+      ssr: false
+    },
+    {
       src: './plugins/vue-await.js',
       ssr: false
     },
