@@ -80,6 +80,64 @@ export default {
 </script>
 
 <style lang="scss">
+  @media(min-width:481px){
+    .header-pilih-pembayaran{
+      margin: auto;
+      width: 480px;
+      /* background: linear-gradient(145deg, #00baff, #009dd7); */
+      color:#00aeef;
+      margin-bottom: 10px;
+      padding: 10px;
+      box-shadow: 0px 2px 6px lightgrey;
+      display: flex;
+      align-items: center;
+
+      .icon-header-pilih-pembayaran{
+        color: #00aeef;
+        /* position: relative; */
+        /* left: -8em; */
+        font-size:18px;
+        width:22px;
+      }
+
+      .text-header-pilih-pembayaran{
+        color: #00aeef;
+        white-space: nowrap;
+        width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+      }
+    }
+
+    .main-pilih-pembayaran{
+      margin: auto;
+      width: 480px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      line-height: 1.6;
+      .pilih-metode{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+        border: 1px solid lightgrey;
+        width: 100%;
+      }
+      .bg-txt-nama-bank{
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        margin-right: 20px;
+        margin-left: 20px;
+      }
+    }
+  }
 
   @media(max-width:480px){
     .header-pilih-pembayaran{
@@ -125,6 +183,7 @@ export default {
         margin-left: 10px;
         margin-right: 10px;
         border: 1px solid lightgrey;
+        width: 100%;
       }
       .bg-txt-nama-bank{
         display: flex;

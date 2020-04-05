@@ -138,9 +138,15 @@
       <div v-if="filter_lelang_data_bid.length == 0">
         <div class="bg-penawaran-tertinggi">
             <div class="text-penawaran-tertinggi">Penawaran Tertinggi</div>
-            <div class="nilai-penawaran-tertinggi"><small>Belum ada Bidding</small>
-              <font-awesome-icon :icon="['fas', 'chevron-right']" style="width:14; font-size:14;" @click="getbidtertinggi()"/>
-            </div>
+            <timer :starttime="now" :endtime="lelang_data_lot.expired_at" :trans="transOption" />
+        </div>
+        <div class="user-penawar-tertinggi">
+          <div>
+            Harga awal
+          </div>
+          <button class="nilai-penawaran-tertinggi">{{lelang_data_lot.bid_price}}
+            <font-awesome-icon :icon="['fas', 'chevron-right']" style="width:14; font-size:14;"/>
+          </button>
         </div>
         <div class="footer-bidding">
           <button class="btn-join-bid" @click="join_lot(id)">
@@ -152,9 +158,15 @@
       <div v-else>
         <div class="bg-penawaran-tertinggi">
             <div class="text-penawaran-tertinggi">Penawaran Tertinggi</div>
-            <div class="nilai-penawaran-tertinggi">{{filter_bid_tertinggi2}}
-              <font-awesome-icon :icon="['fas', 'chevron-right']" style="width:14; font-size:14;" @click="getbidtertinggi()"/>
+            <timer :starttime="now" :endtime="lelang_data_lot.expired_at" :trans="transOption" />
+        </div>
+        <div class="user-penawar-tertinggi">
+            <div v-for="(item, index) in filter_user_penawar_tertinggi" :key="index">
+              {{item.user.name}}
             </div>
+            <button @click='detail_bidding(lelang_data_lot.id)' class="nilai-penawaran-tertinggi">{{filter_bid_tertinggi2}}
+              <font-awesome-icon :icon="['fas', 'chevron-right']" style="width:14; font-size:14;"/>
+            </button>
         </div>
         <div class="footer-bidding">
           <button class="btn-join-bid" @click="join_lot(id)">
@@ -199,11 +211,12 @@
 
 <script>
   import axios from 'axios'
-  import Notfound from '../404'
+  import moment from 'moment'
+  import Timer from '../partial_home/timer'
 
   export default {
     components:{
-      'notfound':Notfound
+      'timer': Timer,
     },
     data() {
       return {
@@ -211,6 +224,7 @@
         token : '',
         lelang_data_lot:[],
         lelang_data_bid:[],
+        user_penawar_tertinggi : [],
         lelang_data_lotdetail : [],
         lelang_data_product: [],
         productid: [],
@@ -222,7 +236,22 @@
         },
         showloader: false,
         btnsubmit: false,
-        showtext_btn: true
+        showtext_btn: true,
+        now : moment(),
+        transOption: {
+            day: "",
+            hours: "",
+            minutes: "",
+            seconds: "",
+            expired: "",
+            running: "",
+            upcoming: "",
+            status: {
+              expired: "Selesai",
+              running: "",
+              upcoming: "Akan Datang"
+            }
+        },
       }
     },
     computed: {
@@ -237,6 +266,9 @@
       },
       filter_penawaran(){
         return this.lelang_data_lot.total_bidder;
+      },
+      filter_user_penawar_tertinggi(){
+        return this.lelang_data_bid.slice(0,1);
       }
     },
     methods: {
@@ -403,6 +435,9 @@
             })
           }
         }
+      },
+      detail_bidding(id){
+        this.$router.push('/details/detail_bidding/'+id)
       }
     },
     created() {
@@ -426,6 +461,29 @@
 </script>
 
 <style>
+
+/* timer */
+  .countdown{
+    display: flex !important;
+    justify-content: space-around !important;
+    margin-bottom: 0px !important;
+  }
+  .day, .hour, .min, .sec {
+    padding: 5px !important;
+    text-align: center !important;
+  }
+  span.number{
+    background: linear-gradient(145deg, #fffb3f, #decc2e);
+    padding-right: 5px;
+    padding-left: 5px;
+    font-size: small !important;
+    border-radius: 5px;
+  }
+
+  .format{
+    font-size: 70% !important;;
+  }
+/* end timer */
 
 /* modal */
 .v--modal-overlay .v--modal-box {
@@ -636,6 +694,7 @@
   }
 
   .bg-penawaran-tertinggi{
+    align-items:center;
     display: flex;
     justify-content:space-between;
     width: 480px;
@@ -643,9 +702,20 @@
     margin-top: 10px;
     padding-left: 30px;
     padding-right: 30px;
-    margin-bottom:100px;
+    margin-bottom:20px;
     font-weight:bold;
   }
+
+  .user-penawar-tertinggi {
+    width: 480px;;
+    margin: auto;
+    margin-bottom: 100px;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
 
   .nilai-penawaran-tertinggi{
     display: flex;
@@ -806,6 +876,7 @@
   }
 
   .bg-penawaran-tertinggi{
+    align-items:center;
     display: flex;
     justify-content:space-between;
     width: auto;
@@ -813,8 +884,16 @@
     margin-top: 10px;
     padding-left: 30px;
     padding-right: 30px;
-    margin-bottom:100px;
+    margin-bottom:20px;
     font-weight:bold;
+  }
+
+  .user-penawar-tertinggi {
+    margin-bottom: 100px;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 
   .nilai-penawaran-tertinggi{
@@ -976,6 +1055,7 @@
   }
 
   .bg-penawaran-tertinggi{
+    align-items:center;
     display: flex;
     justify-content:space-between;
     width: auto;
@@ -983,9 +1063,18 @@
     margin-top: 10px;
     padding-left: 30px;
     padding-right: 30px;
-    margin-bottom:100px;
+    margin-bottom:20px;
     font-weight:bold;
   }
+
+  .user-penawar-tertinggi {
+    margin-bottom: 100px;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
 
   .nilai-penawaran-tertinggi{
     display: flex;

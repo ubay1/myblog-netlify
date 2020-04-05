@@ -234,7 +234,7 @@
 <style lang="scss">
   @media(min-width:481px){
     .header-lelang-all {
-      background: linear-gradient(145deg, #00baff, #009dd7);
+      // background: linear-gradient(145deg, #00baff, #009dd7);
       width: 480px;
       margin: auto;
       display: flex;
@@ -245,11 +245,11 @@
       border-bottom: 1px solid #e2e8f0;
       box-shadow: 0px 0px 2px 0px lightgrey;
       .text-header-lelang-all {
+        color: #00aeef;
         font-weight: bold;
-        color: #ffffff;
       }
       .icon-header-lelang-all{
-        color: #ffffff;
+        color: #00aeef;
         font-size:18px;
         width:20px;
       }
@@ -258,7 +258,7 @@
 
   @media(min-width:321px) and (max-width:480px){
     .header-lelang-all {
-      background: linear-gradient(145deg, #00baff, #009dd7);
+      // background: linear-gradient(145deg, #00baff, #009dd7);
       margin: auto;
       display: flex;
       padding: 15px;
@@ -266,9 +266,9 @@
       border-bottom: 1px solid #e2e8f0;
       align-items: center;
       .text-header-lelang-all {
+        color: #00aeef;
         font-size: 20px;
         font-weight: bold;
-        color: #ffffff;
         width: 200px;
         white-space: nowrap;
         overflow: hidden;
@@ -276,7 +276,7 @@
         text-align: center;;
       }
       .icon-header-lelang-all{
-        color: #ffffff;
+        color: #00aeef;
         font-size:18px;
         width:20px;
       }
@@ -285,7 +285,7 @@
 
   @media(min-width:0px) and (max-width:320px){
     .header-lelang-all {
-      background: linear-gradient(145deg, #00baff, #009dd7);
+      // background: linear-gradient(145deg, #00baff, #009dd7);
       margin: auto;
       display: flex;
       padding: 15px;
@@ -293,9 +293,9 @@
       border-bottom: 1px solid #e2e8f0;
       align-items: center;
       .text-header-lelang-all {
+        color: #00aeef;
         font-size: 20px;
         font-weight: bold;
-        color: #ffffff;
         width: 200px;
         white-space: nowrap;
         overflow: hidden;
@@ -303,7 +303,7 @@
         text-align: center;;
       }
       .icon-header-lelang-all{
-        color: #ffffff;
+        color: #00aeef;
         font-size:18px;
         width:20px;
       }

@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <small v-if="statusType !== 'expired'">berakhir dalam</small>
-    <small v-if="statusType == 'expired'">lelang berakhir</small>
+  <div class="bg-timer">
     <div class="countdown" v-show="statusType !== 'expired'">
       <div class="day">
         <span class="number">{{ days }}</span>

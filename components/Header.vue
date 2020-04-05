@@ -10,7 +10,7 @@
           <font-awesome-icon :icon="['fas', 'box-open']" class="iconmenuHeader"/>
           <span class="text-menuHeader">buat <br> lelang</span>
         </nuxt-link>
-        <nuxt-link to="/" class="menuHeader1">
+        <nuxt-link to="/partial_home/lelang_terbaru_all" class="menuHeader1">
           <font-awesome-icon :icon="['fas', 'fire-alt']" class="iconmenuHeader"/>
           <span class="text-menuHeader">lelang <br> terkini</span>
         </nuxt-link>
