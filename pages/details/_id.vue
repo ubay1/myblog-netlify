@@ -296,7 +296,7 @@
         });
       },
       back(){
-        this.$router.push('/');
+        window.history.back()
       },
       getid(id){
         this.productid = this.lelang_data_lotdetail[id]

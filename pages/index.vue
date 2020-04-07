@@ -61,7 +61,7 @@
           <div class="bg-mainTerlaris">
             <div class="text-main">
               <div>  Lelang terlaris </div>
-              <nuxt-link to="" class="lihat-semua"> Lihat semua</nuxt-link>
+              <nuxt-link to="partial_home/lelang_terlaris_all" class="lihat-semua"> Lihat semua</nuxt-link>
             </div>
             <div>
               <div class="bg-card-mainTerlaris">
@@ -69,14 +69,16 @@
                   <div class="harga-lelang">
                     <small>Harga lot</small> {{item.format_bid}}
                   </div>
-                  <div class="btn-favorit">
-                    <span  v-if="item.is_favorite == false">
-                      <font-awesome-icon :icon="['fas', 'star']" class="icon-favorit" style="width:25px; font-size:20px; filter: drop-shadow(0px 1px 1px #8e8a8a);"/>
+                  <button @click="save_favorit(item.id)" class="btn-favorit" v-if="item.is_favorite == false">
+                    <span >
+                      <font-awesome-icon :icon="['fas', 'star']" :class="{activeFavorit: is_favorite}" class="icon-favorit" style="width:25px; font-size:20px; filter: drop-shadow(0px 1px 1px #8e8a8a);"/>
                     </span>
-                    <span v-else>
+                  </button>
+                  <button @click="save_favorit(item.id)" class="btn-favorit" v-else>
+                    <span>
                       <font-awesome-icon :icon="['fas', 'star']" class="icon-favorit" style="width:25px; font-size:20px; filter: drop-shadow(0px 1px 1px #8e8a8a); color:#00aeef;"/>
                     </span>
-                  </div>
+                  </button>
                   <span>
                     <img alt="img-lot-terlaris" class="img-list-lelang" :src="baseURL+item.picture[0]" >
                   </span>
@@ -273,31 +275,6 @@ export default {
           }
 				});
     },
-    save_favorit(id){
-      const config = {
-        headers: {
-          Authorization: `Bearer ${this.token}`
-        }
-      };
-      this.$axios.post(process.env.DEV_API + "user/save_lot_favorit/"+id, [], config)
-      .then(response => {
-        console.log(response.data.success)
-        if(response.data.success == true){
-          this.$toasted.show(response.data.message, {
-            theme: "bubble",
-            position: "top-center",
-            duration : 5000
-          });
-          this.is_favorite = !this.is_favorite
-        }else{
-          this.$toasted.show(response.data.message, {
-            theme: "bubbles",
-            position: "top-center",
-            duration : 5000
-          });
-        }
-      });
-    },
     getLotAuth(){
       const config = {
           headers: {
@@ -351,6 +328,32 @@ export default {
           }
           // console.log(this.lelang_expired);
 				});
+    },
+    save_favorit(id){
+      const config = {
+        headers: {
+          Authorization: `Bearer ${this.token}`
+        }
+      };
+      this.$axios.post(process.env.DEV_API + "user/save_lot_favorit/"+id, [], config)
+      .then(response => {
+        console.log(response.data.success)
+        if(response.data.success == true){
+          this.$toasted.show(response.data.message, {
+            theme: "bubble",
+            position: "top-center",
+            duration : 5000
+          });
+          this.getLotAuth();
+          this.getLelangTerlarisAuth();
+        }else{
+          this.$toasted.show(response.data.message, {
+            theme: "bubbles",
+            position: "top-center",
+            duration : 5000
+          });
+        }
+      });
     },
     getTipsLelang() {
 			axios.get(process.env.DEV_API + "user/getBlog")

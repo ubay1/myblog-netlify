@@ -142,7 +142,7 @@ export default {
         background: #00aeef;
         width: 100%;
         color: #fff;
-        padding: 7px;
+        padding: 8px;
         box-shadow: 0px 2px 2px lightgrey;
         border-radius: 20px;
       }
@@ -212,7 +212,7 @@ export default {
         background: #00aeef;
         width: 100%;
         color: #fff;
-        padding: 5px;
+        padding: 8px;
         box-shadow: 0px 2px 2px lightgrey;
         border-radius: 20px;
       }

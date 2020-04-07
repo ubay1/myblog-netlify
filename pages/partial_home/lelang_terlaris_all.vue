@@ -3,7 +3,7 @@
     <div class="header-lelang-all">
       <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-lelang-all" @click="back()"/>
       <div class="text-header-lelang-all">
-        List Lelang Terbaru
+        List Lelang Terlaris
       </div>
       <div class="search-lelang-all">
         <font-awesome-icon :icon="['fas', 'search']" class="icon-header-lelang-all"/>
@@ -45,7 +45,7 @@
                 </span>
               </div>
               <div class="nama-lot-lelang-all">
-                {{item.nama}}
+                Lot-{{item.id}}
               </div>
               <div class="lot-expired-lelang-all">
                 <timer :starttime="now" :endtime="item.expired_at" :trans="transOption" />
@@ -76,7 +76,7 @@
                 </span>
               </div>
               <div class="nama-lot-lelang-all">
-                {{item.nama}}
+                Lot-{{item.id}}
               </div>
               <div class="lot-expired-lelang-all">
                 <timer :starttime="now" :endtime="item.expired_at" :trans="transOption" />
@@ -169,7 +169,7 @@
             Authorization: `Bearer ${this.token}`
           }
         };
-        this.$axios.get(this.devAPI + "user/get_lot_auth", config)
+        this.$axios.get(this.devAPI + "user/lot_terlaris_auth", config)
           .then(response => {
             console.log(response.data.data.data)
             if(response.data.success == true){
