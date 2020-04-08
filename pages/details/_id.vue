@@ -138,7 +138,12 @@
       <div v-if="filter_lelang_data_bid.length == 0">
         <div class="bg-penawaran-tertinggi">
             <div class="text-penawaran-tertinggi">Penawaran Tertinggi</div>
-            <timer :starttime="now" :endtime="lelang_data_lot.expired_at" :trans="transOption" />
+            <div v-if="new Date(lelang_data_lot.expired_at).getTime() < new Date(now.format('YYYY-MM-DD HH:mm:ss')).getTime()">
+              <timer-off></timer-off>
+            </div>
+            <div v-else>
+              <timer :starttime="now" :endtime="lelang_data_lot.expired_at" :trans="transOption" />
+            </div>
         </div>
         <div class="user-penawar-tertinggi">
           <div>
@@ -149,16 +154,29 @@
           </button>
         </div>
         <div class="footer-bidding">
-          <button class="btn-join-bid" @click="join_lot(id)">
-            <img src="~/static/img/img_auction.png" alt="img-bidding" style="width:20px; margin-right:10px;">
-            Ikuti Lelang
-          </button>
+          <div v-if="new Date(lelang_data_lot.expired_at).getTime() < new Date(now.format('YYYY-MM-DD HH:mm:ss')).getTime()">
+            <button class="btn-join-bid">
+              <img src="~/static/img/img_auction.png" alt="img-bidding" style="width:20px; margin-right:10px;">
+              Lelang telah selesai
+            </button>
+          </div>
+          <div v-else>
+            <button class="btn-join-bid" @click="join_lot(id)">
+              <img src="~/static/img/img_auction.png" alt="img-bidding" style="width:20px; margin-right:10px;">
+              Ikuti Lelang
+            </button>
+          </div>
         </div>
       </div>
       <div v-else>
         <div class="bg-penawaran-tertinggi">
             <div class="text-penawaran-tertinggi">Penawaran Tertinggi</div>
-            <timer :starttime="now" :endtime="lelang_data_lot.expired_at" :trans="transOption" />
+            <div v-if="new Date(lelang_data_lot.expired_at).getTime() < new Date(now.format('YYYY-MM-DD HH:mm:ss')).getTime()">
+              <timer-off></timer-off>
+            </div>
+            <div v-else>
+              <timer :starttime="now" :endtime="lelang_data_lot.expired_at" :trans="transOption" />
+            </div>
         </div>
         <div class="user-penawar-tertinggi">
             <div v-for="(item, index) in filter_user_penawar_tertinggi" :key="index">
@@ -169,10 +187,18 @@
             </button>
         </div>
         <div class="footer-bidding">
-          <button class="btn-join-bid" @click="join_lot(id)">
-            <img src="~/static/img/img_auction.png" alt="img-bidding" style="width:20px; margin-right:10px;">
-            Ikuti Lelang
-          </button>
+          <div v-if="new Date(lelang_data_lot.expired_at).getTime() < new Date(now.format('YYYY-MM-DD HH:mm:ss')).getTime()">
+            <button class="btn-join-bid">
+              <img src="~/static/img/img_auction.png" alt="img-bidding" style="width:20px; margin-right:10px;">
+              Lelang telah selesai
+            </button>
+          </div>
+          <div v-else>
+            <button class="btn-join-bid" @click="join_lot(id)">
+              <img src="~/static/img/img_auction.png" alt="img-bidding" style="width:20px; margin-right:10px;">
+              Ikuti Lelang
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -213,10 +239,12 @@
   import axios from 'axios'
   import moment from 'moment'
   import Timer from '../partial_home/timer'
+  import TimerOff from '../partial_home/timer_off'
 
   export default {
     components:{
       'timer': Timer,
+      'timer-off' :TimerOff
     },
     data() {
       return {
@@ -476,7 +504,7 @@
     background: linear-gradient(145deg, #fffb3f, #decc2e);
     padding-right: 5px;
     padding-left: 5px;
-    font-size: small !important;
+    /* font-size: small !important; */
     border-radius: 5px;
   }
 
@@ -703,7 +731,11 @@
     padding-left: 30px;
     padding-right: 30px;
     margin-bottom:20px;
-    font-weight:bold;
+    /* font-weight:bold; */
+  }
+
+  .text-penawaran-tertinggi{
+    font-weight: bold;
   }
 
   .user-penawar-tertinggi {
@@ -885,7 +917,11 @@
     padding-left: 30px;
     padding-right: 30px;
     margin-bottom:20px;
-    font-weight:bold;
+    /* font-weight:bold; */
+  }
+
+  .text-penawaran-tertinggi{
+    font-weight: bold;
   }
 
   .user-penawar-tertinggi {
@@ -1064,7 +1100,11 @@
     padding-left: 30px;
     padding-right: 30px;
     margin-bottom:20px;
-    font-weight:bold;
+    /* font-weight:bold; */
+  }
+
+  .text-penawaran-tertinggi{
+    font-weight: bold;
   }
 
   .user-penawar-tertinggi {

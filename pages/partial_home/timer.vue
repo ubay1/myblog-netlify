@@ -108,6 +108,7 @@
     display: flex;
     justify-content: space-around;
     margin-bottom: 10px;
+    margin-top: 10px;
   }
   span.number{
     background: linear-gradient(145deg, #fffb3f, #decc2e);

@@ -384,10 +384,10 @@ export default {
   mounted() {
     if(process.client){
       var aa = localStorage.getItem('lelangoApp');
-      var cekakses = JSON.parse(aa).authh.accessToken;
+      // var cekakses = JSON.parse(aa).authh.accessToken;
 
       // cek adakah akses atau adakah key localstorage dengan nama lelangoApp
-      if(aa == null || cekakses == false){
+      if(aa == null){
         this.getLot();
         this.getLelangTerlaris();
       } else{
