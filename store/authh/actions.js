@@ -36,5 +36,9 @@ export default{
       commit('logout')
       resolve()
     })
+  },
+
+  to_slow: ({commit}, data) => {
+    commit('warehouse', data.warehouse)
   }
 }

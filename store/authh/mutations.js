@@ -17,5 +17,14 @@ export default{
   },
   cek_auth: (state) => {
     state.accessToken
-  }
+  },
+  warehouse: (state) => {
+    state.warehouse
+  },
+  slow: (state) => {
+    state.slow
+  },
+  fast: (state) => {
+    state.fast
+  },
 }

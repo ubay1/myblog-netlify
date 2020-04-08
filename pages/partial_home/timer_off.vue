@@ -43,7 +43,7 @@
   .countdown-off{
     display: flex;
     justify-content: space-around;
-    /* margin-bottom: 10px; */
+    margin-bottom: 10px;
     margin-top: 10px;
   }
   span.number-off{

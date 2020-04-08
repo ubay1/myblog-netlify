@@ -24,6 +24,38 @@
             <div>Tidak ada lelang yang aktif</div>
           </div>
         </div>
+        <div v-else-if="datalot.length == 1">
+          <div class="grid-lelang-all-one">
+            <div v-for="(item, index) in datalot" :key="index" class="lelang-all">
+              <div class="harga-lelang">
+                <!-- <small>Harga lot</small>  -->
+                {{item.format_bid}}
+              </div>
+              <div class="bg-btn-favorit">
+                <button class="btn-favorit" @click="save_favorit(item.id)">
+                  <span  v-if="item.is_favorite == false">
+                    <font-awesome-icon :icon="['fas', 'star']" class="icon-favorit" style="width:25px; font-size:20px; filter: drop-shadow(0px 1px 1px #8e8a8a);"/>
+                  </span>
+                  <span v-else>
+                    <font-awesome-icon :icon="['fas', 'star']" class="icon-favorit" style="width:25px; font-size:20px; filter: drop-shadow(0px 1px 1px #8e8a8a); color:#00aeef;"/>
+                  </span>
+                </button>
+                <span>
+                  <img alt="img-lot-terbaru" class="img-list-lelang-all" :src="baseURL+item.picture[0]" >
+                </span>
+              </div>
+              <div class="nama-lot-lelang-all">
+                Lot-{{item.id}}
+              </div>
+              <div class="lot-expired-lelang-all">
+                <timer :starttime="now" :endtime="item.expired_at" :trans="transOption" />
+              </div>
+              <button @click="detailLelang(item.id)" class="btn-detail">Detail
+                Lelang
+              </button>
+            </div>
+          </div>
+        </div>
         <div v-else>
           <div class="grid-lelang-all">
             <div v-for="(item, index) in datalot" :key="index" class="lelang-all">
@@ -31,7 +63,7 @@
                 <!-- <small>Harga lot</small>  -->
                 {{item.format_bid}}
               </div>
-              <div class="bg-btn-favaorit">
+              <div class="bg-btn-favorit">
                 <button class="btn-favorit" @click="save_favorit(item.id)">
                   <span  v-if="item.is_favorite == false">
                     <font-awesome-icon :icon="['fas', 'star']" class="icon-favorit" style="width:25px; font-size:20px; filter: drop-shadow(0px 1px 1px #8e8a8a);"/>
@@ -64,13 +96,14 @@
             <div>Tidak ada lelang yang aktif</div>
           </div>
         </div>
-        <div class="grid-lelang-all">
+        <div v-else-if="datalot.length == 1">
+          <div class="grid-lelang-all-one">
             <div v-for="(item, index) in datalot" :key="index" class="lelang-all">
               <div class="harga-lelang">
                 <!-- <small>Harga lot</small>  -->
                 {{item.format_bid}}
               </div>
-              <div class="bg-btn-favaorit">
+              <div class="bg-btn-favorit" style="display:inline-block;">
                 <span>
                   <img alt="img-lot-terbaru" class="img-list-lelang-all" :src="baseURL+item.picture[0]" >
                 </span>
@@ -86,6 +119,31 @@
               </button>
             </div>
           </div>
+        </div>
+        <div v-else>
+          <div class="grid-lelang-all">
+            <div v-for="(item, index) in datalot" :key="index" class="lelang-all">
+              <div class="harga-lelang">
+                <!-- <small>Harga lot</small>  -->
+                {{item.format_bid}}
+              </div>
+              <div class="bg-btn-favorit">
+                <span>
+                  <img alt="img-lot-terbaru" class="img-list-lelang-all" :src="baseURL+item.picture[0]" >
+                </span>
+              </div>
+              <div class="nama-lot-lelang-all">
+                Lot-{{item.id}}
+              </div>
+              <div class="lot-expired-lelang-all">
+                <timer :starttime="now" :endtime="item.expired_at" :trans="transOption" />
+              </div>
+              <button @click="detailLelang(item.id)" class="btn-detail">Detail
+                Lelang
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </v-wait>
   </div>
@@ -132,7 +190,7 @@
         return this.accessTokens = this.$store.getters['authh/accessToken'];
       },
       filterDataLot(){
-        console.log('mantap gan '+this.$store.getters['authh/accessToken'])
+        console.log('mantap gans '+this.$store.getters['authh/accessToken'])
         return this.lot = this.$store.getters['authh/accessToken'];
       },
     },
@@ -143,7 +201,7 @@
       async getLot() {
         this.$wait.start('load_all_lot');
 
-        this.$axios.get(this.devAPI + "user/lot")
+        this.$axios.get(this.devAPI + "user/lot_terlaris")
         .then(response => {
           console.log(response.data.success)
           if(response.data.success == true){
@@ -218,10 +276,10 @@
     mounted() {
       if(process.client){
         var aa = localStorage.getItem('lelangoApp');
-        var cekakses = JSON.parse(aa).authh.accessToken;
+        // var cekakses = JSON.parse(aa).authh.accessToken;
 
         // cek adakah akses atau adakah key localstorage dengan nama lelangoApp
-        if(aa == null || cekakses == false){
+        if(aa == null){
           this.getLot();
         } else{
           this.token = JSON.parse(aa).authh.userData.user.token.access_token;
@@ -348,7 +406,7 @@
             width:100%;
           }
 
-          .bg-btn-favaorit{
+          .bg-btn-favorit{
             display: flex;
             flex-direction: row-reverse;
             position: relative;
@@ -435,7 +493,7 @@
             width:100%;
           }
 
-          .bg-btn-favaorit{
+          .bg-btn-favorit{
             display: flex;
             flex-direction: row-reverse;
             position: relative;
@@ -523,7 +581,7 @@
             width:100%;
           }
 
-          .bg-btn-favaorit{
+          .bg-btn-favorit{
             display: flex;
             flex-direction: row-reverse;
             position: relative;
@@ -572,5 +630,80 @@
 
       }
     }
+  }
+
+  // jika hanya ada 1 data
+  .grid-lelang-all-one{
+      margin: auto;
+      margin-bottom: 0px;
+      display: grid;
+      grid-template-columns: 200px;
+      align-items: center;
+      padding: 20px;
+      grid-gap: 20px;
+      justify-content: center;
+      .lelang-all{
+          cursor: pointer;
+          text-align: center;
+          border-radius: 10px;
+          box-shadow: 0px 2px 4px lightgrey;
+
+          .harga-lelang{
+            font-size: 14px;
+            background: linear-gradient(145deg, #00baff, #009dd7);
+            padding: 10px;
+            border-radius: 10px 10px 0px 0px;
+            text-align: center;
+            color: #fff;
+            width:100%;
+          }
+
+          .bg-btn-favorit{
+            position: relative;
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: flex-start;
+            .btn-favorit{
+              position: relative;
+              padding: 10px;
+            }
+            .icon-favorit{
+              color: #b9b8b8;
+            }
+
+            .img-list-lelang-all{
+              width: 120px;
+              height: auto;
+              padding: 10px;
+            }
+          }
+
+          .nama-lot-lelang-all-favorit{
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+          }
+          .lot-expired-lelang-all-favorit{
+            text-align: center;
+            width: 100%;
+          }
+
+          .countdown{
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            span.number{
+              background: linear-gradient(145deg, #fffb3f, #decc2e);
+              padding-right: 5px;
+              padding-left: 5px;
+              border-radius: 5px;
+            }
+            .format{
+              font-size: 80%;;
+            }
+          }
+
+      }
   }
 </style>

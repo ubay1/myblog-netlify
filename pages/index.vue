@@ -28,7 +28,7 @@
               <div class="bg-card-mainTerkini">
                 <div class="card-mainTerkini" v-for="(item, index) in filterLelangTerbaru" :key="index">
                   <div class="harga-lelang">
-                    <small>Harga lot</small> {{item.format_bid}}
+                     {{item.format_bid}}
                   </div>
                   <button @click="save_favorit(item.id)" class="btn-favorit" v-if="item.is_favorite == false">
                     <span >
@@ -67,7 +67,7 @@
               <div class="bg-card-mainTerlaris">
                 <div class="card-mainTerlaris" v-for="(item, index) in filterLelangTerlaris" :key="index">
                   <div class="harga-lelang">
-                    <small>Harga lot</small> {{item.format_bid}}
+                     {{item.format_bid}}
                   </div>
                   <button @click="save_favorit(item.id)" class="btn-favorit" v-if="item.is_favorite == false">
                     <span >
@@ -109,7 +109,7 @@
               <div class="bg-card-mainTerkini">
                 <div class="card-mainTerkini" v-for="(item, index) in filterLelangTerbaru" :key="index">
                   <div class="harga-lelang">
-                    <small>Harga lot</small> {{item.format_bid}}
+                     {{item.format_bid}}
                   </div>
                   <span>
                     <img alt="img-lot-terbaru" class="img-list-lelang" :src="baseURL+item.picture[0]" >
@@ -132,13 +132,13 @@
           <div class="bg-mainTerlaris">
             <div class="text-main">
               <div>  Lelang terlaris </div>
-              <nuxt-link to="" class="lihat-semua"> Lihat semua</nuxt-link>
+              <nuxt-link to="partial_home/lelang_terlaris_all" class="lihat-semua"> Lihat semua</nuxt-link>
             </div>
             <div>
               <div class="bg-card-mainTerlaris">
                 <div class="card-mainTerlaris" v-for="(item, index) in filterLelangTerlaris" :key="index">
                   <div class="harga-lelang">
-                    <small>Harga lot</small> {{item.format_bid}}
+                     {{item.format_bid}}
                   </div>
                   <span>
                     <img alt="img-lot-terlaris" class="img-list-lelang" :src="baseURL+item.picture[0]" >

@@ -210,6 +210,10 @@ export default {
               console.log(response);
               this.$store.dispatch('authh/logout', response.data).then(() => {
                 console.log('response true')
+
+                if (process.client) {
+                  var aa = localStorage.removeItem('lelangoApp');
+                }
                 // location.replace('/')
                 this.$router.push('/')
               }).catch((err) => {

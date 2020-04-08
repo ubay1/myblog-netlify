@@ -6,5 +6,8 @@ export default{
   // isLoggedIn: state => !!state.userData,
   authStatus: state => state.status,
   userData: state => state.userData,
-  accessToken: state => state.accessToken
+  accessToken: state => state.accessToken,
+  warehouse : state => state.warehouse,
+  slow : state => state.slow,
+  fast : state => state.fast
 }

@@ -11,7 +11,7 @@
     <div class="main-create-lelang">
       <div class="judul-create">
         <div>
-          <img src='img/info2.png' style="width:100px;">
+          <img v-lazy="'img/info2.png'" :key="'img/info2.png'" style="width:100px;">
         </div>
         <div><b>Tata Cara Lelang</b></div>
       </div>
@@ -34,7 +34,7 @@
     </div>
 
     <div class="bg-button-lanjut">
-      <button class="btn-lanjut">Lanjut</button>
+      <button class="btn-lanjut" @click="goto_hot()">Lanjut</button>
     </div>
   </div>
 </template>
@@ -53,6 +53,9 @@ export default {
   methods: {
     back(){
       window.history.back()
+    },
+    goto_hot(){
+      this.$router.push('/create_lot/hot')
     }
   },
   mounted() {
@@ -77,13 +80,14 @@ export default {
 <style lang="scss">
   @media (min-width:481px){
     .header-create-lelang{
+      font-weight:bold;
       width: 480px;
       margin: auto;
       /* background: linear-gradient(145deg, #00baff, #009dd7); */
       color:#00aeef;
       margin-bottom: 10px;
       padding: 10px;
-      box-shadow: 0px 2px 6px lightgrey;
+      border-bottom: 1px solid #e2e8f0;
       display: flex;
       align-items: center;
 
@@ -151,12 +155,13 @@ export default {
 
   @media (max-width:480px){
     .header-create-lelang{
+      font-weight:bold;
       margin: auto;
       /* background: linear-gradient(145deg, #00baff, #009dd7); */
       color:#00aeef;
       margin-bottom: 10px;
       padding: 10px;
-      box-shadow: 0px 2px 6px lightgrey;
+      border-bottom: 1px solid #e2e8f0;
       display: flex;
       align-items: center;
 

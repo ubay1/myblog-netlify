@@ -82,6 +82,8 @@ export default {
 <style lang="scss">
   @media(min-width:481px){
     .header-pilih-pembayaran{
+      font-weight: bold;
+      text-align: center;
       margin: auto;
       width: 480px;
       /* background: linear-gradient(145deg, #00baff, #009dd7); */
@@ -103,7 +105,7 @@ export default {
       .text-header-pilih-pembayaran{
         color: #00aeef;
         white-space: nowrap;
-        width: 200px;
+        width: 240px;
         overflow: hidden;
         text-overflow: ellipsis;
         text-align: center;
@@ -141,6 +143,8 @@ export default {
 
   @media(max-width:480px){
     .header-pilih-pembayaran{
+      font-weight: bold;
+      text-align: center;
       margin: auto;
       /* background: linear-gradient(145deg, #00baff, #009dd7); */
       color:#00aeef;
@@ -161,7 +165,7 @@ export default {
       .text-header-pilih-pembayaran{
         color: #00aeef;
         white-space: nowrap;
-        width: 200px;
+        width: 240px;
         overflow: hidden;
         text-overflow: ellipsis;
         text-align: center;

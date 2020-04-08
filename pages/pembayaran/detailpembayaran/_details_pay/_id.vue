@@ -178,6 +178,7 @@ export default {
 <style lang="scss">
   @media(min-width:481px){
     .header-pilih-detail-pembayaran{
+      font-weight: bold;
       margin: auto;
       width: 480px;
       /* background: linear-gradient(145deg, #00baff, #009dd7); */
@@ -286,6 +287,7 @@ export default {
 
   @media(max-width:480px){
     .header-pilih-detail-pembayaran{
+      font-weight: bold;
       margin: auto;
       /* background: linear-gradient(145deg, #00baff, #009dd7); */
       color:#00aeef;

@@ -615,6 +615,7 @@
     height: 5px;
   }
   .header-detail{
+    font-weight: bold;
     width: 481px;
     margin: auto;
     /* background: linear-gradient(145deg, #00baff, #009dd7); */
@@ -639,7 +640,7 @@
   }
   .text-header-penawaran{
     color: #1ddc72;
-    /* font-weight: bold; */
+    font-weight: bold;
   }
 
   .main-detail{
@@ -807,6 +808,7 @@
     height: 0px;
   }
   .header-detail{
+    font-weight: bold;
     width: auto;
     margin: auto;
     /* background: linear-gradient(145deg, #00baff, #009dd7); */
@@ -831,7 +833,7 @@
   }
   .text-header-penawaran{
     color: #1ddc72;
-    /* font-weight: bold; */
+    font-weight: bold;
   }
 
   .main-detail{
@@ -990,6 +992,7 @@
     height: 0px;
   }
   .header-detail{
+    font-weight: bold;
     width: auto;
     margin: auto;
     /* background: linear-gradient(145deg, #00baff, #009dd7); */
@@ -1014,7 +1017,7 @@
   }
   .text-header-penawaran{
     color: #1ddc72;
-    /* font-weight: bold; */
+    font-weight: bold;
   }
 
   .main-detail{

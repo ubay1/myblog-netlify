@@ -274,7 +274,8 @@ export default {
       color:#00aeef;
       margin-bottom: 10px;
       padding: 10px;
-      box-shadow: 0px 2px 6px lightgrey;
+      // box-shadow: 0px 2px 6px lightgrey;
+      border-bottom: 1px solid #e2e8f0;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -312,7 +313,8 @@ export default {
       color:#00aeef;
       margin-bottom: 10px;
       padding: 10px;
-      box-shadow: 0px 2px 6px lightgrey;
+      // box-shadow: 0px 2px 6px lightgrey;
+      border-bottom: 1px solid #e2e8f0;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -652,5 +654,5 @@ export default {
           }
 
       }
-    }
+  }
 </style>
