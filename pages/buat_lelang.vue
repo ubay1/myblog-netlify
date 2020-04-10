@@ -106,6 +106,7 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         text-align: center;
+        font-size: 20px;
       }
     }
 
@@ -180,6 +181,7 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         text-align: center;
+        font-size: 20px;
       }
     }
 

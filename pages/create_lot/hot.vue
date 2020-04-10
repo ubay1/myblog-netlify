@@ -1,11 +1,14 @@
 <template>
   <div>
     <div>
-      <div class="header-create-lelang">
+      <div class="header-create-lelang-hot">
         <div>
-          <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-create-lelang" @click="back()"/>
+          <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-create-lelang-hot" @click="back()"/>
         </div>
-        <div class="text-header-create-lelang">Pilih Produk Hot</div>
+        <div class="text-header-create-lelang-hot">Pilih Produk Hot</div>
+        <div>
+          <font-awesome-icon :icon="['fas', 'search']" class="icon-header-create-lelang-hot"/>
+        </div>
       </div>
     </div>
 
@@ -33,7 +36,7 @@
             </div>
             <div v-else>
               <div v-if="dataSelect.idSelect == index" class="select_product">
-                <font-awesome-icon :icon="['fas', 'check']" class="icon-header-create-lelang"/>
+                <font-awesome-icon :icon="['fas', 'check']" class="icon-header-create-lelang-hot"/>
               </div>
             </div>
             <img :src="baseURL+item.picture[0]" alt="img-produk-hot">
@@ -138,7 +141,7 @@ export default {
 
 <style lang="scss">
   @media (min-width:481px){
-    .header-create-lelang{
+    .header-create-lelang-hot{
       font-weight:bold;
       width: 480px;
       margin: auto;
@@ -149,8 +152,9 @@ export default {
       border-bottom: 1px solid #e2e8f0;
       display: flex;
       align-items: center;
+      justify-content: space-between;
 
-      .icon-header-create-lelang{
+      .icon-header-create-lelang-hot{
         color: #00aeef;
         /* position: relative; */
         /* left: -8em; */
@@ -158,13 +162,14 @@ export default {
         width:22px;
       }
 
-      .text-header-create-lelang{
+      .text-header-create-lelang-hot{
         color: #00aeef;
         white-space: nowrap;
         width: 200px;
         overflow: hidden;
         text-overflow: ellipsis;
         text-align: center;
+        font-size: 20px;
       }
     }
 
@@ -174,7 +179,7 @@ export default {
       // padding: 10px;
       button.btn_hot_lanjut {
         background: #00aeef;
-        width: 100%;
+        width: 480px;
         color: #fff;
         padding: 8px;
         box-shadow: 0px 2px 2px lightgrey;
@@ -186,7 +191,7 @@ export default {
   }
 
   @media (max-width:480px){
-    .header-create-lelang{
+    .header-create-lelang-hot{
       font-weight:bold;
       margin: auto;
       /* background: linear-gradient(145deg, #00baff, #009dd7); */
@@ -196,8 +201,9 @@ export default {
       border-bottom: 1px solid #e2e8f0;
       display: flex;
       align-items: center;
+      justify-content: space-between;
 
-      .icon-header-create-lelang{
+      .icon-header-create-lelang-hot{
         color: #00aeef;
         /* position: relative; */
         /* left: -8em; */
@@ -205,13 +211,14 @@ export default {
         width:22px;
       }
 
-      .text-header-create-lelang{
+      .text-header-create-lelang-hot{
         color: #00aeef;
         white-space: nowrap;
         width: 200px;
         overflow: hidden;
         text-overflow: ellipsis;
         text-align: center;
+        font-size: 20px;
       }
     }
 

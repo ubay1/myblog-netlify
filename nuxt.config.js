@@ -124,7 +124,23 @@ export default {
       ]
     }],
     '@nuxtjs/toast',
-    'vue-wait/nuxt'
+    'vue-wait/nuxt',
+    ['@nuxtjs/firebase',
+    {
+      config: {
+        apiKey: "AIzaSyD5jkeIkI5zMiCsvvqojsCmbBmpJ7L2UTE",
+        authDomain: "lelango-5e5de.firebaseapp.com",
+        databaseURL: "https://lelango-5e5de.firebaseio.com",
+        projectId: "lelango-5e5de",
+        storageBucket: "lelango-5e5de.appspot.com",
+        messagingSenderId: "665502983297",
+        appId: "1:665502983297:web:b48761b4791969cd2bd980",
+        measurementId: "G-DFKXG10089"
+      },
+      services: {
+        messaging: true // Just as example. Can be any other service.
+      }
+    }]
   ],
   axios: {
     // baseURL: process.env.DEV_API,
@@ -156,7 +172,8 @@ export default {
 
   },
   manifest: {
-		name: 'Lelango Lite',
+    name: 'Lelango Lite',
+    gcm_sender_id : '665502983297',
 		short_name: 'Lelango Lite',
 		lang: 'en',
 		display: 'standalone',

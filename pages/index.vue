@@ -191,6 +191,7 @@ import DetailBlog from './partial_blog/blog'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import firebase from 'firebase'
 
 library.add(faUserSecret)
 
@@ -375,6 +376,56 @@ export default {
         name:'partial_blog-blog',
         params: data,
       })
+    },
+    getDeviceToken() {
+      const messaging = firebase.messaging()
+
+      messaging
+        .requestPermission()
+        .then(() => {
+          console.log('Have permission')
+          return messaging.getToken()
+        })
+        .then((currentToken) => {
+          if (currentToken) {
+            console.log('Current Token : ', currentToken)
+          }
+        })
+        .catch((err) => {
+          console.log('Error occured', err)
+        })
+      // messaging.onMessage(function(payload) {
+      //   console.log('onMessage: ', payload)
+      // })
+
+      messaging.onMessage(function (payload) {
+        console.log("Message received. ", JSON.stringify(payload));
+        // notificationElement.innerHTML = notificationElement.innerHTML + " " + payload.notification.body;
+        console.log('[firebase-messaging-sw.js] Received background message ', payload.notification);
+
+        const notification = JSON.parse(payload.notification);
+        console.log(notification);
+        // Customize notification here
+        const title = payload.notification.title;
+        const notificationOptions = payload.notification.body;
+        const options = {
+            body: payload.notification.body,
+            badge: 'https://cdn3.iconfinder.com/data/icons/popular-services-brands-vol-2/512/telegram-512.png'
+        };
+
+        return registration.showNotification(title,options);
+      });
+
+      messaging.onTokenRefresh(function () {
+          messaging.getToken()
+              .then(function (refreshedToken) {
+                  console.log('Token refreshed.');
+                  tokenElement.innerHTML = "Token is " + refreshedToken;
+              }).catch(function (err) {
+                  errorElement.innerHTML = "Error: " + err;
+                  console.log('Unable to retrieve refreshed token ', err);
+              });
+      });
     }
   },
   created(){
@@ -384,17 +435,26 @@ export default {
   mounted() {
     if(process.client){
       var aa = localStorage.getItem('lelangoApp');
-      // var cekakses = JSON.parse(aa).authh.accessToken;
 
       // cek adakah akses atau adakah key localstorage dengan nama lelangoApp
       if(aa == null){
         this.getLot();
         this.getLelangTerlaris();
+        this.getDeviceToken()
       } else{
-        this.token = JSON.parse(aa).authh.userData.user.token.access_token;
-        this.getLotAuth();
-        this.getLelangTerlarisAuth();
+        var cekakses = JSON.parse(aa).authh.accessToken;
+        if(cekakses == false){
+          this.getLot();
+          this.getLelangTerlaris();
+          this.getDeviceToken()
+        }else{
+          this.token = JSON.parse(aa).authh.userData.user.token.access_token;
+          this.getLotAuth();
+          this.getLelangTerlarisAuth();
+          this.getDeviceToken()
+        }
       }
+
     }
   },
 }
