@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="header-detail-kategori">
-      <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-detail-kategori" @click="back()"/>
-      <div class="text-header-detail-kategori">
+    <div class="header-one">
+      <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-one" @click="back()"/>
+      <div class="text-header-one">
         {{judul}}
       </div>
       <div class="search-kategori-detail">
-        <font-awesome-icon :icon="['fas', 'search']" class="icon-header-detail-kategori"/>
+        <font-awesome-icon :icon="['fas', 'search']" class="icon-header-one"/>
       </div>
     </div>
   </div>
@@ -14,10 +14,10 @@
 
 <script>
 export default {
-  props: ['judul'],
+  props: ['judul','search'],
   methods: {
     back(){
-      this.$router.push('/kategori');
+      window.history.back()
     },
   },
 }
@@ -25,21 +25,21 @@ export default {
 
 <style lang="scss">
   @media(min-width:481px){
-    .header-detail-kategori {
+    .header-one {
       width: 480px;
       margin: auto;
       display: flex;
-      padding: 15px;
+      padding: 10px;
       justify-content: space-between;
       align-items: center;
       font-size: 20px;
       border-bottom: 1px solid #e2e8f0;
       box-shadow: 0px 0px 2px 0px lightgrey;
-      .text-header-detail-kategori {
+      .text-header-one {
         font-weight: bold;
         color: #00aeef;
       }
-      .icon-header-detail-kategori{
+      .icon-header-one{
         color: #00aeef;
         font-size:18px;
         width:20px;
@@ -81,14 +81,15 @@ export default {
   }
 
   @media(min-width:321px) and (max-width:480px){
-    .header-detail-kategori {
+    .header-one {
       margin: auto;
       display: flex;
-      padding: 15px;
+      padding: 10px;
       justify-content: space-between;
       border-bottom: 1px solid #e2e8f0;
-      align-items: baseline;
-      .text-header-detail-kategori {
+      align-items: center;
+      box-shadow: 0px 0px 2px 0px lightgrey;
+      .text-header-one {
         font-size: 20px;
         font-weight: bold;
         color: #00aeef;
@@ -98,7 +99,7 @@ export default {
         text-overflow: ellipsis;
         text-align: center;;
       }
-      .icon-header-detail-kategori{
+      .icon-header-one{
         color: #00aeef;
         font-size:18px;
         width:20px;
@@ -137,15 +138,16 @@ export default {
     }
   }
 
-  @media(min-width:280px) and (max-width:320px){
-    .header-detail-kategori {
+  @media(min-width:0px) and (max-width:320px){
+    .header-one {
       margin: auto;
       display: flex;
-      padding: 15px;
+      padding: 10px;
       justify-content: space-between;
       border-bottom: 1px solid #e2e8f0;
-      align-items: baseline;
-      .text-header-detail-kategori {
+      align-items: center;
+      box-shadow: 0px 0px 2px 0px lightgrey;
+      .text-header-one {
         font-size: 20px;
         font-weight: bold;
         color: #00aeef;
@@ -155,7 +157,7 @@ export default {
         text-overflow: ellipsis;
         text-align: center;;
       }
-      .icon-header-detail-kategori{
+      .icon-header-one{
         color: #00aeef;
         font-size:18px;
         width:20px;

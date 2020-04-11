@@ -135,10 +135,13 @@ export default {
         storageBucket: "lelango-5e5de.appspot.com",
         messagingSenderId: "665502983297",
         appId: "1:665502983297:web:b48761b4791969cd2bd980",
-        measurementId: "G-DFKXG10089"
+        measurementId: "G-DFKXG10089",
+        fcmPublicVapidKey:'BF6c94Hz3yRs-0h3Qxw33wG68q2wZAaCq5tFPEblNChQNAg9ZJlqCxflmtNqLADwB9vwrjsndYI3QKCmwiEPNnY'
       },
       services: {
-        messaging: true // Just as example. Can be any other service.
+        messaging: {
+          createServiceWorker: true
+        }// Just as example. Can be any other service.
       }
     }]
   ],

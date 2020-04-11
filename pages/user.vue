@@ -1,10 +1,12 @@
 <template>
   <div>
     <div>
-      <div class="header-user">
+      <!-- <div class="header-user">
         <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-user" @click="back()"/>
         <button @click="logout()" class="text-black bg-yellow-400 p-1 rounded shadow-md">Logout</button>
-      </div>
+      </div> -->
+      <Header :judul="judul"/>
+
     </div>
      <v-wait for="load_user">
       <template slot="waiting">
@@ -104,6 +106,10 @@
                 </div>
             </div>
         </div>
+        <div class="text-center mb-4 w-full" style="padding:10px;">
+
+          <button @click="logout()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">Logout</button>
+        </div>
       </div>
     </v-wait>
   </div>
@@ -111,11 +117,16 @@
 
 <script>
 import axios from 'axios';
+import Header from '~/components/Headers/Header_two'
 
 export default {
   // middleware: 'iflogin',
+  components:{
+    Header
+  },
   data() {
     return {
+      judul : 'Data Profil',
       accessTokens : '',
       token   : '',
       idUser  : '',

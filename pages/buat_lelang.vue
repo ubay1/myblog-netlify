@@ -1,12 +1,13 @@
 <template>
   <div>
     <div>
-      <div class="header-create-lelang">
+      <!-- <div class="header-create-lelang">
         <div>
           <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-create-lelang" @click="back()"/>
         </div>
         <div class="text-header-create-lelang">Cara membuat lelang</div>
-      </div>
+      </div> -->
+      <Header :judul="judul"/>
     </div>
     <div class="main-create-lelang">
       <div class="judul-create">
@@ -41,11 +42,16 @@
 
 <script>
 import axios from 'axios';
+import Header from '~/components/Headers/Header_two'
 
 export default {
   // middleware: 'iflogin',
+  components:{
+    Header
+  },
   data() {
     return {
+      judul : 'Cara membuat lelang',
       accessToken : '',
       token: ''
     }
@@ -79,37 +85,6 @@ export default {
 
 <style lang="scss">
   @media (min-width:481px){
-    .header-create-lelang{
-      font-weight:bold;
-      width: 480px;
-      margin: auto;
-      /* background: linear-gradient(145deg, #00baff, #009dd7); */
-      color:#00aeef;
-      margin-bottom: 10px;
-      padding: 10px;
-      border-bottom: 1px solid #e2e8f0;
-      display: flex;
-      align-items: center;
-
-      .icon-header-create-lelang{
-        color: #00aeef;
-        /* position: relative; */
-        /* left: -8em; */
-        font-size:18px;
-        width:22px;
-      }
-
-      .text-header-create-lelang{
-        color: #00aeef;
-        white-space: nowrap;
-        width: 200px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        text-align: center;
-        font-size: 20px;
-      }
-    }
-
     .main-create-lelang{
       width: 480px;
       margin: auto;
@@ -149,42 +124,12 @@ export default {
         color: #fff;
         padding: 8px;
         box-shadow: 0px 2px 2px lightgrey;
-        border-radius: 20px;
+        // border-radius: 20px;
       }
     }
   }
 
   @media (max-width:480px){
-    .header-create-lelang{
-      font-weight:bold;
-      margin: auto;
-      /* background: linear-gradient(145deg, #00baff, #009dd7); */
-      color:#00aeef;
-      margin-bottom: 10px;
-      padding: 10px;
-      border-bottom: 1px solid #e2e8f0;
-      display: flex;
-      align-items: center;
-
-      .icon-header-create-lelang{
-        color: #00aeef;
-        /* position: relative; */
-        /* left: -8em; */
-        font-size:18px;
-        width:22px;
-      }
-
-      .text-header-create-lelang{
-        color: #00aeef;
-        white-space: nowrap;
-        width: 200px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        text-align: center;
-        font-size: 20px;
-      }
-    }
-
     .main-create-lelang{
       width: auto;
       .judul-create {
@@ -221,7 +166,7 @@ export default {
         color: #fff;
         padding: 8px;
         box-shadow: 0px 2px 2px lightgrey;
-        border-radius: 20px;
+        // border-radius: 20px;
       }
     }
   }

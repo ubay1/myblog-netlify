@@ -1,13 +1,14 @@
 <template>
   <div>
-    <div class="header-detail-blog">
+    <!-- <div class="header-detail-blog">
       <div>
         <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-detail" @click="back()"/>
       </div>
       <div style="position: relative; left: -40%; color:#fff; font-weight:bold;">
         Tips Lelango
       </div>
-    </div>
+    </div> -->
+    <Header :judul="judul"/>
     <div class="detail-blog">
       <img :src="baseURL+this.$route.params.image" alt="image-blog">
       <div class="title-detail-blog">
@@ -21,9 +22,15 @@
 </template>
 
 <script>
+import Header from '~/components/Headers/Header_two'
+
 export default {
+  components:{
+    Header
+  },
   data() {
     return {
+      judul : 'Tips Lelango',
       baseURL : process.env.URL
     }
   },

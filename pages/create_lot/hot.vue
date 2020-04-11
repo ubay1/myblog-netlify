@@ -1,15 +1,7 @@
 <template>
   <div>
     <div>
-      <div class="header-create-lelang-hot">
-        <div>
-          <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-create-lelang-hot" @click="back()"/>
-        </div>
-        <div class="text-header-create-lelang-hot">Pilih Produk Hot</div>
-        <div>
-          <font-awesome-icon :icon="['fas', 'search']" class="icon-header-create-lelang-hot"/>
-        </div>
-      </div>
+      <Header :judul='judul' :search='search'/>
     </div>
 
     <v-wait for="load_product_hot">
@@ -36,7 +28,7 @@
             </div>
             <div v-else>
               <div v-if="dataSelect.idSelect == index" class="select_product">
-                <font-awesome-icon :icon="['fas', 'check']" class="icon-header-create-lelang-hot"/>
+                <font-awesome-icon :icon="['fas', 'check']" class="icon-header-create-lelang-hot" style="width: 15px; font-size: 18px; color:#fff;"/>
               </div>
             </div>
             <img :src="baseURL+item.picture[0]" alt="img-produk-hot">
@@ -60,11 +52,17 @@
 
 <script>
 import axios from 'axios';
+import Header from '~/components/Headers/Header_one'
 
 export default {
   // middleware: 'iflogin',
+  components:{
+    Header
+  },
   data() {
     return {
+      judul : 'Pilih Produk Hot',
+      search: 'produkhot',
       accessToken : '',
       token: '',
       data_hot : [],
@@ -141,38 +139,6 @@ export default {
 
 <style lang="scss">
   @media (min-width:481px){
-    .header-create-lelang-hot{
-      font-weight:bold;
-      width: 480px;
-      margin: auto;
-      /* background: linear-gradient(145deg, #00baff, #009dd7); */
-      color:#00aeef;
-      margin-bottom: 10px;
-      padding: 10px;
-      border-bottom: 1px solid #e2e8f0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      .icon-header-create-lelang-hot{
-        color: #00aeef;
-        /* position: relative; */
-        /* left: -8em; */
-        font-size:18px;
-        width:22px;
-      }
-
-      .text-header-create-lelang-hot{
-        color: #00aeef;
-        white-space: nowrap;
-        width: 200px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        text-align: center;
-        font-size: 20px;
-      }
-    }
-
     .bg-button-hot-lanjut {
       width:480px;
       margin:auto;
@@ -191,37 +157,6 @@ export default {
   }
 
   @media (max-width:480px){
-    .header-create-lelang-hot{
-      font-weight:bold;
-      margin: auto;
-      /* background: linear-gradient(145deg, #00baff, #009dd7); */
-      color:#00aeef;
-      margin-bottom: 10px;
-      padding: 10px;
-      border-bottom: 1px solid #e2e8f0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      .icon-header-create-lelang-hot{
-        color: #00aeef;
-        /* position: relative; */
-        /* left: -8em; */
-        font-size:18px;
-        width:22px;
-      }
-
-      .text-header-create-lelang-hot{
-        color: #00aeef;
-        white-space: nowrap;
-        width: 200px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        text-align: center;
-        font-size: 20px;
-      }
-    }
-
     .bg-button-hot-lanjut {
       // padding: 10px;
       button.btn_hot_lanjut {
@@ -241,8 +176,8 @@ export default {
     .grid-produk-hot{
       width: 480px;
       margin: auto;
-      margin-bottom: 70px;
-      margin-top: 20px;
+      margin-bottom: 0px;
+      // margin-top: 20px;
       display: grid;
       grid-template-columns: auto auto;
       align-items: center;
@@ -289,7 +224,7 @@ export default {
     .grid-produk-hot{
       margin: auto;
       margin-bottom: 0px;
-      margin-top: 20px;
+      // margin-top: 20px;
       display: grid;
       grid-template-columns: auto auto;
       align-items: center;
@@ -336,7 +271,7 @@ export default {
     .grid-produk-hot{
       margin: auto;
       margin-bottom: 0px;
-      margin-top: 20px;
+      // margin-top: 20px;
       display: grid;
       grid-template-columns: auto;
       align-items: center;

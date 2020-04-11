@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header-detail :judul="categoryname"/>
+    <Header :judul='judul' :search='search'/>
     <v-wait for="load_kategori_detail">
       <template slot="waiting">
         <div style="display:flex; flex-direction:column; align-items:center; height:50vh; margin:auto;">
@@ -18,6 +18,17 @@
         <div class="grid-kategori-detail">
           <div v-for="(item, index) in get_data" :key="index" class="kategori-detail">
             <img :src="baseURL+item.picture[0]" alt="img-header-detail-kategori">
+
+            <div v-if="item.type.type_name == 'hot'">
+              <div class="type-kategori" style="background:red; color:#fff;">{{item.type.type_name}} </div>
+            </div>
+            <div v-else-if="item.type.type_name == 'slow'">
+              <div class="type-kategori" style="background:#4caf50; color:#fff;">tambahan </div>
+            </div>
+            <div v-else-if="item.type.type_name == 'fast'">
+              <div class="type-kategori" style="background:#ff9800; color:#fff;">lanjutan </div>
+            </div>
+
             <div class="text-product-name">
               {{item.product_name}}
             </div>
@@ -52,16 +63,17 @@
 
 <script>
 import axios from 'axios'
-import HeaderDetail from '../header_detail'
+import Header from '~/components/Headers/Header_one'
 
 export default {
   components:{
-    'header-detail':HeaderDetail
+    Header
   },
   data() {
     return {
+      judul : this.$route.params.categoryname,
+      search: `category_${this.$route.params.id}`,
       id: this.$route.params.id,
-      categoryname: this.$route.params.categoryname,
       baseURL : process.env.URL,
       data_all: [],
       get_data : [],
@@ -103,6 +115,7 @@ export default {
       padding: 20px;
       grid-gap: 20px;
       .kategori-detail{
+          position: relative;
           cursor:pointer;
           // height: 50%;
           // width: 50%;
@@ -125,6 +138,15 @@ export default {
             overflow: hidden;
             text-overflow: ellipsis;
             padding:10px;
+          }
+
+          .type-kategori {
+              position: absolute;
+              top: 0px;
+              left: 0px;
+              padding: 5px;
+              border-radius: 10px 0px 0px 0px;
+              box-shadow: 0px 2px 4px lightgrey;
           }
 
           .text_price {
@@ -149,6 +171,7 @@ export default {
       padding: 20px;
       grid-gap: 20px;
       .kategori-detail{
+          position: relative;
           cursor:pointer;
           // height: 50%;
           // width: 50%;
@@ -171,6 +194,15 @@ export default {
             overflow: hidden;
             text-overflow: ellipsis;
             padding:10px;
+          }
+
+          .type-kategori {
+              position: absolute;
+              top: 0px;
+              left: 0px;
+              padding: 5px;
+              border-radius: 10px 0px 0px 0px;
+              box-shadow: 0px 2px 4px lightgrey;
           }
 
           .text_price {
@@ -195,6 +227,7 @@ export default {
       padding: 20px;
       grid-gap: 20px;
       .kategori-detail{
+          position: relative;
           cursor:pointer;
           // height: 50%;
           // width: 50%;
@@ -217,6 +250,15 @@ export default {
             overflow: hidden;
             text-overflow: ellipsis;
             padding:10px;
+          }
+
+          .type-kategori {
+              position: absolute;
+              top: 0px;
+              left: 0px;
+              padding: 5px;
+              border-radius: 10px 0px 0px 0px;
+              box-shadow: 0px 2px 4px lightgrey;
           }
 
           .text_price {

@@ -191,7 +191,8 @@ import DetailBlog from './partial_blog/blog'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import firebase from 'firebase'
+// import { messaging } from 'static/init_fcm'
+import firebase from 'firebase/app'
 
 library.add(faUserSecret)
 
@@ -222,7 +223,10 @@ export default {
           }
       },
       // icon_favorit: true,
-      is_favorite : false
+      is_favorite : false,
+      listenersStarted: false,
+      permissionGranted: false,
+      idToken: ''
     }
   },
   // middleware:'iflogin',
@@ -377,60 +381,119 @@ export default {
         params: data,
       })
     },
-    getDeviceToken() {
-      const messaging = firebase.messaging()
+    async getDeviceToken() {
 
-      messaging
-        .requestPermission()
-        .then(() => {
-          console.log('Have permission')
-          return messaging.getToken()
-        })
-        .then((currentToken) => {
-          if (currentToken) {
-            console.log('Current Token : ', currentToken)
-          }
-        })
-        .catch((err) => {
-          console.log('Error occured', err)
-        })
+      let currentToken
+      try {
+        const permission = await Notification.requestPermission()
+        try {
+          currentToken = await this.$fireMess.getToken()
+        } catch (e) {
+          console.error('An error occurred while retrieving token. ', e)
+          this.idToken = ''
+        }
+        if (currentToken) {
+          this.idToken = currentToken
+          console.log(this.idToken)
+        } else {
+          // Show permission request.
+          console.info(
+            'No Instance ID token available. Request permission to generate one.'
+          )
+          // Show permission UI.
+          //updateUIForPushPermissionRequired();
+          this.idToken = ''
+        }
+        this.permissionGranted = permission === 'granted'
+      } catch (e) {
+        console.error(e)
+        return
+      }
+
+      // const messaging = firebase.messaging()
+
+      // messaging
+      //   .requestPermission()
+      //   .then(() => {
+      //     console.log('Have permission')
+      //     return messaging.getToken()
+      //   })
+      //   .then((currentToken) => {
+      //     if (currentToken) {
+      //       console.log('Current Token : ', currentToken)
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     console.log('Error occured', err)
+      //   })
+    },
+    startListeners() {
+      this.startOnMessageListener()
+      this.startTokenRefreshListener()
+      this.listenersStarted = true
+    },
+    startOnMessageListener() {
+      this.$fireMess.onMessage((payload) => {
+        // console.info('Message received. ', payload)
+        console.log(payload.data)
+        // Customize data here
+        const title = payload.data.title;
+        const options = {
+            body: payload.data.body,
+            badge: 'https://cdn3.iconfinder.com/data/icons/popular-services-brands-vol-2/512/telegram-512.png',
+            icon : 'https://cdn3.iconfinder.com/data/icons/popular-services-brands-vol-2/512/telegram-512.png'
+        };
+
+        return self.registration.showNotification(title,options);
+      })
+
       // messaging.onMessage(function(payload) {
       //   console.log('onMessage: ', payload)
       // })
+      // messaging.onMessage(function (payload) {
+      //   console.log("Message received. ", JSON.stringify(payload));
+      //   // notificationElement.innerHTML = notificationElement.innerHTML + " " + payload.notification.body;
+      //   console.log('[firebase-messaging-sw.js] Received background message ', payload.notification);
 
-      messaging.onMessage(function (payload) {
-        console.log("Message received. ", JSON.stringify(payload));
-        // notificationElement.innerHTML = notificationElement.innerHTML + " " + payload.notification.body;
-        console.log('[firebase-messaging-sw.js] Received background message ', payload.notification);
+      //   const notification = JSON.parse(payload.notification);
+      //   console.log(notification);
+      //   // Customize notification here
+      //   const title = payload.notification.title;
+      //   const notificationOptions = payload.notification.body;
+      //   const options = {
+      //       body: payload.notification.body,
+      //       badge: 'https://cdn3.iconfinder.com/data/icons/popular-services-brands-vol-2/512/telegram-512.png'
+      //   };
 
-        const notification = JSON.parse(payload.notification);
-        console.log(notification);
-        // Customize notification here
-        const title = payload.notification.title;
-        const notificationOptions = payload.notification.body;
-        const options = {
-            body: payload.notification.body,
-            badge: 'https://cdn3.iconfinder.com/data/icons/popular-services-brands-vol-2/512/telegram-512.png'
-        };
+      //   return registration.showNotification(title,options);
+      // });
+    },
+    startTokenRefreshListener() {
+      this.$fireMess.onTokenRefresh(async () => {
+        try {
+          const refreshedToken = await this.$fireMess.getToken()
+          this.idToken = refreshedToken
+        } catch (e) {
+          console.error('Unable to retrieve refreshed token ', e)
+        }
+      })
 
-        return registration.showNotification(title,options);
-      });
-
-      messaging.onTokenRefresh(function () {
-          messaging.getToken()
-              .then(function (refreshedToken) {
-                  console.log('Token refreshed.');
-                  tokenElement.innerHTML = "Token is " + refreshedToken;
-              }).catch(function (err) {
-                  errorElement.innerHTML = "Error: " + err;
-                  console.log('Unable to retrieve refreshed token ', err);
-              });
-      });
+       // messaging.onTokenRefresh(function () {
+      //     messaging.getToken()
+      //         .then(function (refreshedToken) {
+      //             console.log('Token refreshed.');
+      //             tokenElement.innerHTML = "Token is " + refreshedToken;
+      //         }).catch(function (err) {
+      //             errorElement.innerHTML = "Error: " + err;
+      //             console.log('Unable to retrieve refreshed token ', err);
+      //         });
+      // });
     }
   },
   created(){
     this.getCaraousel(),
     this.getTipsLelang()
+    // this.startListeners()
   },
   mounted() {
     if(process.client){
@@ -454,6 +517,8 @@ export default {
           this.getDeviceToken()
         }
       }
+
+      this.startListeners()
 
     }
   },

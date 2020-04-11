@@ -1,13 +1,7 @@
 <template>
   <div>
     <div>
-      <div class="header-favorit">
-        <div>
-          <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-favorit" @click="back()"/>
-        </div>
-        <div class="text-header-favorit">Lelang Favorit</div>
-        <font-awesome-icon :icon="['fas', 'search']" class="icon-header-favorit" @click="back()"/>
-      </div>
+      <Header :judul='judul' :search="search"/>
     </div>
     <div class="main-favorit">
       <v-wait for="load_favorit">
@@ -34,7 +28,7 @@
                 <div class="bg-btn-favorit">
                   <button class="btn-favorit" @click="delete_favorit(item.lot.id)">
                     <span>
-                      <font-awesome-icon :icon="['fas', 'trash']" class="icon-favorit" style="width:25px; font-size:20px; color:#f44336;"/>
+                      <font-awesome-icon :icon="['fas', 'trash']" class="icon-favorit" style="width:15px; font-size:18px; color:#f44336;"/>
                     </span>
                   </button>
                   <span>
@@ -59,7 +53,7 @@
                 <div class="bg-btn-favorit">
                   <button class="btn-favorit" @click="delete_favorit(item.lot.id)">
                     <span>
-                      <font-awesome-icon :icon="['fas', 'trash']" class="icon-favorit" style="width:25px; font-size:20px; color:#f44336;"/>
+                      <font-awesome-icon :icon="['fas', 'trash']" class="icon-favorit" style="width:15px; font-size:18px; color:#f44336;"/>
                     </span>
                   </button>
                   <span>
@@ -90,7 +84,7 @@
                 <div class="bg-btn-favorit">
                   <button class="btn-favorit" @click="delete_favorit(item.lot.id)">
                     <span>
-                      <font-awesome-icon :icon="['fas', 'trash']" class="icon-favorit" style="width:25px; font-size:20px; color:#f44336;"/>
+                      <font-awesome-icon :icon="['fas', 'trash']" class="icon-favorit" style="width:15px; font-size:18px; color:#f44336;"/>
                     </span>
                   </button>
                   <span>
@@ -115,7 +109,7 @@
                 <div class="bg-btn-favorit">
                   <button class="btn-favorit" @click="delete_favorit(item.lot.id)">
                     <span>
-                      <font-awesome-icon :icon="['fas', 'trash']" class="icon-favorit" style="width:25px; font-size:20px; color:#f44336;"/>
+                      <font-awesome-icon :icon="['fas', 'trash']" class="icon-favorit" style="width:15px; font-size:18px; color:#f44336;"/>
                     </span>
                   </button>
                   <span>
@@ -145,15 +139,19 @@ import axios from 'axios';
 import moment from 'moment'
 import Timer from './partial_home/timer'
 import TimerOff from './partial_home/timer_off'
+import Header from '~/components/Headers/Header_one'
 
 export default {
   // middleware: 'iflogin',
   components:{
+    Header,
     'timer': Timer,
     'timer-off':TimerOff
   },
   data() {
     return {
+      judul : 'Lelang Favorit',
+      search: 'lelangfavorit',
       accessToken : '',
       token: '',
       baseURL : process.env.URL,
@@ -459,7 +457,7 @@ export default {
             }
 
             .img-list-lelang-all-favorit{
-              width: 100px;
+              width: 120px;
               height: auto;
               padding:10px;
               margin: auto;

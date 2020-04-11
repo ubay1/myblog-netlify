@@ -615,32 +615,30 @@
     height: 5px;
   }
   .header-detail{
-    font-weight: bold;
-    width: 481px;
+    width: 480px;
     margin: auto;
-    /* background: linear-gradient(145deg, #00baff, #009dd7); */
-    color:#00aeef;
-    margin-bottom: 10px;
-    padding: 10px;
-    box-shadow: 0px 2px 6px lightgrey;
     display: flex;
-    align-items: center;
+    padding: 10px;
     justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0px 0px 2px 0px lightgrey;
   }
   .icon-header-detail{
     color: #00aeef;
-    /* position: relative; */
-    /* left: -8em; */
     font-size:18px;
-    width:22px;
+    width:20px;
   }
   .text-header-lot{
     color: #00aeef;
-    /* font-weight: bold; */
+    font-weight: bold;
+    font-size: 16px;
   }
   .text-header-penawaran{
     color: #1ddc72;
     font-weight: bold;
+    font-size: 16px;
   }
 
   .main-detail{
@@ -808,32 +806,29 @@
     height: 0px;
   }
   .header-detail{
-    font-weight: bold;
-    width: auto;
     margin: auto;
-    /* background: linear-gradient(145deg, #00baff, #009dd7); */
-    color:#00aeef;
-    margin-bottom: 10px;
-    padding: 10px;
-    box-shadow: 0px 2px 6px lightgrey;
     display: flex;
-    align-items: center;
+    padding: 10px;
     justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0px 0px 2px 0px lightgrey;
   }
   .icon-header-detail{
     color: #00aeef;
-    /* position: relative; */
-    /* left: -8em; */
     font-size:18px;
-    width:22px;
+    width:20px;
   }
   .text-header-lot{
     color: #00aeef;
-    /* font-weight: bold; */
+    font-weight: bold;
+    font-size: 16px;
   }
   .text-header-penawaran{
     color: #1ddc72;
     font-weight: bold;
+    font-size: 16px;
   }
 
   .main-detail{
@@ -992,32 +987,29 @@
     height: 0px;
   }
   .header-detail{
-    font-weight: bold;
-    width: auto;
     margin: auto;
-    /* background: linear-gradient(145deg, #00baff, #009dd7); */
-    color:#00aeef;
-    margin-bottom: 10px;
-    padding: 10px;
-    box-shadow: 0px 2px 6px lightgrey;
     display: flex;
-    align-items: center;
+    padding: 10px;
     justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0px 0px 2px 0px lightgrey;
   }
   .icon-header-detail{
     color: #00aeef;
-    /* position: relative; */
-    /* left: -8em; */
     font-size:18px;
-    width:22px;
+    width:20px;
   }
   .text-header-lot{
     color: #00aeef;
-    /* font-weight: bold; */
+    font-weight: bold;
+    font-size: 16px;
   }
   .text-header-penawaran{
     color: #1ddc72;
     font-weight: bold;
+    font-size: 16px;
   }
 
   .main-detail{

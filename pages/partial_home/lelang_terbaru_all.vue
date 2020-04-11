@@ -1,14 +1,6 @@
 <template>
   <div>
-    <div class="header-lelang-all">
-      <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-lelang-all" @click="back()"/>
-      <div class="text-header-lelang-all">
-        List Lelang Terbaru
-      </div>
-      <div class="search-lelang-all">
-        <font-awesome-icon :icon="['fas', 'search']" class="icon-header-lelang-all"/>
-      </div>
-    </div>
+    <Header :judul='judul' :search='search'/>
 
     <v-wait for="load_all_lot">
       <template slot="waiting">
@@ -151,13 +143,17 @@
   import axios from 'axios'
   import moment from 'moment'
   import Timer from './timer'
+  import Header from '~/components/Headers/Header_one'
 
   export default {
     components:{
       'timer': Timer,
+      Header
     },
     data() {
       return {
+        judul:'List Lelang Terbaru',
+        search : 'lelangterbaru',
         accessTokens : '',
         token : '',
         is_favorite : false,

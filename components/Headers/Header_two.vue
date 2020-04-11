@@ -1,69 +1,49 @@
 <template>
   <div>
-    <Header :judul='judul' :search='search'/>
-    <div class="grid-kategori">
-      <div v-for="(item, index) in listcategory" :key="index" class="grid-item" @click="detail_kategori(item.id, item.category_name)">
-          <img v-lazy="baseURL + item.category_picture" :key="baseURL + item.category_picture" alt="img-kategori">
-          <div>
-            {{item.category_name}}
-          </div>
+    <div class="header-two">
+      <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-two" @click="back()"/>
+      <div class="text-header-two">
+        {{judul}}
       </div>
     </div>
-    <Footer />
   </div>
 </template>
 
 <script>
-import Header from '~/components/Headers/Header_one'
-import Footer from '~/components/Footer'
-import axios from 'axios'
-
 export default {
-  components:{
-    Header,
-    Footer
-  },
-  data() {
-    return {
-      judul : 'kategori',
-      search: 'category',
-      listcategory : [],
-      baseURL : process.env.URL
-    }
-  },
+  props: ['judul'],
   methods: {
-    getListCategory() {
-			axios.get(process.env.DEV_API + "user/category")
-				.then(response => {
-          this.listcategory = response.data.data;
-				});
+    back(){
+      window.history.back()
     },
-    detail_kategori(id, name){
-      this.$router.push('/kategoris/'+name+'/'+id)
-    }
-  },
-  created() {
-    this.getListCategory();
   },
 }
 </script>
 
-
 <style lang="scss">
   @media(min-width:481px){
-    .header-kategori {
+    .header-two {
+      font-weight:bold;
       width: 480px;
       margin: auto;
-      display: flex;
-      padding: 15px;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 20px;
+      /* background: linear-gradient(145deg, #00baff, #009dd7); */
+      color:#00aeef;
+      margin-bottom: 10px;
+      padding: 10px;
       border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
       box-shadow: 0px 0px 2px 0px lightgrey;
-      .text-header-kategori {
+      .text-header-two {
         font-weight: bold;
         color: #00aeef;
+        padding-left: 20px;
+        font-size: 20px;
+      }
+      .icon-header-two{
+        color: #00aeef;
+        font-size:18px;
+        width:20px;
       }
     }
 
@@ -102,17 +82,32 @@ export default {
   }
 
   @media(min-width:321px) and (max-width:480px){
-    .header-kategori {
+    .header-two {
+      font-weight:bold;
       margin: auto;
-      display: flex;
-      padding: 15px;
-      justify-content: space-between;
+      /* background: linear-gradient(145deg, #00baff, #009dd7); */
+      color:#00aeef;
+      margin-bottom: 10px;
+      padding: 10px;
       border-bottom: 1px solid #e2e8f0;
-      align-items: baseline;
-      .text-header-kategori {
-        font-size: 20px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0px 0px 2px 0px lightgrey;
+      .text-header-two {
         font-weight: bold;
         color: #00aeef;
+        padding-left: 20px;
+        font-size: 20px;
+        width: 320px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        // text-align: center;;
+      }
+      .icon-header-two{
+        color: #00aeef;
+        font-size:18px;
+        width:20px;
       }
     }
     .grid-kategori{
@@ -148,18 +143,33 @@ export default {
     }
   }
 
-  @media(min-width:280px) and (max-width:320px){
-    .header-kategori {
+  @media(min-width:0px) and (max-width:320px){
+    .header-two {
+      font-weight:bold;
       margin: auto;
-      display: flex;
-      padding: 15px;
-      justify-content: space-between;
+      /* background: linear-gradient(145deg, #00baff, #009dd7); */
+      color:#00aeef;
+      margin-bottom: 10px;
+      padding: 10px;
       border-bottom: 1px solid #e2e8f0;
-      align-items: baseline;
-      .text-header-kategori {
-        font-size: 20px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0px 0px 2px 0px lightgrey;
+      .text-header-two {
         font-weight: bold;
         color: #00aeef;
+        padding-left: 20px;
+        font-size: 20px;
+        width: 280px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        // text-align: center;;
+      }
+      .icon-header-two{
+        color: #00aeef;
+        font-size:18px;
+        width:20px;
       }
     }
 
