@@ -440,8 +440,8 @@ export default {
         const title = payload.data.title;
         const options = {
             body: payload.data.body,
-            badge: 'https://cdn3.iconfinder.com/data/icons/popular-services-brands-vol-2/512/telegram-512.png',
-            icon : 'https://cdn3.iconfinder.com/data/icons/popular-services-brands-vol-2/512/telegram-512.png'
+            badge: 'img/badge_notif.png',
+            icon : 'img/icon/android-icon-144x144.png'
         };
 
         return self.registration.showNotification(title,options);

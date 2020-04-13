@@ -23,18 +23,17 @@ else {
 const messaging = firebase.messaging()
 
 messaging.setBackgroundMessageHandler(function(payload) {
-  console.info("SW received the message: ", payload.data);
-  const notification = payload.data;
-
-  const notificationTitle = notification.title;
-  const notificationOptions = {
-    body: payload.data.body,
-    badge: 'img/badge_notif.png',
-    icon : 'img/logo.png'
+  console.info("SW background received the message: ", payload.data);
+  // Customize data here
+  const title = payload.data.title;
+  const options = {
+      body: payload.data.body,
+      badge: 'img/badge_notif.png',
+      icon : 'img/icon/android-icon-144x144.png'
   };
   return self.registration.showNotification(
-    notificationTitle,
-    notificationOptions
+    title,
+    options
   )
 })
 

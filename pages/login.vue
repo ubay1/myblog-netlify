@@ -46,7 +46,7 @@
   import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
   import {uuid} from 'vue-uuid';
   import axios from 'axios';
-  import firebase from 'firebase'
+  import firebase from 'firebase/app'
 
   library.add(faUserSecret)
 
@@ -139,26 +139,34 @@
         this.passwordFieldType = this.passwordFieldType == 'password' ? 'text' : 'password';
         this.icon = this.icon == 'eye-slash' ? 'eye' : 'eye-slash';
       },
-      getDeviceToken() {
-        const messaging = firebase.messaging()
-        messaging
-          .requestPermission()
-          .then(() => {
-            console.log('Have permission')
-            return messaging.getToken()
-          })
-          .then((currentToken) => {
-            if (currentToken) {
-              console.log('Current Token : ', currentToken)
-              this.form.fcm_token = currentToken
-            }
-          })
-          .catch((err) => {
-            console.log('Error occured', err)
-          })
-        messaging.onMessage(function(payload) {
-          console.log('onMessage: ', payload)
-        })
+      async getDeviceToken() {
+
+        let currentToken
+        try {
+          const permission = await Notification.requestPermission()
+          try {
+            currentToken = await this.$fireMess.getToken()
+          } catch (e) {
+            console.error('An error occurred while retrieving token. ', e)
+            this.idToken = ''
+          }
+          if (currentToken) {
+            console.log('Current Token : ', currentToken)
+            this.form.fcm_token = currentToken
+          } else {
+            // Show permission request.
+            console.info(
+              'No Instance ID token available. Request permission to generate one.'
+            )
+            // Show permission UI.
+            //updateUIForPushPermissionRequired();
+            this.form.fcm_token = ''
+          }
+          this.permissionGranted = permission === 'granted'
+        } catch (e) {
+          console.error(e)
+          return
+        }
       }
     },
     mounted() {

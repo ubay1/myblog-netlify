@@ -207,7 +207,7 @@
     <modal name="hello-world">
       <div class="bg-modal-lot">
         <div>
-          <img :src="baseURL+lelang_data_lot.picture" style="width: 70px; box-shadow: 0px 2px 2px lightgrey;">
+          <img :src="baseURL+lelang_data_lot_picture" style="width: 70px; box-shadow: 0px 2px 2px lightgrey;">
         </div>
         <div class="bg-text-modal-lot">
           <div><b>Lot-{{id}}</b></div>
@@ -251,6 +251,7 @@
         id: this.$route.params.id,
         token : '',
         lelang_data_lot:[],
+        lelang_data_lot_picture:'',
         lelang_data_bid:[],
         user_penawar_tertinggi : [],
         lelang_data_lotdetail : [],
@@ -309,6 +310,8 @@
         axios.get(this.devAPI + "user/lot/"+this.id, [])
           .then(response => {
             this.lelang_data_lot = response.data.lot;
+            this.lelang_data_lot_picture = response.data.lot.picture[0];
+            // console.log(response.data.lot.picture[0])
             this.lelang_data_bid = response.data.bid;
             this.lelang_data_lotdetail = response.data.lot_detail;
 
@@ -321,6 +324,20 @@
             // mengambil data pertama, untuk ditampilkan diawal
             this.lelang_product_awal.push(this.lelang_data_lotdetail[0])
             // console.log(this.lelang_data_lot)
+        });
+      },
+      getforbidding(){
+        const config = {
+          headers: {
+            Authorization: `Bearer ${this.token}`
+          }
+        };
+        axios.get(this.devAPI + "user/lot/"+this.id, [])
+        .then(response => {
+          console.log('success')
+          this.lelang_data_lot = response.data.lot;
+          this.lelang_data_bid = response.data.bid;
+          this.lelang_data_lotdetail = response.data.lot_detail;
         });
       },
       back(){
@@ -404,7 +421,7 @@
                   duration : 5000
                 });
 
-                this.getdetaillelang();
+                this.getforbidding();
                 this.form.bidding = '';
 
                 this.showloader = !this.showloader;
@@ -452,7 +469,7 @@
                   duration : 5000
                 });
 
-                this.getdetaillelang();
+                this.getforbidding();
                 this.form.bidding = '';
 
                 this.showloader = !this.showloader;
