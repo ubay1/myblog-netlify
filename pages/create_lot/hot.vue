@@ -35,16 +35,23 @@
             <div class="text-product-hot-name">
               {{item.product_name}}
             </div>
+            <div class="text-product-warehouse">
+              <small>{{item.stock.warehouse.warehouse_name}}</small>
+            </div>
             <div class="text_price-hot">
               <b>{{item.price}}</b>
             </div>
           </div>
         </div>
+        <infinite-loading spinner="bubbles" @infinite="infiniteHandler">
+            <div class="text-red" slot="no-more">Produk telah di load semua</div>
+            <div class="text-red" slot="no-results">Produk telah di load semua</div>
+        </infinite-loading>
       </div>
     </v-wait>
 
     <div class="bg-button-hot-lanjut">
-      <button @click="goto_slow()" class="btn_hot_lanjut" :class="{btn_hot_lanjut_active:btn_disable_next}">Lanjut ke Slow (tambahan)</button>
+      <button @click="goto_slow(dataSelect.idProduct,dataSelect.idWarehouse, dataSelect.totalSlow, dataSelect.totalFast, dataSelect.idProduct)" class="btn_hot_lanjut" :class="{btn_hot_lanjut_active:btn_disable_next}">Lanjut</button>
     </div>
 
   </div>
@@ -61,12 +68,16 @@ export default {
   },
   data() {
     return {
+      page : 2,
+      lastPage: 0,
+      isInit : true,
       judul : 'Pilih Produk Hot',
       search: 'produkhot',
       accessToken : '',
       token: '',
       data_hot : [],
       get_data_hot : [],
+      next_page_url : [],
       baseURL : process.env.URL,
       devAPI : process.env.DEV_API,
       dataSelect: {
@@ -86,13 +97,24 @@ export default {
     back(){
       window.history.back()
     },
+    fetchHot(){
+      if(this.isInit == true){
+        let url = axios.get(process.env.DEV_API + "user/producttype/1")
+      }
+        let url = axios.get(process.env.DEV_API + "user/producttype/1?page="+this.page)
+
+      return axios.get(url);
+    },
     async getProductHot(){
       this.$wait.start('load_product_hot');
+
+      // console.log(this.fetchHot())
 
       axios.get(process.env.DEV_API + "user/producttype/1")
 			.then(response => {
         console.log(response);
         this.data_hot = response.data.data.data;
+        this.next_page_url = response.data.data.next_page_url;
       });
 
       this.get_data_hot = await new Promise(resolve => {
@@ -115,24 +137,61 @@ export default {
         }
 
         console.log(data_toslow)
-          // console.log(this.$store.state['authh/accessToken']);
-        // this.$store.dispatch('authh/to_slow', data_toslow).then(() => {
-        //   console.log('to slow is true');
-        // }).catch((err) => {
-        //   console.log(err);
-        // })
 
         this.dataSelect.idSelect = id
         this.dataSelect.isSelect = !this.dataSelect.isSelect
         this.btn_disable_next = false
         this.margin_grid_false = true
     },
-    goto_slow(){
-
+    goto_slow(id_product, warehouse_id, slow, fast,){
+      this.$router.push('/create_lot/'+id_product+'/'+warehouse_id+'/'+slow+'/'+fast+'/slow')
+    },
+    infiniteHandler: function($state) {
+      setTimeout(function () {
+        axios.get(process.env.DEV_API + "user/producttype/1?page="+this.page)
+        .then(response => {
+          console.log(response.data.data.data)
+          if (response.data.data.data.length > 0) {
+            this.lastPage = response.data.data.last_page;
+            response.data.data.data.forEach(message => {
+              this.get_data_hot.push(message);
+            });
+            if (this.page-1 === this.lastPage) {
+              console.log('wkwk')
+              this.page = 2;
+              $state.complete();
+            } else {
+              this.page += 1;
+            }
+            $state.loaded();
+            $state.complete();
+          } else {
+            this.page = 2;
+            $state.complete();
+          }
+        })
+        .catch(err => {
+          // console.log(err)
+        })
+      }.bind(this), 1000);
     }
   },
   created() {
     this.getProductHot();
+    axios.get(process.env.DEV_API + "user/producttype/1")
+      .then(response => {
+        if (response.data.data.data.length > 0) {
+          this.get_data_hot = response.data.data.data;
+          this.isInit = false;
+        }else{
+          console.log('No users found.');
+        }
+      })
+      .catch(e => console.log(e))
+  },
+  mounted() {
+    if (process.client) {
+    }
   },
 }
 </script>
@@ -206,7 +265,16 @@ export default {
             width: 150px;
             overflow: hidden;
             text-overflow: ellipsis;
+            // padding:10px;
+          }
+
+          .text-product-warehouse {
+            white-space: nowrap;
+            width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
             padding:10px;
+            font-weight: 700;
           }
 
           .text_price-hot {
@@ -253,7 +321,16 @@ export default {
             width: 150px;
             overflow: hidden;
             text-overflow: ellipsis;
+            // padding:10px;
+          }
+
+          .text-product-warehouse {
+            white-space: nowrap;
+            width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
             padding:10px;
+            font-weight: 700;
           }
 
           .text_price-hot {
@@ -300,7 +377,16 @@ export default {
             width: 150px;
             overflow: hidden;
             text-overflow: ellipsis;
+            // padding:10px;
+          }
+
+          .text-product-warehouse {
+            white-space: nowrap;
+            width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
             padding:10px;
+            font-weight: 700;
           }
 
           .text_price-hot {
@@ -329,5 +415,26 @@ export default {
 
   .margin_grid_bottom_false{
     margin-bottom: 40px;
+  }
+
+  .toasted.bubble {
+    background: rgb(0, 159, 225) !important;
+  }
+
+  .toasted.bubbles {
+    min-height: 38px;
+    line-height: 1.1em;
+    background-color: #f83c3c;
+    padding: 0 20px;
+    font-size: 15px;
+    font-weight: 300;
+    color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+  }
+
+  .text-red {
+    color: #c30303;
+    font-size: small;
+    margin-bottom: 10px;
   }
 </style>

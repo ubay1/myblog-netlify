@@ -435,11 +435,11 @@ export default {
     startOnMessageListener() {
       this.$fireMess.onMessage((payload) => {
         // console.info('Message received. ', payload)
-        console.log(payload.data)
+        console.log(payload.notification)
         // Customize data here
-        const title = payload.data.title;
+        const title = payload.notification.title;
         const options = {
-            body: payload.data.body,
+            body: payload.notification.body,
             badge: 'img/badge_notif.png',
             icon : 'img/icon/android-icon-144x144.png'
         };

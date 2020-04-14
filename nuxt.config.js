@@ -85,6 +85,10 @@ export default {
       ssr: false
     },
     {
+      src: './plugins/vue-infinite.js',
+      ssr: false
+    },
+    {
       src: './plugins/vue-lodash.js',
     },
     {

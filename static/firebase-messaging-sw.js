@@ -23,17 +23,25 @@ else {
 const messaging = firebase.messaging()
 
 messaging.setBackgroundMessageHandler(function(payload) {
-  console.info("SW background received the message: ", payload.data);
-  // Customize data here
-  const title = payload.data.title;
-  const options = {
-      body: payload.data.body,
-      badge: 'img/badge_notif.png',
-      icon : 'img/icon/android-icon-144x144.png'
+  console.info("SW received the message: ", payload);
+  const notification = payload.notification;
+
+  const notificationTitle = notification.title;
+  const notificationOptions = {
+    body: notification.body,
+    icon: notification.image,
+    vibrate: notification.vibrate || [200, 100, 200, 100, 200, 100, 200],
+    actions: [
+      // First item is always taken as click action (see comment below)
+      {
+        title: "Visit",
+        action: notification.clickPath
+      }
+    ]
   };
   return self.registration.showNotification(
-    title,
-    options
+    notificationTitle,
+    notificationOptions
   )
 })
 
