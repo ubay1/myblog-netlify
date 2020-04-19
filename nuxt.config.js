@@ -92,6 +92,9 @@ export default {
       src: './plugins/vue-lodash.js',
     },
     {
+      src: './plugins/eventbus.js',
+    },
+    {
       src: './plugins/mixins/validation.js'
     },
     {

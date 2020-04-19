@@ -18,20 +18,12 @@
           </div>
       </div>
       <div v-else>
-        <div class="grid-produk-hot" :class={margin_grid_bottom_false:margin_grid_false}>
-          <div class="produk-hot" v-for="(item, index) in get_data_hot" :key="index"
+        <div class="grid-produk" :class={margin_grid_bottom_false:margin_grid_false}>
+          <div class="produk" v-for="(item, index) in get_data_hot" :key="index"
             :id="`id-${item.id}`"
-            @click="select_hot(index, item.id, item.hot_slow.slow1, item.hot_slow.slow2, item.stock.warehouse_id)"
           >
-            <div v-if="dataSelect.idSelect.length == 0">
-
-            </div>
-            <div v-else>
-              <div v-if="dataSelect.idSelect == index" class="select_product">
-                <font-awesome-icon :icon="['fas', 'check']" class="icon-header-create-lelang-hot" style="width: 15px; font-size: 18px; color:#fff;"/>
-              </div>
-            </div>
-            <img :src="baseURL+item.picture[0]" alt="img-produk-hot">
+            <div class="checkme" @click="select_hot(index, item.id, item.hot_slow.slow1, item.hot_slow.slow2, item.stock.warehouse_id)">pilih</div>
+            <img :src="baseURL+item.picture" alt="img-produk">
             <div class="text-product-hot-name">
               {{item.product_name}}
             </div>
@@ -43,7 +35,7 @@
             </div>
           </div>
         </div>
-        <infinite-loading spinner="bubbles" @infinite="infiniteHandler">
+        <infinite-loading spinner="waveDots" @infinite="infiniteHandler">
             <div class="text-red" slot="no-more">Produk telah di load semua</div>
             <div class="text-red" slot="no-results">Produk telah di load semua</div>
         </infinite-loading>
@@ -84,13 +76,11 @@ export default {
         idProduct : '',
         totalSlow : '',
         totalFast : '',
-        idWarehouse : '',
-        idSelect : [],
-        isSelect:false,
-        isDisable: true
+        idWarehouse : ''
       },
       btn_disable_next : true,
-      margin_grid_false : false
+      margin_grid_false : false,
+      checkedProduct : []
     }
   },
   methods: {
@@ -125,6 +115,37 @@ export default {
       this.$wait.end('load_product_hot');
     },
     select_hot(id, id_product, slow, fast, warehouse_id){
+        let ell = document.querySelector('#id-'+id_product);
+
+        if (ell.classList.contains('active')) {
+          ell.classList.remove('active');
+          var index = this.checkedProduct.indexOf(id_product);
+
+          if (index > -1) {
+            this.checkedProduct.splice(index, 1);
+            this.btn_disable_next = true
+            this.margin_grid_false = false
+            console.log(this.checkedProduct)
+          }
+        }else{
+          if(this.checkedProduct.length >= 1){
+            this.$swal({
+              title: '',
+              text: `hanya bisa pilih 1 product`,
+              icon: 'info',
+              showCancelButton: false,
+            })
+            return false
+          }else{
+            ell.classList.add('active');
+            this.checkedProduct.push(id_product)
+            this.btn_disable_next = false
+            this.margin_grid_false = true
+            console.log(this.checkedProduct)
+          }
+        }
+
+        // tambahkan ke data, untuk lanjutkan ke slow
         this.dataSelect.idProduct = id_product
         this.dataSelect.totalSlow = slow
         this.dataSelect.totalFast = fast
@@ -137,11 +158,6 @@ export default {
         }
 
         console.log(data_toslow)
-
-        this.dataSelect.idSelect = id
-        this.dataSelect.isSelect = !this.dataSelect.isSelect
-        this.btn_disable_next = false
-        this.margin_grid_false = true
     },
     goto_slow(id_product, warehouse_id, slow, fast,){
       this.$router.push('/create_lot/'+id_product+'/'+warehouse_id+'/'+slow+'/'+fast+'/slow')
@@ -156,17 +172,14 @@ export default {
             response.data.data.data.forEach(message => {
               this.get_data_hot.push(message);
             });
-            if (this.page-1 === this.lastPage) {
-              console.log('wkwk')
-              this.page = 2;
+            // console.log(this.page-1)
+            if (this.page == this.lastPage) {
+              console.log(`%c finish `, 'background:#000; color:green;');
               $state.complete();
-            } else {
-              this.page += 1;
             }
+            this.page += 1;
             $state.loaded();
-            $state.complete();
           } else {
-            this.page = 2;
             $state.complete();
           }
         })
@@ -197,6 +210,7 @@ export default {
 </script>
 
 <style lang="scss">
+
   @media (min-width:481px){
     .bg-button-hot-lanjut {
       width:480px;
@@ -232,7 +246,7 @@ export default {
   }
 
   @media(min-width:481px){
-    .grid-produk-hot{
+    .grid-produk{
       width: 480px;
       margin: auto;
       margin-bottom: 0px;
@@ -242,7 +256,7 @@ export default {
       align-items: center;
       padding: 20px;
       grid-gap: 20px;
-      .produk-hot{
+      .produk{
           position: relative;
           cursor:pointer;
           // height: 50%;
@@ -289,7 +303,7 @@ export default {
   }
 
   @media(min-width:360px) and (max-width: 480px){
-    .grid-produk-hot{
+    .grid-produk{
       margin: auto;
       margin-bottom: 0px;
       // margin-top: 20px;
@@ -298,7 +312,7 @@ export default {
       align-items: center;
       padding: 20px;
       grid-gap: 20px;
-      .produk-hot{
+      .produk{
           position: relative;
           cursor:pointer;
           // height: 50%;
@@ -345,7 +359,7 @@ export default {
   }
 
   @media(max-width: 359px){
-    .grid-produk-hot{
+    .grid-produk{
       margin: auto;
       margin-bottom: 0px;
       // margin-top: 20px;
@@ -354,7 +368,7 @@ export default {
       align-items: center;
       padding: 20px;
       grid-gap: 20px;
-      .produk-hot{
+      .produk{
           position: relative;
           cursor:pointer;
           // height: 50%;
@@ -400,13 +414,18 @@ export default {
     }
   }
 
-  .select_product{
+  .checkme {
     background: #00aeef;
+    width: 100%;
+    border-radius: 10px 10px 0px 0px;
     padding: 5px;
-    position: absolute;
-    left: 0;
-    box-shadow: 0px 2px 4px lightgrey;
-    border-radius: 10px 0px 0px 0px;
+    color: #fff;
+    font-weight: 500;
+  }
+
+  .produk.active{
+    border: 3px solid #00aeef;
+    border-radius: 13px;
   }
 
   .btn_hot_lanjut_active{
@@ -436,5 +455,6 @@ export default {
     color: #c30303;
     font-size: small;
     margin-bottom: 10px;
+    display: none;
   }
 </style>

@@ -93,7 +93,7 @@ export default {
         font-size: 20px;
         font-weight: bold;
         color: #00aeef;
-        width: 180px;
+        width: 320px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -151,7 +151,7 @@ export default {
         font-size: 20px;
         font-weight: bold;
         color: #00aeef;
-        width: 180px;
+        width: 280px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
