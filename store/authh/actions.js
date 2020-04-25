@@ -37,8 +37,4 @@ export default{
       resolve()
     })
   },
-
-  to_slow: ({commit}, data) => {
-    commit('warehouse', data.warehouse)
-  }
 }

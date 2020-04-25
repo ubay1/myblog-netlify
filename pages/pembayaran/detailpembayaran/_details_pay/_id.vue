@@ -130,7 +130,7 @@ export default {
               Authorization: `Bearer ${this.token}`
             },
             data: {
-              tipe:"join",
+              tipe:this.$store.getters['authh/tipe_pembayaran'],
               id_lelang:this.id_lelang,
               id_user:this.id_user,
               harga:"300000",
@@ -148,6 +148,13 @@ export default {
                 text: response.data.message,
               }).then((result)=>{
                 if(result.value){
+                  this.$store.commit('authh/removetipe_pembayaran')
+                  this.$store.commit('authh/removeallhot')
+                  this.$store.commit('authh/removeallfast')
+                  this.$store.commit('authh/removeallslow')
+                  this.$store.commit('authh/removealltotalfast')
+                  this.$store.commit('authh/removealltotalslow')
+                  this.$store.commit('authh/removeallwarehouse')
                   this.$router.push('/');
                 }
               })

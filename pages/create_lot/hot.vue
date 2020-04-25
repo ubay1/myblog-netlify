@@ -12,8 +12,8 @@
         </div>
       </template>
       <div v-if='get_data_hot.length == 0'>
-        <div style="display:flex; flex-direction:column; align-items:center; height: 70vh;">
-            <img src="~/static/img/img_splash.png" alt="img-kategori" style="margin:auto; margin-bottom:10px; width:80%;">
+        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height: 80vh;">
+            <img src="~/static/img/img_splash.png" alt="img-kategori" class="img-kategori">
             <div>Data tidak ditemukan</div>
           </div>
       </div>
@@ -23,7 +23,10 @@
             :id="`id-${item.id}`"
           >
             <div class="checkme" @click="select_hot(index, item.id, item.hot_slow.slow1, item.hot_slow.slow2, item.stock.warehouse_id)">pilih</div>
-            <img :src="baseURL+item.picture" alt="img-produk">
+
+            <img alt="image-produk-hot" :src="baseURL+item.picture[0]" v-if="item.picture.length > 1">
+            <img alt="image-produk-hot" :src="baseURL+item.picture" v-else>
+
             <div class="text-product-hot-name">
               {{item.product_name}}
             </div>
@@ -43,7 +46,8 @@
     </v-wait>
 
     <div class="bg-button-hot-lanjut">
-      <button @click="goto_slow(dataSelect.idProduct,dataSelect.idWarehouse, dataSelect.totalSlow, dataSelect.totalFast, dataSelect.idProduct)" class="btn_hot_lanjut" :class="{btn_hot_lanjut_active:btn_disable_next}">Lanjut</button>
+      <!-- <button @click="goto_slow(dataSelect.idProduct,dataSelect.idWarehouse, dataSelect.totalSlow, dataSelect.totalFast, dataSelect.idProduct)" class="btn_hot_lanjut" :class="{btn_hot_lanjut_active:btn_disable_next}">Lanjut</button> -->
+      <button @click="goto_slow()" class="btn_hot_lanjut" :class="{btn_hot_lanjut_active:btn_disable_next}">Lanjut</button>
     </div>
 
   </div>
@@ -83,19 +87,19 @@ export default {
       checkedProduct : []
     }
   },
+  computed: {
+    cek_hot(){
+      // return this.$store.getters['authh/hot'].length > 0 ? this.$store.commit('authh/removeallhot') : ''
+    }
+  },
   methods: {
     back(){
       window.history.back()
     },
-    fetchHot(){
-      if(this.isInit == true){
-        let url = axios.get(process.env.DEV_API + "user/producttype/1")
-      }
-        let url = axios.get(process.env.DEV_API + "user/producttype/1?page="+this.page)
-
-      return axios.get(url);
-    },
     async getProductHot(){
+      // remove seluruh item yang ada di localstorage key hot
+      this.$store.commit('authh/removeallhot')
+
       this.$wait.start('load_product_hot');
 
       // console.log(this.fetchHot())
@@ -119,8 +123,14 @@ export default {
 
         if (ell.classList.contains('active')) {
           ell.classList.remove('active');
-          var index = this.checkedProduct.indexOf(id_product);
+          this.$store.commit('authh/removehot',id_product)
+          this.$store.commit('authh/removewarehouse',warehouse_id)
+          this.$store.commit('authh/removetotalslow',slow)
+          this.$store.commit('authh/removetotalfast',fast)
+          this.btn_disable_next = true
+          this.margin_grid_false = false
 
+          var index = this.checkedProduct.indexOf(id_product);
           if (index > -1) {
             this.checkedProduct.splice(index, 1);
             this.btn_disable_next = true
@@ -128,6 +138,22 @@ export default {
             console.log(this.checkedProduct)
           }
         }else{
+          if(this.$store.getters['authh/hot'].length > 0){
+            if(this.checkedProduct.length == 0){
+              this.$swal({
+                title: '',
+                text: `data sebelumnya telah dihapus, silahkan pilih lagi`,
+                icon: 'info',
+                showCancelButton: false,
+              })
+              this.$store.commit('authh/removeallhot')
+              this.$store.commit('authh/removeallwarehouse')
+              this.$store.commit('authh/removealltotalslow')
+              this.$store.commit('authh/removealltotalfast')
+              return false
+            }
+          }
+
           if(this.checkedProduct.length >= 1){
             this.$swal({
               title: '',
@@ -139,10 +165,15 @@ export default {
           }else{
             ell.classList.add('active');
             this.checkedProduct.push(id_product)
+            this.$store.commit('authh/addhot', id_product)
+            this.$store.commit('authh/addwarehouse', warehouse_id)
+            this.$store.commit('authh/addtotalslow', slow)
+            this.$store.commit('authh/addtotalfast', fast)
             this.btn_disable_next = false
             this.margin_grid_false = true
             console.log(this.checkedProduct)
           }
+
         }
 
         // tambahkan ke data, untuk lanjutkan ke slow
@@ -159,8 +190,8 @@ export default {
 
         console.log(data_toslow)
     },
-    goto_slow(id_product, warehouse_id, slow, fast,){
-      this.$router.push('/create_lot/'+id_product+'/'+warehouse_id+'/'+slow+'/'+fast+'/slow')
+    goto_slow(){
+      this.$router.push('/create_lot/slow')
     },
     infiniteHandler: function($state) {
       setTimeout(function () {
@@ -190,17 +221,13 @@ export default {
     }
   },
   created() {
+    this.$store.commit('authh/removeallhot')
+    this.$store.commit('authh/removeallwarehouse')
+    this.$store.commit('authh/removealltotalslow')
+    this.$store.commit('authh/removealltotalfast')
+
     this.getProductHot();
-    axios.get(process.env.DEV_API + "user/producttype/1")
-      .then(response => {
-        if (response.data.data.data.length > 0) {
-          this.get_data_hot = response.data.data.data;
-          this.isInit = false;
-        }else{
-          console.log('No users found.');
-        }
-      })
-      .catch(e => console.log(e))
+
   },
   mounted() {
     if (process.client) {
@@ -270,7 +297,7 @@ export default {
           border-radius: 10px;
           box-shadow: 0px 2px 4px lightgrey;
           img{
-            height: 140px;
+            height:140px;
             padding: 10px;
           }
 

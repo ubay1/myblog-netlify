@@ -12,19 +12,35 @@
       <div class="txt-small-pembayaran mb-5"> <small>Pilih virtual account yang anda gunakan</small>
       </div>
 
-      <div class="pilih-metode" v-for="(item, index) in list_bank" :key="index" @click="detail_pembayaran(item.bank)">
-        <div>
-          <img :src="item.logo" alt="logo-bank" style="width:80px;">
-        </div>
-        <div class="bg-txt-nama-bank">
-          <div class="txt-nama-bank">
-            <b>{{item.bank}}</b>
+      <div class="pilih-metode" v-for="(item, index) in list_bank" :key="index" @click="detail_pembayaran(item.bank, item.success)">
+        <div class="item_success" v-if="item.success == true">
+          <div>
+            <img :src="item.logo" alt="logo-bank" style="width:80px;">
           </div>
-          <div class="txt-description-bank">
-            <small>{{item.text}}</small>
+          <div class="bg-txt-nama-bank">
+            <div class="txt-nama-bank">
+              <b>{{item.bank}}</b>
+            </div>
+            <div class="txt-description-bank">
+              <small>{{item.text}}</small>
+            </div>
           </div>
+          <font-awesome-icon :icon="['fas', 'chevron-right']" class="icon-header-pilih-pembayaran"/>
         </div>
-        <font-awesome-icon :icon="['fas', 'chevron-right']" class="icon-header-pilih-pembayaran"/>
+        <div class="item_success" v-else style="opacity:.3;">
+          <div>
+            <img :src="item.logo" alt="logo-bank" style="width:80px;">
+          </div>
+          <div class="bg-txt-nama-bank">
+            <div class="txt-nama-bank">
+              <b>{{item.bank}}</b>
+            </div>
+            <div class="txt-description-bank">
+              <small>{{item.text}}</small>
+            </div>
+          </div>
+          <font-awesome-icon :icon="['fas', 'chevron-right']" class="icon-header-pilih-pembayaran"/>
+        </div>
       </div>
     </div>
   </div>
@@ -58,8 +74,17 @@ export default {
         }
       })
     },
-    detail_pembayaran(nama){
-      this.$router.push('/pembayaran/detailpembayaran/'+nama+'/'+this.id);
+    detail_pembayaran(nama, success){
+      if(success == true){
+        this.$router.push('/pembayaran/detailpembayaran/'+nama+'/'+this.id);
+      }else{
+        this.$swal({
+          icon: 'warning',
+          title: '',
+          text: `${nama} telah digunakan`,
+        })
+        return false
+      }
     }
   },
   mounted() {
@@ -113,6 +138,7 @@ export default {
     }
 
     .main-pilih-pembayaran{
+      cursor: pointer;
       margin: auto;
       width: 480px;
       display: flex;
@@ -125,11 +151,18 @@ export default {
         flex-direction: row;
         justify-content: space-around;
         align-items: center;
-        padding: 10px;
-        margin-left: 10px;
-        margin-right: 10px;
-        border: 1px solid lightgrey;
         width: 100%;
+        div.item_success{
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          align-items: center;
+          padding: 10px;
+          margin-left: 10px;
+          margin-right: 10px;
+          border: 1px solid lightgrey;
+          width: 100%;
+        }
       }
       .bg-txt-nama-bank{
         display: flex;
@@ -173,6 +206,7 @@ export default {
     }
 
     .main-pilih-pembayaran{
+      cursor: pointer;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -183,11 +217,18 @@ export default {
         flex-direction: row;
         justify-content: space-around;
         align-items: center;
-        padding: 10px;
-        margin-left: 10px;
-        margin-right: 10px;
-        border: 1px solid lightgrey;
         width: 100%;
+        div.item_success{
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          align-items: center;
+          padding: 10px;
+          margin-left: 10px;
+          margin-right: 10px;
+          border: 1px solid lightgrey;
+          width: 100%;
+        }
       }
       .bg-txt-nama-bank{
         display: flex;

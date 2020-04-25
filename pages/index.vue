@@ -40,8 +40,12 @@
                       <font-awesome-icon :icon="['fas', 'star']" class="icon-favorit" style="width:25px; font-size:20px; filter: drop-shadow(0px 1px 1px #8e8a8a); color:#00aeef;"/>
                     </span>
                   </button>
-                  <span>
-                    <img alt="image-lot-terbaru" class="img-list-lelang" :src="baseURL+item.picture[0]" >
+
+                  <span v-if="item.picture.length > 2">
+                    <img alt="image-lot-terbaru" class="img-list-lelang" :src="baseURL+item.picture">
+                  </span>
+                  <span v-else>
+                    <img alt="image-lot-terbaru" class="img-list-lelang" :src="baseURL+item.picture[0]">
                   </span>
                   <div class="nama-lot">
                     {{item.nama}}
@@ -80,7 +84,8 @@
                     </span>
                   </button>
                   <span>
-                    <img alt="img-lot-terlaris" class="img-list-lelang" :src="baseURL+item.picture[0]" >
+                    <img alt="image-lot-terbaru" class="img-list-lelang" :src="baseURL+item.picture[0]" v-if="item.picture.length > 1">
+                    <img alt="image-lot-terbaru" class="img-list-lelang" :src="baseURL+item.picture" v-else>
                   </span>
                   <div class="nama-lot">
                     Lot-{{item.id}}
@@ -112,7 +117,8 @@
                      {{item.format_bid}}
                   </div>
                   <span>
-                    <img alt="img-lot-terbaru" class="img-list-lelang" :src="baseURL+item.picture[0]" >
+                    <img alt="image-lot-terbaru" class="img-list-lelang" :src="baseURL+item.picture[0]" v-if="item.picture.length > 1">
+                    <img alt="image-lot-terbaru" class="img-list-lelang" :src="baseURL+item.picture" v-else>
                   </span>
                   <div class="nama-lot">
                     {{item.nama}}
@@ -141,7 +147,8 @@
                      {{item.format_bid}}
                   </div>
                   <span>
-                    <img alt="img-lot-terlaris" class="img-list-lelang" :src="baseURL+item.picture[0]" >
+                    <img alt="image-lot-terbaru" class="img-list-lelang" :src="baseURL+item.picture[0]" v-if="item.picture.length > 1">
+                    <img alt="image-lot-terbaru" class="img-list-lelang" :src="baseURL+item.picture" v-else>
                   </span>
                   <div class="nama-lot">
                     Lot-{{item.id}}

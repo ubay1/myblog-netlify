@@ -4,10 +4,13 @@ export default () => ({
   accessToken: false,
   status: '',
   userData: '',
-  warehouse : '',
-  slow : '',
-  fast : ''
-
+  warehouse : [],
+  totalslow: [],
+  totalfast: [],
+  hot : [],
+  slow : [],
+  fast : [],
+  tipe_pembayaran:''
 })
 
 // export const strict = false

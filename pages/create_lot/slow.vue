@@ -19,7 +19,6 @@
           </div>
       </div>
       <div v-else>
-
         <div v-if="checkedProduct.length == 0" class="cart-empty">
           <img src="~static/img/emptycart.png" alt="">
           belum ada product yang dipilih
@@ -65,7 +64,8 @@
     </v-wait>
 
     <div class="bg-button-hot-lanjut">
-      <button @click="goto_fast(dataSelect.idWarehouse, dataSelect.totalSlow, dataSelect.totalFast)" class="btn_hot_lanjut" :class="{btn_slow_lanjut_active:btn_disable_next}">Lanjut</button>
+      <!-- <button @click="goto_fast(this.id_product_hot,this.warehouse_id, this.slow, this.fast)" class="btn_hot_lanjut" :class="{btn_slow_lanjut_active:btn_disable_next}">Lanjut</button> -->
+       <button @click="goto_fast()" class="btn_hot_lanjut" :class="{btn_slow_lanjut_active:btn_disable_next}">Lanjut</button>
     </div>
 
   </div>
@@ -86,11 +86,11 @@ export default {
   },
   data() {
     return {
-      id_product_hot : this.$route.params.idproduct,
-      warehouse_id : this.$route.params.warehouses,
-      slow : this.$route.params.slows,
-      fast : this.$route.params.fasts,
-      judul : `Pilih Produk Slow ${this.$route.params.slows} buah`,
+      id_product_hot : this.$store.getters['authh/hot'],
+      warehouse_id : this.$store.getters['authh/warehouse'],
+      slow : this.$store.getters['authh/totalslow'],
+      fast : this.$store.getters['authh/totalfast'],
+      judul : `Pilih Produk Slow ${this.$store.getters['authh/totalslow']} buah`,
       search: 'produkslow',
       accessToken : '',
       token: '',
@@ -116,6 +116,7 @@ export default {
       window.history.back()
     },
     async getProductSlow(){
+
       this.$wait.start('load_product_slow');
 
       axios.get(process.env.DEV_API + "user/producttype/2")
@@ -142,18 +143,35 @@ export default {
     select_slow(id, product_name, picture){
       let ell = document.querySelector('#id-'+id);
 
-      // jika data telah aktif, lalu ingin dinonaktifkan.. maka hapus data dari array
+      // jika product telah dipilih, lalu ingin diganti. maka hapus id dari array
       if (ell.classList.contains('active')) {
         ell.classList.remove('active');
+        console.log('deselect '+id);
+
         var index = this.checkedProduct.indexOf(id);
         if (index > -1) {
           this.checkedProduct.splice(index, 1);
           this.img_product.splice(index,1)
           this.btn_disable_next = true
           this.margin_grid_false = false
-          console.log(this.checkedProduct);
+          this.$store.commit('authh/removeslow',id)
         }
       }else{
+        // jika telah pilih product, lalu klik refresh, lalu coba pilih product lagi.
+        // akan tampil alert ini
+        if(this.$store.getters['authh/slow'].length > 0){
+          if(this.checkedProduct.length == 0){
+            this.$swal({
+              title: '',
+              text: `data sebelumnya telah dihapus, silahkan pilih lagi`,
+              icon: 'info',
+              showCancelButton: false,
+            })
+            this.$store.commit('authh/removeallslow')
+            return false
+          }
+        }
+
         if(this.checkedProduct.length >= this.slow){
           this.$swal({
               title: '',
@@ -167,13 +185,15 @@ export default {
           ell.classList.add('active');
           this.checkedProduct.push(id)
           this.img_product.push(picture)
+
+          this.$store.commit('authh/addslow', id)
+          console.log('select '+id)
+
           // jika yang diceklist telah sama, maka tampilkan btn next
           if(this.checkedProduct.length == this.slow){
             this.btn_disable_next = false
             this.margin_grid_false = true
           }
-
-          console.log(this.checkedProduct);
         }
       }
     },
@@ -188,48 +208,43 @@ export default {
         return false
       }
       this.plusminus+= 1
-      // this.$bus.$emit("changeValue", this.plusminus);
       this.checkedProduct.push(id)
+      this.$store.commit('authh/addslow', id)
+      console.log('select '+id)
       this.img_product.push(picture)
+
       // jika yang diceklist telah sama, maka tampilkan btn next
       if(this.checkedProduct.length == this.slow){
         this.btn_disable_next = false
         this.margin_grid_false = true
       }
 
-      console.log(this.checkedProduct);
     },
     decrement(id, picture){
-      // if(this.plusminus < 2){
-      //   this.$swal({
-      //     title: '',
-      //     text: `tidak bisa kurang dari 1`,
-      //     icon: 'info',
-      //     showCancelButton: false,
-      //   })
-      //   return false
-      // }
       this.plusminus -= 1
       var index = this.checkedProduct.indexOf(id);
       if (index > -1) {
         this.checkedProduct.splice(index, 1);
         this.img_product.splice(index, 1);
+
+        this.$store.commit('authh/removeslow',id)
+        console.log('deselect '+id)
+
         this.btn_disable_next = true
         this.margin_grid_false = false
-        console.log(this.checkedProduct);
       }
     },
-    goto_fast(warehouse_id, slow, fast){
-      this.$router.push('/create_lot/'+warehouse_id+'/'+slow+'/'+fast+'/slow')
+    goto_fast(){
+      this.$router.push('/create_lot/fast')
     }
   },
   created() {
     this.getProductSlow();
-    // this.$bus.$on("changeValue", (val)=> {
-    //   this.checkedProduct.push(val);
-    //   console.log('triggered ' + val)
-    //   console.log(this.checkedProduct);
-    // });
+    if(process.client){
+    }
+  },
+  mounted() {
+
   },
 }
 </script>
@@ -519,7 +534,7 @@ export default {
         }
         .ext {
           position: relative;
-          // left: 100%;
+          left: 0%;
           width: 30px;
           height: 1px;
         }

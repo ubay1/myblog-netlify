@@ -376,6 +376,7 @@
               cancelButtonText: 'Batal',
             }).then((result) => {
               if (result.value) {
+                this.$store.commit('authh/tipe_pembayaran', 'join')
                 return this.$router.push('/pembayaran/'+this.id)
               }
             })

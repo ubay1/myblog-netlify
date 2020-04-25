@@ -8,6 +8,10 @@ export default{
   userData: state => state.userData,
   accessToken: state => state.accessToken,
   warehouse : state => state.warehouse,
+  totalslow : state => state.totalslow,
+  totalfast : state => state.totalfast,
+  hot : state => state.hot,
   slow : state => state.slow,
-  fast : state => state.fast
+  fast : state => state.fast,
+  tipe_pembayaran: state => state.tipe_pembayaran
 }
