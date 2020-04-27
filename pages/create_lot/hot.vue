@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <Header :judul='judul' :search='search'/>
+      <Header :judul='judul'/>
     </div>
 
     <v-wait for="load_product_hot">
@@ -55,7 +55,7 @@
 
 <script>
 import axios from 'axios';
-import Header from '~/components/Headers/Header_one'
+import Header from '~/components/Headers/Header_two'
 
 export default {
   // middleware: 'iflogin',
@@ -66,9 +66,8 @@ export default {
     return {
       page : 2,
       lastPage: 0,
-      isInit : true,
       judul : 'Pilih Produk Hot',
-      search: 'produkhot',
+      // search: 'produkhot',
       accessToken : '',
       token: '',
       data_hot : [],
@@ -169,6 +168,7 @@ export default {
             this.$store.commit('authh/addwarehouse', warehouse_id)
             this.$store.commit('authh/addtotalslow', slow)
             this.$store.commit('authh/addtotalfast', fast)
+            // this.$store.commit('authh/tipe_pembayaran', 'create')
             this.btn_disable_next = false
             this.margin_grid_false = true
             console.log(this.checkedProduct)

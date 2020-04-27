@@ -1,138 +1,136 @@
 <template>
   <div>
     <div>
-      <div class="header-riwayat">
-        <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-detail" @click="back()"/>
-        <button @click="logout()" class="text-black bg-yellow-400 p-1 rounded shadow-md">Logout</button>
-      </div>
+      <Header :judul="judul"/>
     </div>
-    <div class="main-riwayat">
 
-    </div>
+    <v-wait for="load_status_lelang">
+      <template slot="waiting">
+        <div style="display:flex; flex-direction:column; align-items:center; height:50vh; margin:auto;">
+          <img src="~/static/loading_send.gif" alt="" width="70" style="margin:100px auto; margin-bottom:10px;">
+          <div>sedang memuat data..</div>
+        </div>
+      </template>
+      <div class="tabs">
+        <div class="tab">Semua</div>
+        <div class="tab">Pembayaran</div>
+        <div class="tab">Lelang Aktif</div>
+        <div class="tab">Lelang Dibatalkan</div>
+        <div class="tab">Lelang Selesai</div>
+      </div>
+      <div v-if='get_data_status_lelang.length == 0'>
+        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height: 80vh;">
+            <img src="~/static/img/img_splash.png" alt="img-kategori" class="img-kategori">
+            <div>Data tidak ditemukan</div>
+          </div>
+      </div>
+      <div v-else>
+        {{get_data_status_lelang}}
+        <infinite-loading spinner="waveDots" @infinite="infiniteHandler">
+            <div class="text-red" slot="no-more">Produk telah di load semua</div>
+            <div class="text-red" slot="no-results">Produk telah di load semua</div>
+        </infinite-loading>
+      </div>
+    </v-wait>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import Header from '~/components/Headers/Header_two'
 
 export default {
-  middleware: 'iflogin',
+  // middleware: 'iflogin',
+  components:{
+    Header
+  },
   data() {
     return {
+      page : 2,
+      lastPage: 0,
+      data_status_lelang : [],
+      get_data_status_lelang : [],
+      next_page_url : [],
+      judul : 'Riwayat lelang',
       accessToken : '',
-      token: ''
+      token: '',
+      hashid: ''
     }
   },
   methods: {
     back(){
       this.$router.push('/');
     },
-    logout() {
-        const config = {
-            headers: {
-              Authorization: `Bearer ${this.token}`
+    async get_status() {
+      this.$wait.start('load_status_lelang');
+
+      this.$axios.get( process.env.DEV_API+`user/status_lot/${this.hashid}/0`)
+      .then(response => {
+        this.data_status_lelang.push(response.data.data);
+        this.next_page_url.push(response.data.data.next_page_url);
+        console.log(this.data_status_lelang)
+      })
+      .catch(function (err) {
+        console.log(err)
+      });
+
+      this.get_data_status_lelang = await new Promise(resolve => {
+        setTimeout(() => resolve(this.data_status_lelang), 2000);
+      });
+
+      // stop waiting
+      this.$wait.end('load_status_lelang');
+    },
+    infiniteHandler: function($state) {
+      setTimeout(function () {
+        axios.get(process.env.DEV_API+`user/status_lot/${this.hashid}/0?page=`+this.page)
+        .then(response => {
+          console.log(response.data.data)
+          if (response.data.data.length > 0) {
+            this.lastPage = response.data.data.last_page;
+            response.data.data.forEach(message => {
+              this.get_data_status_lelang.push(message);
+            });
+            // console.log(this.page-1)
+            if (this.page == this.lastPage) {
+              console.log(`%c finish `, 'background:#000; color:green;');
+              $state.complete();
             }
-        };
-        this.$axios.post(
-          process.env.DEV_API + 'user/logout',
-          [],
-          config
-        ).then(response => {
-          console.log(response)
-          switch (response.data.success) {
-            case false:
-              this.$toasted.show(response.data.message, {
-                theme: "bubblee",
-                position: "top-center",
-                duration : 5000
-              });
-
-              console.log(response);
-
-              this.$store.dispatch('authh/logout', response.data).then(() => {
-                console.log('success is false');
-              }).catch((err) => {
-                console.log(err);
-              })
-              break;
-
-            case true:
-              console.log(response);
-              this.$store.dispatch('authh/logout', response.data).then(() => {
-                console.log('response true')
-                location.replace('/')
-              }).catch((err) => {
-                console.log(err)
-              })
-              break;
-
-            default:
-              break;
+            this.page += 1;
+            $state.loaded();
+          } else {
+            $state.complete();
           }
         })
-        .catch(function (err) {
-          console.log(err)
-        });
-      },
+        .catch(err => {
+          // console.log(err)
+        })
+      }.bind(this), 1000);
+    }
   },
-  created() {
+  created(){
     if (process.client) {
       var aa = localStorage.getItem('lelangoApp');
-      this.accessToken = JSON.parse(aa).authh.accessToken;
-      this.token = JSON.parse(aa).authh.userData.user.token.access_token
+
+      if(aa == null){
+        this.$router.push('/login');
+      } else{
+        this.accessTokens = JSON.parse(aa).authh.accessToken;
+        if(JSON.parse(aa).authh.userData == ''){
+          this.$router.push('/login');
+        } else {
+          this.token = JSON.parse(aa).authh.userData.user.token.access_token;
+          this.hashid = JSON.parse(aa).authh.userData.user.id;
+        }
+      }
     }
+    this.get_status()
+  },
+  mounted() {
   },
 }
 </script>
 
 <style lang="scss">
-  @media (min-width:481px){
-    .header-riwayat{
-      width: 481px;
-      margin: auto;
-      background: linear-gradient(145deg, #00baff, #009dd7);
-      margin-bottom: 10px;
-      padding: 10px;
-      box-shadow: 0px 2px 6px lightgrey;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
 
-      .icon-header-detail{
-        color: #ffffff;
-        font-size:18px;
-        width:22px;
-      }
-    }
-
-    .main-riwayat{
-      width: 481px;
-      margin-bottom: 90px;
-    }
-  }
-
-  @media (max-width:480px){
-    .header-riwayat{
-      width: auto;
-      margin: auto;
-      background: linear-gradient(145deg, #00baff, #009dd7);
-      margin-bottom: 10px;
-      padding: 10px;
-      box-shadow: 0px 2px 6px lightgrey;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      .icon-header-detail{
-        color: #ffffff;
-        font-size:18px;
-        width:22px;
-      }
-    }
-
-    .main-riwayat{
-      width: auto;
-      margin-bottom: 90px;
-    }
-  }
 </style>

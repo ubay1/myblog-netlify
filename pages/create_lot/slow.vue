@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <Header :judul='judul' :search='search'/>
+      <Header :judul='judul'/>
     </div>
 
     <v-wait for="load_product_slow">
@@ -73,7 +73,7 @@
 
 <script>
 import axios from 'axios';
-import Header from '~/components/Headers/Header_one'
+import Header from '~/components/Headers/Header_two'
 import PrettyCheck from 'pretty-checkbox-vue/check'
 import btnPlusMinus from './btn_plusminus'
 
@@ -91,7 +91,7 @@ export default {
       slow : this.$store.getters['authh/totalslow'],
       fast : this.$store.getters['authh/totalfast'],
       judul : `Pilih Produk Slow ${this.$store.getters['authh/totalslow']} buah`,
-      search: 'produkslow',
+      // search: 'produkslow',
       accessToken : '',
       token: '',
       data_slow : [],

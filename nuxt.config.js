@@ -56,7 +56,9 @@ export default {
     {
       src: './plugins/axios.js'
     },
-    { src: "./plugins/vue-swiper.js", ssr: false },
+    { src: "./plugins/vue-swiper.js",
+      ssr: false
+    },
     {
       src: './plugins/imageprogressive.js',
       ssr: false

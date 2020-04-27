@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <Header :judul='judul' :search='search'/>
+      <Header :judul='judul'/>
     </div>
 
     <v-wait for="load_detail_product">
@@ -67,7 +67,7 @@
 
 <script>
 import axios from 'axios';
-import Header from '~/components/Headers/Header_one'
+import Header from '~/components/Headers/Header_two'
 
 export default {
   components:{
@@ -81,7 +81,7 @@ export default {
       slow : this.$store.getters['authh/totalslow'],
       fast : this.$store.getters['authh/totalfast'],
       judul : `Detail Product`,
-      search: 'detailproduk',
+      // search: 'detailproduk',
       accessToken : '',
       token: '',
       data_detail : [],
@@ -112,24 +112,37 @@ export default {
       var detail_hot = this.$store.getters['authh/hot'];
       var detail_slow = this.$store.getters['authh/slow'];
       var detail_fast = this.$store.getters['authh/fast'];
-      var concat_detail = ([...new Set([...detail_hot ,...detail_slow,...detail_fast])]);
+      // var concat_detail = ([...new Set([...detail_hot ,...detail_slow,...detail_fast])]);
+      var concat1 = detail_hot.concat(detail_slow);
+      var concat_detail = concat1.concat(detail_fast);
+      console.log(concat_detail) // [3,9,9,12,12]
+
+      // number format
+      function formatNumber(num) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+      }
 
       axios.get(process.env.DEV_API + "user/getAllProduct")
 			.then(response => {
-        this.data_detail = response.data.data;
-        // get product where warehouse
-        for (let i = 0; i<this.data_detail.length; i++) {
-          if(concat_detail.indexOf(response.data.data[i].id) != -1){
-            this.lot_data_detail.push({
-              product: response.data.data[i]
-            })
+        // this.data_detail = response.data.data;
 
-            this.totalharga.push(response.data.data[i].price)
+        for (let i = 0; i<response.data.data.length; i++) {
+          for(let j = 0; j<concat_detail.length; j++){
+            if(response.data.data[i].id == concat_detail[j]){
+              this.lot_data_detail.push({
+                product: response.data.data[i]
+              })
+
+              this.totalharga.push(response.data.data[i].price)
+            }
           }
         }
+
         console.log(this.lot_data_detail)
+
+        // total harga dengan reduce
         var reducer = (accumulator, currentValue) => accumulator + currentValue;
-        this.totalharga_reducer = this.totalharga.reduce(reducer);
+        this.totalharga_reducer = formatNumber(this.totalharga.reduce(reducer));
       });
 
       this.get_data_detail = await new Promise(resolve => {

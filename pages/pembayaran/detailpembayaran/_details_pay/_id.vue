@@ -1,11 +1,6 @@
 <template>
   <div>
-    <div class="header-pilih-detail-pembayaran">
-      <div>
-        <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-pilih-detail-pembayaran" @click="back()"/>
-      </div>
-      <div class="text-header-pilih-detail-pembayaran">Detail pembayaran</div>
-    </div>
+    <Header :judul='judul'/>
 
     <div class="main-pilih-detail-pembayaran">
       <div class="txt-tagihan-awal">
@@ -50,10 +45,12 @@
 
 <script>
 import DetailDesc from '../../detail_description'
+import Header from '~/components/Headers/Header_two'
 
 export default {
   components:{
-    'detail-desc' : DetailDesc
+    'detail-desc' : DetailDesc,
+    Header
   },
   data() {
     return {
@@ -63,7 +60,8 @@ export default {
       nama_bank : this.$route.params.details_pay,
       logo : '',
       baseURL : process.env.URL,
-      devAPI : process.env.DEV_API
+      devAPI : process.env.DEV_API,
+      judul : 'Detail pembayaran',
     }
   },
   methods: {
@@ -282,7 +280,8 @@ export default {
         background: #00aeef;
         padding: 10px;
         width: 100%;
-        border-radius: 50px;
+        // border-radius: 50px;
+        font-weight: 600;
         color: #ffffff;
         display: flex;
         justify-content: center;
@@ -390,7 +389,8 @@ export default {
         background: #00aeef;
         padding: 10px;
         width: 100%;
-        border-radius: 50px;
+        // border-radius: 50px;
+        font-weight: 600;
         color: #ffffff;
         display: flex;
         justify-content: center;

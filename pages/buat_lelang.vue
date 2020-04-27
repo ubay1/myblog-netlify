@@ -1,12 +1,6 @@
 <template>
   <div>
     <div>
-      <!-- <div class="header-create-lelang">
-        <div>
-          <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-create-lelang" @click="back()"/>
-        </div>
-        <div class="text-header-create-lelang">Cara membuat lelang</div>
-      </div> -->
       <Header :judul="judul"/>
     </div>
     <div class="main-create-lelang">
@@ -119,6 +113,7 @@ export default {
       margin:auto;
       padding: 10px;
       button.btn-lanjut {
+        font-weight: 600;
         background: #00aeef;
         width: 100%;
         color: #fff;
@@ -161,6 +156,7 @@ export default {
     .bg-button-lanjut {
       padding: 10px;
       button.btn-lanjut {
+        font-weight: 600;
         background: #00aeef;
         width: 100%;
         color: #fff;

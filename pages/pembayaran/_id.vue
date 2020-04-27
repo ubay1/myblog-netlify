@@ -1,10 +1,7 @@
 <template>
   <div>
-    <div class="header-pilih-pembayaran">
-      <div>
-        <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-pilih-pembayaran" @click="back()"/>
-      </div>
-      <div class="text-header-pilih-pembayaran">Pilih metode pembayaran</div>
+    <div>
+      <Header :judul='judul'/>
     </div>
 
     <div class="main-pilih-pembayaran">
@@ -47,13 +44,19 @@
 </template>
 
 <script>
+import Header from '~/components/Headers/Header_two'
+
 export default {
+  components:{
+    Header
+  },
   data() {
     return {
       id : this.$route.params.id,
       token: '',
       list_bank:[],
-      devAPI : process.env.DEV_API
+      devAPI : process.env.DEV_API,
+      judul : 'Pilih metode pembayaran',
     }
   },
   methods: {
