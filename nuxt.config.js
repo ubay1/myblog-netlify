@@ -102,7 +102,7 @@ export default {
     {
       src: './plugins/vuexpersist.js',
       ssr: false
-    }
+    },
 
   ],
   buildModules: [

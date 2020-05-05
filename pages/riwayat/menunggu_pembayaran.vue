@@ -15,7 +15,7 @@
         <div class="tab">
           <nuxt-link to="/riwayat_lelang">
             <div class="tab-method">
-              <img src="img/riwayat/all.png" alt="">
+              <img src="~static/img/riwayat/all.png" alt="">
               <span>Semua</span>
             </div>
           </nuxt-link>
@@ -23,7 +23,7 @@
         <div class="tab">
           <nuxt-link to="/riwayat/pembayaran">
             <div class="tab-method">
-              <img src="img/riwayat/method.png" alt="">
+              <img src="~static/img/riwayat/method.png" alt="">
               <span>Pembayaran</span>
             </div>
           </nuxt-link>
@@ -31,7 +31,7 @@
         <div class="tab">
           <nuxt-link to="/riwayat/aktif">
             <div class="tab-method">
-              <img src="img/riwayat/active.png" alt="">
+              <img src="~static/img/riwayat/active.png" alt="">
               <span>Lelang Aktif</span>
             </div>
           </nuxt-link>
@@ -39,7 +39,7 @@
         <div class="tab">
           <nuxt-link to="/riwayat/batal">
             <div class="tab-method">
-              <img src="img/riwayat/gagal.png" alt="">
+              <img src="~static/img/riwayat/gagal.png" alt="">
               <span>Lelang Dibatalkan</span>
             </div>
           </nuxt-link>
@@ -47,12 +47,25 @@
         <div class="tab">
           <nuxt-link to="/riwayat/selesai">
             <div class="tab-method">
-              <img src="img/riwayat/finish.png" alt="">
+              <img src="~static/img/riwayat/finish.png" alt="">
               <span>Lelang Selesai</span>
             </div>
           </nuxt-link>
         </div>
         <div class="ext"></div>
+      </div>
+
+      <div class="bg_metode_menunggu">
+        <nuxt-link to="/riwayat/pembayaran">
+          <div class="tab-metode">
+            <span>Metode Pembayaran</span>
+          </div>
+        </nuxt-link>
+        <nuxt-link to="/riwayat/menunggu_pembayaran">
+          <div class="tab-menunggu">
+            <span>Menunggu Pembayaran</span>
+          </div>
+        </nuxt-link>
       </div>
 
       <div v-if='filter_status.length == 0'>
@@ -170,8 +183,8 @@ export default {
     return {
       page : 2,
       lastPage: 0,
-      data_status_lelang : [],
-      get_data_status_lelang : [],
+      data_status_lelang_pembayaran : [],
+      get_data_status_lelang_pembayaran : [],
       next_page_url : [],
       judul : 'Riwayat lelang',
       accessToken : '',
@@ -184,7 +197,7 @@ export default {
   },
   computed: {
     filter_status(){
-      return this.get_data_status_lelang;
+      return this.get_data_status_lelang_pembayaran;
     }
   },
   methods: {
@@ -197,22 +210,22 @@ export default {
     async get_status() {
       this.$wait.start('load_status_lelang');
 
-      this.$axios.get( process.env.DEV_API+`user/status_lot/${this.hashid}/0`)
+      this.$axios.get( process.env.DEV_API+`user/status_lot/${this.hashid}/2`)
       .then(response => {
-        // console.log(response.data.data[0].lot);
+        console.log(response.data.data.length);
         for (let i=0; i<response.data.data.length; i++) {
-          this.data_status_lelang.push([response.data.data[i]])
+          this.data_status_lelang_pembayaran.push([response.data.data[i]])
         }
-        // this.data_status_lelang.push(response.data.data);
+        // this.data_status_lelang_pembayaran.push(response.data.data);
         this.next_page_url.push(response.data.data.next_page_url);
-        console.log(this.data_status_lelang)
+        console.log(this.data_status_lelang_pembayaran)
       })
       .catch(function (err) {
         console.log(err)
       });
 
-      this.get_data_status_lelang = await new Promise(resolve => {
-        setTimeout(() => resolve(this.data_status_lelang), 2000);
+      this.get_data_status_lelang_pembayaran = await new Promise(resolve => {
+        setTimeout(() => resolve(this.data_status_lelang_pembayaran), 2000);
       });
 
       // stop waiting
@@ -220,14 +233,14 @@ export default {
     },
     infiniteHandler: function($state) {
       setTimeout(function () {
-        axios.get(process.env.DEV_API+`user/status_lot/${this.hashid}/0?page=`+this.page)
+        axios.get(process.env.DEV_API+`user/status_lot/${this.hashid}/2?page=`+this.page)
         .then(response => {
           if (response.data.data.length > 0) {
             this.lastPage = response.data.data.last_page;
               for (let i=0; i<response.data.data.length; i++) {
-                this.get_data_status_lelang.push([response.data.data[i]])
+                this.get_data_status_lelang_pembayaran.push([response.data.data[i]])
               }
-            console.log(this.get_data_status_lelang)
+            console.log(this.get_data_status_lelang_pembayaran)
             if (this.page == this.lastPage) {
               console.log(`%c finish `, 'background:#000; color:green;');
               $state.complete();
@@ -244,7 +257,7 @@ export default {
       }.bind(this), 1000);
     },
     update_va(index, status, lot_id){
-      this.get_data_status_lelang.splice(index,1);
+      this.get_data_status_lelang_pembayaran.splice(index,1);
 
       const config = {
         headers: {
@@ -351,6 +364,41 @@ export default {
   }
 
   @media (min-width:481px){
+    .bg_metode_menunggu{
+      width: 480px;
+      margin: auto;
+
+      a{
+        .tab-metode{
+          margin: 0px;
+          padding: 5px;
+        }
+      }
+      a.active-link{
+        background: #000;
+        color: #fff;
+        .tab-metode{
+          margin: 0px;
+          padding: 5px;
+        }
+      }
+
+      a{
+        .tab-menunggu{
+          margin: 0px;
+          padding: 5px;
+        }
+      }
+      a.active-link{
+        background: #000;
+        color: #fff;
+        .tab-menunggu{
+          margin: 0px;
+          padding: 5px;
+        }
+      }
+    }
+
     .tabs{
       background: #ffffff;
       width: 480px;
@@ -565,6 +613,39 @@ export default {
   }
 
   @media (max-width:480px){
+    .bg_metode_menunggu{
+      display: flex;
+      a{
+        .tab-metode{
+          margin: 0px;
+          padding: 5px;
+        }
+      }
+      a.active-link{
+        background: #000;
+        color: #fff;
+        .tab-metode{
+          margin: 0px;
+          padding: 5px;
+        }
+      }
+
+      a{
+        .tab-menunggu{
+          margin: 0px;
+          padding: 5px;
+        }
+      }
+      a.active-link{
+        background: #000;
+        color: #fff;
+        .tab-menunggu{
+          margin: 0px;
+          padding: 5px;
+        }
+      }
+    }
+
     .tabs{
       background: #ffffff;
       margin: auto;

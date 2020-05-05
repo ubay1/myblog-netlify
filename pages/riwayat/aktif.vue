@@ -15,7 +15,7 @@
         <div class="tab">
           <nuxt-link to="/riwayat_lelang">
             <div class="tab-method">
-              <img src="img/riwayat/all.png" alt="">
+              <img src="~static/img/riwayat/all.png" alt="">
               <span>Semua</span>
             </div>
           </nuxt-link>
@@ -23,7 +23,7 @@
         <div class="tab">
           <nuxt-link to="/riwayat/pembayaran">
             <div class="tab-method">
-              <img src="img/riwayat/method.png" alt="">
+              <img src="~static/img/riwayat/method.png" alt="">
               <span>Pembayaran</span>
             </div>
           </nuxt-link>
@@ -31,7 +31,7 @@
         <div class="tab">
           <nuxt-link to="/riwayat/aktif">
             <div class="tab-method">
-              <img src="img/riwayat/active.png" alt="">
+              <img src="~static/img/riwayat/active.png" alt="">
               <span>Lelang Aktif</span>
             </div>
           </nuxt-link>
@@ -39,7 +39,7 @@
         <div class="tab">
           <nuxt-link to="/riwayat/batal">
             <div class="tab-method">
-              <img src="img/riwayat/gagal.png" alt="">
+              <img src="~static/img/riwayat/gagal.png" alt="">
               <span>Lelang Dibatalkan</span>
             </div>
           </nuxt-link>
@@ -47,7 +47,7 @@
         <div class="tab">
           <nuxt-link to="/riwayat/selesai">
             <div class="tab-method">
-              <img src="img/riwayat/finish.png" alt="">
+              <img src="~static/img/riwayat/finish.png" alt="">
               <span>Lelang Selesai</span>
             </div>
           </nuxt-link>
@@ -197,7 +197,7 @@ export default {
     async get_status() {
       this.$wait.start('load_status_lelang');
 
-      this.$axios.get( process.env.DEV_API+`user/status_lot/${this.hashid}/0`)
+      this.$axios.get( process.env.DEV_API+`user/status_lot/${this.hashid}/3`)
       .then(response => {
         // console.log(response.data.data[0].lot);
         for (let i=0; i<response.data.data.length; i++) {
@@ -220,7 +220,7 @@ export default {
     },
     infiniteHandler: function($state) {
       setTimeout(function () {
-        axios.get(process.env.DEV_API+`user/status_lot/${this.hashid}/0?page=`+this.page)
+        axios.get(process.env.DEV_API+`user/status_lot/${this.hashid}/3?page=`+this.page)
         .then(response => {
           if (response.data.data.length > 0) {
             this.lastPage = response.data.data.last_page;

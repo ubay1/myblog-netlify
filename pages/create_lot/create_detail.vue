@@ -67,7 +67,7 @@
 
 <script>
 import axios from 'axios';
-import Header from '~/components/Headers/Header_two'
+import Header from '~/components/Headers/Header_three'
 
 export default {
   components:{
@@ -186,6 +186,8 @@ export default {
             if(result.value){
               this.$store.commit('authh/tipe_pembayaran', 'create')
               return this.$router.push('/pembayaran/'+response.data.data.id)
+            }else{
+              return this.$router.push('/riwayat_lelang')
             }
           })
         }

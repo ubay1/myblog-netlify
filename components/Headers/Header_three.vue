@@ -1,12 +1,9 @@
 <template>
   <div>
-    <div class="header-one">
-      <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-one" @click="back()"/>
-      <div class="text-header-one">
+    <div class="header-two">
+      <font-awesome-icon :icon="['fas', 'arrow-left']" class="icon-header-two" @click="back()"/>
+      <div class="text-header-two">
         {{judul}}
-      </div>
-      <div class="search-kategori-detail">
-        <font-awesome-icon :icon="['fas', 'search']" class="icon-header-one"/>
       </div>
     </div>
   </div>
@@ -14,11 +11,11 @@
 
 <script>
 export default {
-  props: ['judul','search'],
+  props: ['judul'],
   methods: {
     back(){
-      // window.history.back()
-      this.$router.push('/')
+      window.history.back()
+      // this.$router.push('/')
     },
   },
 }
@@ -26,21 +23,25 @@ export default {
 
 <style lang="scss">
   @media(min-width:481px){
-    .header-one {
+    .header-two {
+      font-weight:bold;
       width: 480px;
       margin: auto;
-      display: flex;
+      /* background: linear-gradient(145deg, #00baff, #009dd7); */
+      color:#00aeef;
+      margin-bottom: 10px;
       padding: 10px;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 20px;
       border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
       box-shadow: 0px 0px 2px 0px lightgrey;
-      .text-header-one {
+      .text-header-two {
         font-weight: bold;
         color: #00aeef;
+        padding-left: 20px;
+        font-size: 20px;
       }
-      .icon-header-one{
+      .icon-header-two{
         color: #00aeef;
         font-size:18px;
         width:20px;
@@ -82,25 +83,29 @@ export default {
   }
 
   @media(min-width:321px) and (max-width:480px){
-    .header-one {
+    .header-two {
+      font-weight:bold;
       margin: auto;
-      display: flex;
+      /* background: linear-gradient(145deg, #00baff, #009dd7); */
+      color:#00aeef;
+      margin-bottom: 10px;
       padding: 10px;
-      justify-content: space-between;
       border-bottom: 1px solid #e2e8f0;
+      display: flex;
       align-items: center;
       box-shadow: 0px 0px 2px 0px lightgrey;
-      .text-header-one {
-        font-size: 20px;
+      .text-header-two {
         font-weight: bold;
         color: #00aeef;
+        padding-left: 20px;
+        font-size: 20px;
         width: 320px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        text-align: center;;
+        // text-align: center;;
       }
-      .icon-header-one{
+      .icon-header-two{
         color: #00aeef;
         font-size:18px;
         width:20px;
@@ -140,25 +145,29 @@ export default {
   }
 
   @media(min-width:0px) and (max-width:320px){
-    .header-one {
+    .header-two {
+      font-weight:bold;
       margin: auto;
-      display: flex;
+      /* background: linear-gradient(145deg, #00baff, #009dd7); */
+      color:#00aeef;
+      margin-bottom: 10px;
       padding: 10px;
-      justify-content: space-between;
       border-bottom: 1px solid #e2e8f0;
+      display: flex;
       align-items: center;
       box-shadow: 0px 0px 2px 0px lightgrey;
-      .text-header-one {
-        font-size: 20px;
+      .text-header-two {
         font-weight: bold;
         color: #00aeef;
+        padding-left: 20px;
+        font-size: 20px;
         width: 280px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        text-align: center;;
+        // text-align: center;;
       }
-      .icon-header-one{
+      .icon-header-two{
         color: #00aeef;
         font-size:18px;
         width:20px;

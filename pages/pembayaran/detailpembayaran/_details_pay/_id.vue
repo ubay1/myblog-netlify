@@ -103,7 +103,7 @@ export default {
                 text: response.data.message,
               }).then((result)=>{
                 if(result.value){
-                  this.$router.push('/');
+                  this.$router.push('/riwayat_lelang');
                 }
               })
             }
@@ -153,7 +153,7 @@ export default {
                   this.$store.commit('authh/removealltotalfast')
                   this.$store.commit('authh/removealltotalslow')
                   this.$store.commit('authh/removeallwarehouse')
-                  this.$router.push('/');
+                  this.$router.push('/riwayat_lelang');
                 }
               })
             }

@@ -55,7 +55,7 @@
 
 <script>
 import axios from 'axios';
-import Header from '~/components/Headers/Header_two'
+import Header from '~/components/Headers/Header_three'
 
 export default {
   // middleware: 'iflogin',

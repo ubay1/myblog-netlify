@@ -14,7 +14,8 @@ export default {
   props: ['judul'],
   methods: {
     back(){
-      window.history.back()
+      // window.history.back()
+      this.$router.push('/')
     },
   },
 }

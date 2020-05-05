@@ -82,7 +82,7 @@
                   {{item.lot.format_bid}}
                 </div>
                 <div class="bg-btn-favorit">
-                  <button class="btn-favorit" @click="delete_favorit(item.lot.id)">
+                  <button class="btn-favorit" @click="delete_favorit(index,item.lot.id)">
                     <span>
                       <font-awesome-icon :icon="['fas', 'trash']" class="icon-favorit" style="width:15px; font-size:18px; color:#f44336;"/>
                     </span>
@@ -107,7 +107,7 @@
                   {{item.lot.format_bid}}
                 </div>
                 <div class="bg-btn-favorit">
-                  <button class="btn-favorit" @click="delete_favorit(item.lot.id)">
+                  <button class="btn-favorit" @click="delete_favorit(index,item.lot.id)">
                     <span>
                       <font-awesome-icon :icon="['fas', 'trash']" class="icon-favorit" style="width:15px; font-size:18px; color:#f44336;"/>
                     </span>
@@ -214,7 +214,9 @@ export default {
     detailLelang(id){
       this.$router.push('/details/'+id)
     },
-    delete_favorit(id){
+    delete_favorit(index, id){
+      this.get_dataFavorit.splice(index,1);
+
       const config = {
           headers: {
             Authorization: `Bearer ${this.token}`
@@ -229,7 +231,6 @@ export default {
               position: "top-center",
               duration : 5000
             });
-            this.getFavorit();
           }else{
             this.$toasted.show(response.data.message, {
               theme: "bubbles",
